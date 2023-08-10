@@ -5,12 +5,12 @@ def le_assinatura():
     print("Bem-vindo ao detector automático de COH-PIAH.")
     print("Informe a assinatura típica de um aluno infectado:")
 
-    wal = float(input("Entre o tamanho médio de palavra:"))
-    ttr = float(input("Entre a relação Type-Token:"))
-    hlr = float(input("Entre a Razão Hapax Legomana:"))
-    sal = float(input("Entre o tamanho médio de sentença:"))
-    sac = float(input("Entre a complexidade média da sentença:"))
-    pal = float(input("Entre o tamanho medio de frase:"))
+    wal = float(input("Entre o tamanho médio de palavra: "))
+    ttr = float(input("Entre a relação Type-Token: "))
+    hlr = float(input("Entre a Razão Hapax Legomana: "))
+    sal = float(input("Entre o tamanho médio de sentença: "))
+    sac = float(input("Entre a complexidade média da sentença: "))
+    pal = float(input("Entre o tamanho medio de frase: "))
 
     return [wal, ttr, hlr, sal, sac, pal]
 
@@ -70,21 +70,63 @@ def n_palavras_diferentes(lista_palavras):
     return len(freq)
 
 def compara_assinatura(as_a, as_b):
-    '''IMPLEMENTAR. Essa funcao recebe duas assinaturas de texto e deve devolver o grau de similaridade nas assinaturas.'''
-    pass
-
+    GSab = 0
+    for dadosa, dadosb in zip(as_a, as_b):
+        GSab += abs(dadosa - dadosb)
+        
+    similaridade = GSab / len(as_a)
+    return similaridade
+    
 def calcula_assinatura(texto):
-    '''IMPLEMENTAR. Essa funcao recebe um texto e deve devolver a assinatura do texto.'''
-    pass
-
+    sentenca = separa_sentencas(texto)
+    frase = separa_frases(sentenca)
+    lista_palavras = separa_palavras(frase)
+    palavras_unicas = n_palavras_unicas(lista_palavras)
+    palavras_diferentes = n_palavras_diferentes(lista_palavras)
+    
+    wal = 0
+    ttr = 0
+    hlr = 0
+    sal = 0
+    sac = 0
+    pal = 0
+    
+    #wal = tamanho_medio_palavra(lista_palavras)
+    for palavra in lista_palavras:
+        wal += len(palavra)
+    wal = wal / len(lista_palavras)
+    #ttr = relacao_type_token(lista_palavras)
+    ttr = palavras_diferentes / len(lista_palavras)
+    #hlr = razao_hapax_legomena(lista_palavras)
+    hlr = palavras_unicas / len(lista_palavras)
+    #sal = tamanho_medio_sentenca(sentenca)
+    sal = sum(len(lista_palavras) for palavra in lista_palavras) / len(sentenca)
+    #sac = complexidade_media_sentenca(sentenca, frase)
+    sac = len(frase) / len(sentenca)
+    #pal = tamanho_medio_frase(frase)
+    for palavra in frase:
+        pal += len(palavra)
+    pal = pal / len(frase)
+    
+    return [wal, ttr, hlr, sal, sac, pal]
+    
 def avalia_textos(textos, ass_cp):
-    '''IMPLEMENTAR. Essa funcao recebe uma lista de textos e uma assinatura ass_cp e deve devolver o numero (1 a n) do texto com maior probabilidade de ter sido infectado por COH-PIAH.'''
-    pass
+    as_a = []
+    as_b = ass_cp
+    Sab = []
+        
+    for texto in textos:
+        as_a.append(calcula_assinatura(texto)) 
+        similaridade = compara_assinatura(as_a, as_b)
+        Sab.append(similaridade)
 
-def main():
-    infectado = le_assinatura()
+    escritor = Sab.index(min(Sab))
+    print(f"O autor do texto {escritor} está infectado com COH-PIAH")
+    
+def main():  
+    ass_cp = le_assinatura()
     textos = le_textos()
-    calcula_assinatura(textos)
-
+    avalia_textos(textos, ass_cp)
+       
 if __name__ == '__main__':
     main()
