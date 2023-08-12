@@ -21,7 +21,7 @@ def mostrar(lista, posicoes):
     
     while True:
         
-        num = int(input("\nDigite um número da lista para receber a posição dele (digite 0 para sair) ")) 
+        num = int(input("\nDigite um número da lista para receber a posição dele: (digite 0 para sair) ")) 
         posi = pesquisaBinaria(lista, num)
         
         if num == 0:           
@@ -42,7 +42,7 @@ def main():
     lista.sort()
     posicoes = []
     
-    print (f"\n{lista}\n # - Lembrando que a lista começa com o primeiro item na posição 0, o segundo na posição 1 e assim por diante...")
+    print (f"\n{lista}\n \n- Lembrando que a lista começa com o primeiro item na posição 0, o segundo na posição 1 e assim por diante...")
     mostrar(lista, posicoes)
     
     print(f"\nTodas as posições recebidas: {posicoes}\nFinalizando o programa!\n")

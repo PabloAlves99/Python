@@ -14,6 +14,6 @@ def soma_hipotenusas(n):
     return soma
 
 
-numero = int(input("Digite um valor: ")) # type: ignore
+numero = int(input("Digite um valor: ")) 
 resultado = soma_hipotenusas(numero)
 print(f"A soma das hipotenusas até {numero} é: {resultado}")
