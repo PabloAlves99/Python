@@ -134,7 +134,7 @@ def main():
     autor_infectado = avalia_textos(textos, ass_cp)
     
     
-    print(f"O autor do texto {autor_infectado} está infectado com COH-PIAH")
+    print(f"\nO autor do texto {autor_infectado} está infectado com COH-PIAH")
        
        
 if __name__ == '__main__':
