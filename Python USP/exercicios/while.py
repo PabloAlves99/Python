@@ -1,4 +1,4 @@
-num =input("Digite um número grande, vamos somar cada número dele entre eles: ")
+num =input("Digite um número com varios dígitos, vamos somar cada número dele, entre eles: ")
 x = len(num)
 soma = 0
 
