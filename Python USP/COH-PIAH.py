@@ -69,15 +69,12 @@ def n_palavras_diferentes(lista_palavras):
 
     return len(freq)
 
-def compara_assinatura(as_a, as_b):   
+def compara_assinatura(as_a, as_b):      
     
-    similaridade = []
-    for ass in as_a:
-        grauSimilar = sum([abs(ass[i] - as_b[i] for i in range(len(ass)))])
-        grauSimilar /= 6            
-        similaridade.append(grauSimilar)
+    grauSimilar = sum([abs(as_a[i] - as_b[i]) for i in range(6)])
+    grauSimilar /= 6            
     
-    return similaridade
+    return grauSimilar
     
 def calcula_assinatura(texto):
     
@@ -122,9 +119,8 @@ def avalia_textos(textos, ass_cp):
         
     for texto in textos:
         as_a.append(calcula_assinatura(texto)) 
-        
-    Sab = compara_assinatura(as_a, ass_cp)
-
+  
+    Sab = [compara_assinatura(as_a[i], ass_cp) for i in range(len(textos))]
     infectado = Sab.index(min(Sab))
     
     infectado += 1
