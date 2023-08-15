@@ -1,7 +1,7 @@
 NOME = input("Digite o seu nome: ")
 
 contador = 0
-nome = '*'
+nome = ''
 while contador < len(NOME):
     nome += f'*{NOME[contador]}'
     contador += 1
