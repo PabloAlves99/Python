@@ -6,4 +6,4 @@ while contador < len(NOME):
     nome += f'*{NOME[contador]}'
     contador += 1
 
-print(nome)
+print(nome + '*')

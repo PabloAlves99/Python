@@ -20,4 +20,4 @@ while i < len(frase):
         letra = letra_atual
     i += 1
 
-print(f'A letra que apareceu mais vezes foi {letra} que apareceu {maior}x')
+print(f'A letra que apareceu mais vezes foi: -> {letra} <-. Que apareceu {maior}x')
