@@ -1,3 +1,4 @@
+import os
 
 print(" Tente completar a palavra oculta")
 PALAVRA = 'CRUZEIRO'
@@ -28,12 +29,13 @@ while True:
         for l in palavraFormada:
             palavraCerta += l     
              
-        print(f'\n {palavraCerta}')
+        print(f'{palavraCerta}')
         
     else:
         print(f'ERROU! Não tem a letra {tentativa} nessa palavra, tente outra')
         continue
     
     if '*' not in palavraFormada:
-        print(f'\nParabens, você acertou a palavra: {PALAVRA} que tem {len(PALAVRA)} letras, com {vezes} tentativas.')
+        os.system('cls')
+        print(f'\nParabens, você acertou a palavra!! \n{PALAVRA} que tem {len(PALAVRA)} letras, você acertou com {vezes} tentativas.')
         break

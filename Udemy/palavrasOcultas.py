@@ -1,3 +1,5 @@
+import os
+
 print(" Tente completar a palavra oculta")
 PALAVRA = 'CRUZEIRO'
 completando = ''
@@ -32,5 +34,6 @@ while True:
         continue
     
     if PALAVRA == palavraCerta:
-        print(f'\nParabens, você acertou a palavra: {PALAVRA} que tem {len(PALAVRA)} letras, com {vezes} tentativas.')
+        os.system('cls')
+        print(f'\nParabens, você acertou a palavra!! \n{PALAVRA} que tem {len(PALAVRA)} letras, você acertou com {vezes} tentativas.')
         break
