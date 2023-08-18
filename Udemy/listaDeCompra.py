@@ -19,14 +19,19 @@ while True:
         
     elif acao == 'D':
         os.system('cls')
-        d = int(input('Digite qual o indice do item que deseja apagar: '))
-        if d < len(lista):
-            del(lista[d])
-            os.system('cls')
-            continue
+        d = input('Digite qual o indice do item que deseja apagar: ')
+        if d.isdigit():       
+            d = int(d)  
+            if d in range(len(lista)):
+                del(lista[d])
+                os.system('cls')
+                continue
+            else:
+                os.system('cls')
+                print('Indice incorreto, vamos tentar novamente')
+                continue
         else:
-            os.system('cls')
-            print('Indice incorreto, vamos tentar novamente')
+            print('Digite apenas números.')
             continue
     
     elif acao == 'I':
