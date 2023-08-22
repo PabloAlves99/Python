@@ -25,9 +25,9 @@ def verificar(CPF):
         if seg == CPF[10]:
             print('CPF Verificado!')
         else:
-            print('CPF inválido 2')
+            print('CPF inválido')
     else:
-            print('CPF inválido 1')
+            print('CPF inválido')
    
 def converteNumeros(cpf):
     
