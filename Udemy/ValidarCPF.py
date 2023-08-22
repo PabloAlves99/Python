@@ -18,9 +18,16 @@ def verificarDigi(CPF, v):
 
 def verificar(CPF):
     v = 10
-    print(f'Primeiro digito: {verificarDigi(CPF, v)}')
-    v += 1
-    print(f'Segundo digito: {verificarDigi(CPF, v)}')
+    pri = verificarDigi(CPF, v)
+    if pri == CPF[9]:
+        v += 1
+        seg = verificarDigi(CPF, v)
+        if seg == CPF[10]:
+            print('CPF Verificado!')
+        else:
+            print('CPF inválido 2')
+    else:
+            print('CPF inválido 1')
    
 def converteNumeros(cpf):
     
