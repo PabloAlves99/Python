@@ -1,9 +1,11 @@
 import re
-#CPF = 287.307.536-86
+import os
+# CPF = 287.307.536-86
+   
 def verificarDigi(CPF, v):
     multi = v
     somaNoveD = []
-    # Posso usar também o cpf[:9] para pegar os 9 primeiros digitos
+    
     for digito in CPF:
         somaNoveD.append(digito * multi)
         multi -= 1
@@ -13,36 +15,38 @@ def verificarDigi(CPF, v):
            
     resto = somaNoveD % 11
     
-    primeiroDigito = 0 if resto > 9 else resto
-    return primeiroDigito
+    nDigito = 0 if resto > 9 else resto
+    return nDigito
 
-def verificar(CPF):
+def verificar(CPF, cpf):
     v = 10
-    pri = verificarDigi(CPF, v)
-    if pri == CPF[9]:
-        v += 1
-        seg = verificarDigi(CPF, v)
-        if seg == CPF[10]:
-            print('CPF Verificado!')
-        else:
-            print('CPF inválido')
+    CPF[9] = verificarDigi(CPF, v)
+    v += 1
+    CPF[10] = verificarDigi(CPF, v)
+    CPF = ''.join(map(str, CPF))
+    
+    if CPF == cpf:
+        os.system('cls')
+        print('O CPF digitado é válido')
     else:
-            print('CPF inválido')
+        os.system('cls')
+        print('O CPF digitado não é válido')
    
-def converteNumeros(cpf):
+def verificarNumeros(cpf):
     
     if cpf.isdigit() == False:
-        cpf = re.sub(r'[^\w|s]','', cpf)
-    CPF = [int(digito) for digito in cpf]
+        cpf = re.sub(r'[^0-9]', '', cpf)
+    CPF = []
+    CPF.extend(int(digito) for digito in cpf)
     
-    verificar(CPF)
+    verificar(CPF, cpf)
 
 def main ():
     
     print(f'\t VAMOS VERIFICAR O SEU CPF\n')
     cpf = input('Digite o seu CPF: ')
     
-    converteNumeros(cpf)
+    verificarNumeros(cpf)
       
 if __name__ == '__main__':
     main()
