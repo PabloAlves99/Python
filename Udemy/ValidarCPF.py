@@ -1,7 +1,7 @@
 import re
 #CPF = 287.307.536-86
-def primeiroDigi(CPF):
-    multi = 10
+def verificarDigi(CPF, v):
+    multi = v
     somaNoveD = []
     # Posso usar também o cpf[:9] para pegar os 9 primeiros digitos
     for digito in CPF:
@@ -17,8 +17,10 @@ def primeiroDigi(CPF):
     return primeiroDigito
 
 def verificar(CPF):
-    
-    print(primeiroDigi(CPF))
+    v = 10
+    print(f'Primeiro digito: {verificarDigi(CPF, v)}')
+    v += 1
+    print(f'Segundo digito: {verificarDigi(CPF, v)}')
    
 def converteNumeros(cpf):
     
