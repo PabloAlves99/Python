@@ -35,8 +35,7 @@ def quiz(questions):
                 print('\n{}{}VOCÊ ACERTOU!!{}'.format(cores['fechar'], cores['verde'], cores['fechar']))
                 acerto += 1
                 sleep(2)
-                break
-            
+                break   
             else:             
                 print('\n{}VOCÊ ERROU!!{}'.format(cores['vermelho'], cores['fechar']))
                 sleep(2)
@@ -69,9 +68,11 @@ def main():
     right = quiz(questions)
     limpar_tela()
     if right > 0:
-        print(f'{cores["verde"]}-='*20 , f'\nVocê acertou {right} de {len(questions)} perguntas\n' , '=-'*20 , f'{cores["fechar"]}')
+        mensagem = f'Você acertou {right} de {len(questions)} perguntas'
+        print(f'{cores["verde"]}-='*20 , f'\n{mensagem.center(40)}\n' , '=-'*20 , f'{cores["fechar"]}')
     else:
-        print('{}Infelizmente você não conhece nada de Harry Potter!\n{}'.format(cores['ciano'], cores['fechar']))
+        mensagem = 'Infelizmente você não conhece nada de Harry Potter!'
+        print(f'{cores["ciano"]}-='*30 , f'\n{mensagem.center(60)}\n' , '=-'*30 , f'{cores["fechar"]}')
         
 if __name__ == '__main__':
     main()
