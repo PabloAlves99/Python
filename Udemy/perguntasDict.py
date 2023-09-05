@@ -29,7 +29,9 @@ def quiz(questions):
             
             for i, opç in enumerate(question['Opções']):
                 print(f'{i}) {opç}')
-            x = int(input('Resposta: {}{}'.format(cores['fechar'], cores['cinza'])))
+                
+            #O try se x for numero resolveria a outra verificação.
+            x = input('Resposta: {}{}'.format(cores['fechar'], cores['cinza']))
             
             if x == question['resposta']:      
                 print('\n{}{}VOCÊ ACERTOU!!{}'.format(cores['fechar'], cores['verde'], cores['fechar']))
@@ -47,17 +49,17 @@ def createQuestions():
         {
             'Pergunta': 'Existe quantas reliquias da morte na saga de Harry Potter?',
             'Opções': [3, 5, 2, 7],
-            'resposta': 0,
+            'resposta': '0',
         },
         {
             'Pergunta': 'Existe quantas maldições imperdoaveis na saga de Harry Potter?',
             'Opções': [2, 5, 3, 7],
-            'resposta': 2,
+            'resposta': '2',
         },
         {
             'Pergunta': 'O que o apanhador precisa capturar para vencer o jogo?',
             'Opções': ['pomo de ouro', 'bola de ouro', 'elmo de ouro', 'arco de ouro'],
-            'resposta': 0,
+            'resposta': '0',
         }
     ]
     return questions
