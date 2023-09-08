@@ -20,8 +20,7 @@ def limpar_tela():
 def quiz(questions):
     acerto = 0
     
-    for question in questions:
-        
+    for question in questions:       
         limpar_tela()
         for chave, valor in question.items():
             print(f'{cores["amarelo"]}{chave}: {valor} ')
@@ -30,17 +29,28 @@ def quiz(questions):
             for i, opç in enumerate(question['Opções']):
                 print(f'{i}) {opç}')
                 
-            #O try se x for numero resolveria a outra verificação.
             x = input('Resposta: {}{}'.format(cores['fechar'], cores['cinza']))
             
-            if x == question['resposta']:      
-                print('\n{}{}VOCÊ ACERTOU!!{}'.format(cores['fechar'], cores['verde'], cores['fechar']))
-                acerto += 1
-                sleep(2)
-                break   
-            else:             
-                print('\n{}VOCÊ ERROU!!{}'.format(cores['vermelho'], cores['fechar']))
-                sleep(2)
+            if x.isdigit(): 
+                xint = int(x)
+                if (xint >= 0) and (xint < 4):
+                    if x == question['resposta']:     
+                        print('\n{}{}VOCÊ ACERTOU!!{}'.format(cores['fechar'], cores['verde'], cores['fechar']))
+                        acerto += 1
+                        sleep(2)
+                        break   
+                    else:             
+                        print('\n{}VOCÊ ERROU!!{}'.format(cores['vermelho'], cores['fechar']))
+                        sleep(2)
+                        break
+                else:
+                    print(f'\n{cores["vermelho"]}VOCê ERROU!! Digite apenas os números das opções{cores["fechar"]}')
+                sleep(3)
+                break
+                    
+            else:
+                print(f'\n{cores["vermelho"]}Digite apenas os números das opções, você errou essa pergunta!{cores["fechar"]}')
+                sleep(3)
                 break
     return acerto
 
