@@ -28,7 +28,7 @@ produtos = [
 ]
 
 def p(v):
-    pprint.pprint(v, sort_dicts=False, width=40)
+    pprint.pprint(v, sort_dicts=False, width=35)
 
 novos_produtos = [
     {**produto, 'preco': produto['preco'] * 1.05} # ALTERAÇÃO 
