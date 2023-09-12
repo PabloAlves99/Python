@@ -1,6 +1,7 @@
 """
 *** LISTAS ***
 
+isinstance() - Para saber se o objeto é de determinado tipo
 append - Adiciona um item ao final da lista
 insert  - Adiciona um item no índice escolhido
 pop - Remove do final ou do índice escolhido
