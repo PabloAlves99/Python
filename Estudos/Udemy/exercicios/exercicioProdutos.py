@@ -1,3 +1,5 @@
+from copy import deepcopy
+
 produtos = [
     {'nome': 'Produto 5', 'preco': 10.00},
     {'nome': 'Produto 1', 'preco': 22.32},
@@ -5,10 +7,6 @@ produtos = [
     {'nome': 'Produto 2', 'preco': 105.87},
     {'nome': 'Produto 4', 'preco': 69.90},
 ]
-
-#copia profunda
-from copy import deepcopy
-novos_produtos = deepcopy(produtos)
 
 def aumentando10(novos_produtos):
     
@@ -32,11 +30,11 @@ def precoCrescente(novos_produtos):
     
     return crescente
 
-
+novos_produtos = deepcopy(aumentando10(produtos))
 produtos_ordenados_por_nome = deepcopy(nomeDecrescente(novos_produtos))
 produtos_ordenados_por_preco = deepcopy(precoCrescente(novos_produtos))
 
-print(*aumentando10(novos_produtos), sep='\n')
+print('\n', *novos_produtos, sep='\n')
 print('\n', *produtos_ordenados_por_nome, sep='\n')
 print('\n', *produtos_ordenados_por_preco, sep='\n')
 
