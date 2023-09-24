@@ -10,7 +10,6 @@ cores = {
     'cinza': '\033[37m'
 }
 
-
 # def aumentando10(novos_produtos):
     
 #     for i, preco in enumerate(novos_produtos):
@@ -29,18 +28,19 @@ cores = {
 # def precoCrescente(novos_produtos):
     
 #     crescente = sorted(novos_produtos, key= lambda item: item['preco']) 
-    
+
 #     return crescente
 
 
-novos_produtos = [{**i} for i in produtos]
+novos_produtos = [ {**i, 'preco': round(i['preco'] * 1.1, 2)} for i in produtos ]
 
-produtos_ordenados_por_nome = ...
-produtos_ordenados_por_preco = ...
+produtos_ordenados_por_nome = sorted(produtos, key=lambda i: i['nome'], reverse=True)
+
+produtos_ordenados_por_preco = sorted(produtos, key=lambda i: i['preco'])
 
 if __name__ == "__main__":
 
-    print('\n', f'{cores["ciano"]}Essa é a lista dos produtos original:', *produtos, sep='\n')
+    print(f'{cores["ciano"]}Essa é a lista dos produtos original:', *produtos, sep='\n')
     
     print(f'{cores["fechar"]}', f'{cores["verde"]}Essa é a nova lista dos produtos com um acrescimo de 10%:',*novos_produtos, sep='\n')
     
