@@ -10,7 +10,6 @@ get - obtém uma chave
 pop - apaga um item com a chave especificada (del)
 popitem - apaga o último item adicionado
 update - atualiza um dicionário com outro
-round - altera o item que você escolher *VEJA O 'exercicioProdutos.py'*
 """
 
 pessoa = {
