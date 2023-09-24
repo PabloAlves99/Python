@@ -9,16 +9,15 @@ estados = ['BA', 'SP', 'MG', 'RJ']
 Resultado:
 [('Salvador', 'BA), ('Ubatuba', 'SP'), ('Belo Horizonte', 'MG')]
 """
+from itertools import zip_longest
+
 cidades = ['Salvador', 'Ubatuba', 'Belo Horizonte']
 estados = ['BA', 'SP', 'MG', 'RJ']
 
-unidas = []
+def zipper(l1, l2):
+    end = min(len(l1), len(l2))   
+    return [(l1[i], l2[i]) for i in range(end)]
 
-fim = len(cidades) if len(cidades) > len(estados) else len(estados)
-
-for c, e in zip(cidades, estados):
-    if fim == 0:
-        break
-    unidas.append([c, e])
-
-print (unidas)
+print(zipper(cidades, estados))
+print( list( zip(cidades, estados) ) )
+print( list( zip_longest(cidades, estados) ) )
