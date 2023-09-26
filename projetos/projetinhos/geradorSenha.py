@@ -10,19 +10,19 @@ colors = {
     'cinza': '\033[1;37m'
 }
 
-def gerarSenha(end):   # Gerador de senha aleatória de letras e números
+def createPassword(end):   # Gerador de senha aleatória de letras e números
     letterAndNum = string.digits + string.ascii_letters
-    passoword = ''
+    password = ''
     for i in range(end):
-        passoword += choice(letterAndNum)
+        password += choice(letterAndNum)
         
-    return passoword        
+    return password        
 
 # Segundo a documentação, não é seguro criar uma senha usando o modulo random
 if __name__ == '__main__':
     try:
         digits = int(input(f'{colors["cinza"]}Com quantos dígitos você deseja sua senha? {colors["fechar"]}'))       
-        print(f'{colors["ciano"]}A sua senha aleatória é:\n {gerarSenha(digits)}{colors["fechar"]}')
+        print(f'{colors["ciano"]}A sua senha aleatória é:\n {createPassword(digits)}{colors["fechar"]}')
         
     except ValueError:
         print(f'\n{colors["vermelho"]}*** O programa será finalizado, execute novamente usando apenas números inteiros ***{colors["fechar"]}\n')
