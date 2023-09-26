@@ -27,7 +27,7 @@ def gerarCPF():
     v += 1
     CPF += verificarDigi(CPF, v)
     
-    print (CPF)
+    print ('\n{}{}{}.{}{}{}.{}{}{}-{}{}'.format(*CPF))
     
 
 x = int(input('Quantos CPF você deseja que seja criado? '))
