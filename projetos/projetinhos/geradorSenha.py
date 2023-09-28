@@ -18,7 +18,7 @@ colors = {
     'cinza': '\033[37m'
 }
 
-def createPassword(end):   # Gerador de senha aleatória de letras e números
+def createPassword(end):   # Gerador de senha aleatória 
     passwordTypes = int(input('Como você deseja sua senha?\n'
                               '1- Apenas letras\n'
                               '2- Apenas Números\n'
@@ -44,10 +44,13 @@ def createPassword(end):   # Gerador de senha aleatória de letras e números
         else:
             print(f'\n{colors["vermelho"]}*** APENAS É ACEITO OS NÚMEROS DAS OPÇÕES ACIMA. O programa será finalizado ***{colors["fechar"]}\n')
             return
+        
     elif passwordTypes == 2:
         unit = string.digits
+        
     elif passwordTypes == 3:
         unit = string.ascii_letters + string.digits
+        
     elif passwordTypes == 4:
         unit = string.ascii_letters + string.digits + string.punctuation
     
