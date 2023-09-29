@@ -12,10 +12,6 @@ def limpar_tela():
 colors = {
     'fechar': '\033[m',
     'vermelho': '\033[1;31m',
-    'amarelo': '\033[33m',
-    'ciano': '\033[36m',
-    'verde': '\033[32m',
-    'cinza': '\033[37m'
 }
 
 def createPassword(end):   # Gerador de senha aleatória 
