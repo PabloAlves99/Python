@@ -14,7 +14,7 @@ colors = {
     'vermelho': '\033[1;31m',
 }
 
-def createPassword(end):   # Gerador de senha aleatória 
+def createPassword(end):
     passwordTypes = int(input('Como você deseja sua senha?\n'
                               '1- Apenas letras\n'
                               '2- Apenas Números\n'
