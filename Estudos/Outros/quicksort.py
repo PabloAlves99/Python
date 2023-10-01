@@ -9,7 +9,7 @@ def quicksort(array):
         bigger = [i for i in array[1:] if i > pivo]
     return quicksort(menor) + [pivo] + quicksort(bigger)
 
-lista = random.sample(range(1,1001), 500)
+lista = random.sample(range(1,1001), 100)
 
 print(quicksort(lista))
 
