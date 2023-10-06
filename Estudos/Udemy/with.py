@@ -23,14 +23,24 @@ caminho_arquivo = 'aula116.txt'
 # arquivo = open(caminho_arquivo, 'w')
 # #
 # arquivo.close()
-with open(caminho_arquivo, 'w+') as arquivo:
+
+
+# with open(caminho_arquivo, 'w+') as arquivo:
+#     arquivo.write('Olá mundo\n')
+#     arquivo.write('Olá dnv mundo\n')
+#     arquivo.writelines(('testando\n', 'testando linha de baixo\n'))
+#     arquivo.seek(0.0) # Voltar o cursor pro topo para ler o arquivo no comando da proxima linha
+#     print(arquivo.read())
+    
+# print('#' * 20)
+
+# with open(caminho_arquivo, 'r') as arquivo:
+#     print(arquivo.read())
+
+# Usando o 'a' eu não apago oque o arquivo ja tem. Usando o 'w' apaga tudo e se eu mandar, escreve oque eu mandar
+with open(caminho_arquivo, 'a+') as arquivo:
     arquivo.write('Olá mundo\n')
     arquivo.write('Olá dnv mundo\n')
     arquivo.writelines(('testando\n', 'testando linha de baixo\n'))
     arquivo.seek(0.0) # Voltar o cursor pro topo para ler o arquivo no comando da proxima linha
-    print(arquivo.read())
-    
-print('#' * 20)
-
-with open(caminho_arquivo, 'r') as arquivo:
     print(arquivo.read())
