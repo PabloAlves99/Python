@@ -8,19 +8,35 @@ def limpar_tela():
     else:  # Unix/Linux/Mac
         os.system('clear')
   
-def presentation(listTasks):
-    
+def presentation(listTasks):   
     if listTasks:
         print('\tTarefas')
         print(*listTasks, sep='\n')
     else: 
         print('Lista de tarefas vazia')
         
+def insertTask(list):
+    list.append(input('\nQual tarefa deseja inserir? '))
+    return listTasks
+    
+def toUndo(list):
+    removeTask = list.pop(-1)
+    return removeTask
+
+def remake(list, removed):
+    if removed:
+        list.append(removed.pop(-1))
+        return list
+    else:
+        print('\n\nNão tem oque refazer')
+        time.sleep(2)
+    
 def command(listTasks, removed):
     
     while True:
         limpar_tela()
         presentation(listTasks)     
+        
         funcao = input('\nOpções:\n [I]nserir    [D]esfazer    [R]efazer    [C]oncluir ').upper()
             
         if funcao == ('I' or 'INSERIR'): # Inserir tarefa
@@ -42,26 +58,7 @@ def command(listTasks, removed):
             print('\n\nDigite apenas uma das opções válida\n\n')
             time.sleep(2)
 
-def insertTask(list):
-    list.append(input('\nQual tarefa deseja inserir? '))
-    return listTasks
-
-def toUndo(list):
-    removeTask = list.pop(-1)
-    return removeTask
-    
-
-def remake(list, removed):
-    if removed:
-        list.append(removed.pop(-1))
-        return list
-    else:
-        print('\n\nNão tem oque refazer')
-        time.sleep(2)
-
-
 if __name__ == '__main__':
-    
     listTasks = []
     removed = []       
     command(listTasks, removed)
