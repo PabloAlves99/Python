@@ -45,8 +45,7 @@ def remake(listTasks, removed):
   
 def toSave(listTasks):
     with open('tarefas.json', 'w+', encoding='utf8' ) as tarefas:
-        dados = json.dump(listTasks, tarefas, indent=2, ensure_ascii=False)
-        
+        dados = json.dump(listTasks, tarefas, indent=2, ensure_ascii=False)      
     
     
 def command(listTasks, removed):
@@ -63,7 +62,7 @@ def command(listTasks, removed):
         presentation(listTasks)     
           
         try:
-            funcao = input('\nOpções:\n [I]nserir    [D]esfazer    [R]efazer    [C]oncluir ').upper() #Falta implementar o C
+            funcao = input('\nOpções:\n [I]nserir    [D]esfazer    [R]efazer    [C]oncluir ').upper()
             
             comandos = { # As funções só são executadas depois, quando chamadas
                 'I': lambda: insertTask(listTasks),           
