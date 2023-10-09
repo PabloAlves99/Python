@@ -1,0 +1,14 @@
+[
+  {
+    "administrador": "Pablo",
+    "chave": 123
+  },
+  {
+    "administrador": "Henrique",
+    "chave": 456
+  },
+  {
+    "administrador": "Alves",
+    "chave": 789
+  }
+]

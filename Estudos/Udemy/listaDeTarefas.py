@@ -45,7 +45,7 @@ def remake(listTasks, removed):
   
 def toSave(listTasks):
     with open('tarefas.json', 'w+', encoding='utf8' ) as tarefas:
-        dados = json.dump(listTasks, tarefas, indent=2, ensure_ascii=False)      
+        json.dump(listTasks, tarefas, indent=2, ensure_ascii=False)      
     
     
 def command(listTasks, removed):
