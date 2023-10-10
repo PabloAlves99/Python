@@ -37,4 +37,3 @@ if __name__ == '__main__':
 
     with open(CAMINHO, "w+", encoding='utf8') as admins:
         json.dump(list_users, admins, indent=2, ensure_ascii=False)
-
