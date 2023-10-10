@@ -1,15 +1,13 @@
-from classSalvar import adm, CAMINHO
+from classSalvar import users, CAMINHO
 import json
 
-with open(CAMINHO, 'r') as admins:
-    adms = json.load(admins)
+with open(CAMINHO, 'r') as arquivo:
     
-    adm1 = adm(**adms[0])
-    adm2 = adm(**adms[1])
-    adm3 = adm(**adms[2])
+    list_users = json.load(arquivo)   
+    user1 = users.create_full_user(**list_users[0])
+    user2 = users.create_full_user(**list_users[1])
     
-    print(vars(adm1))
-    print(vars(adm2))
-    print(vars(adm3))
+print(vars(user1))
+print(vars(user2))
     
     

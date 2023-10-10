@@ -1,0 +1,12 @@
+[
+  {
+    "host": "localhost",
+    "user": "Pablo",
+    "password": "123"
+  },
+  {
+    "host": "localhost",
+    "user": "Alves",
+    "password": "456"
+  }
+]
