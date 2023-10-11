@@ -1,3 +1,5 @@
+# Apenas criei as funções: digitar_textos, compara_assinatura, calcula_assinatura e avalia_textos. Além do if para inicializar no main
+
 import re
 
 def le_assinatura():
@@ -69,7 +71,7 @@ def n_palavras_diferentes(lista_palavras):
 
     return len(freq)
 
-def compara_assinatura(as_a = [4.34, 0.05, 0.02, 12.81, 2.16, 0.0], as_b = [3.96, 0.05, 0.02, 22.22, 3.41, 0.0]):
+def compara_assinatura(as_a, as_b):
     x = 0
     for a, b in zip(as_a, as_b):
         x += abs(a - b)
