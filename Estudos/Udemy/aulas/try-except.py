@@ -1,4 +1,4 @@
-# Try, except
+# Udemy com Luiz Otávio Miranda
 
 a = 18
 b = 0

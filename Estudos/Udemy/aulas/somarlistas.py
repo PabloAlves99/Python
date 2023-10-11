@@ -1,3 +1,5 @@
+# Udemy com Luiz Otávio Miranda
+
 listaA = [1, 2, 3, 4, 5, 6, 7]
 listaB = [1, 2, 3, 4]
 listaSomada = [x + y for x, y in zip(listaA, listaB)]

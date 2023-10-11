@@ -1,3 +1,5 @@
+# Udemy com Luiz Otávio Miranda
+
 """
 List comprehension em Python
 List comprehension é uma forma rápida para criar listas

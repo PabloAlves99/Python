@@ -1,3 +1,5 @@
+# Udemy com Luiz Otávio Miranda
+
 """
 Métodos úteis dos dicionários em Python
 len - quantas chaves

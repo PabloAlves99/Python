@@ -1,3 +1,5 @@
+# Udemy com Luiz Otávio Miranda
+
 # raise - lançando exceções (erros)
 # https://docs.python.org/pt-br/3/library/exceptions.html
 

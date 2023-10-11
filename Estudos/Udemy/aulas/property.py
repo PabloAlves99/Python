@@ -1,3 +1,5 @@
+# Udemy com Luiz Otávio Miranda
+
 # @property - um getter no modo Pythônico
 # getter - um método para obter um atributo
 # cor -> get_cor()

@@ -1,3 +1,5 @@
+# Udemy com Luiz Otávio Miranda
+
 lista = [1, 2, 3, 'Alo', 0.5 , 'Alo2']
 
 for _ in lista:

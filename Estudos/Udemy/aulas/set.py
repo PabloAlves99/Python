@@ -1,3 +1,5 @@
+# Udemy com Luiz Otávio Miranda
+
 """
 Sets - Conjuntos em Python (tipo set)
 Conjuntos são ensinados na matemática

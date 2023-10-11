@@ -1,3 +1,5 @@
+# Udemy com Luiz Otávio Miranda
+
 # Encapsulamento (modificadores de acesso: public, protected, private)
 # Python NÃO TEM modificadores de acesso
 # Mas podemos seguir as seguintes convenções

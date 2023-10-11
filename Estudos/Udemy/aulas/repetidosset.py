@@ -1,34 +1,5 @@
-# lista_de_listas = [
-#     [1, 2, 2, 3, 4, 4, 5, 5, 6, 7],
-#     [2, 3, 3, 4, 5, 5, 6, 6, 7, 8],
-#     [3, 4, 4, 5, 6, 6, 7, 7, 8, 9],
-#     [4, 5, 5, 6, 7, 7, 8, 8, 9, 10],
-#     [5, 6, 6, 7, 8, 8, 9, 9, 10, 1],
-#     [6, 7, 7, 8, 9, 9, 10, 10, 1, 2],
-#     [7, 8, 8, 9, 10, 10, 1, 1, 2, 3],
-#     [8, 9, 9, 10, 1, 1, 2, 2, 3, 4],
-#     [9, 10, 10, 1, 2, 2, 3, 3, 4, 5],
-#     [10, 1, 1, 2, 3, 3, 4, 4, 5, 6],
-#     [1, 2, 3, 4, 5, 6, 7, 8, 9, 9]
-# ]
+# Udemy com Luiz Otávio Miranda
 
-
-# for ind, lista in enumerate(lista_de_listas):
-#     stop = 0
-    
-#     for i, item in enumerate(lista):
-#         lista.pop(i)
-#         x = lista
-        
-#         if item in x:
-#             repetido = item
-#             stop += 1
-            
-#             if stop == 3:
-#                 print(f'Lista {ind + 1}: {repetido}')
-#     if stop < 3:
-#         print(f'Listas {ind + 1}: Não tem mais de dois numeros repetidos')
-        
 def primeiroduplicado(listas):
     
     for i, lista in enumerate(listas):

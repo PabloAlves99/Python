@@ -1,3 +1,5 @@
+# Udemy com Luiz Otávio Miranda
+
 """
 Exercício - Unir listas
 Crie uma função zipper (como o zipper de roupas)
