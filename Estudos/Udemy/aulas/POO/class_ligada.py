@@ -8,7 +8,7 @@
 # Obs.: Um Fabricante pode fabricar vários carros
 # Exiba o nome do carro, motor e Fabricante na tela
 
-class Carro ():
+class Carro:
     def __init__(self, nome):
         self.nome = nome
         self._motor = None
@@ -30,11 +30,11 @@ class Carro ():
     def fabricante(self, fabricante):
         self._fabricante = fabricante
 
-class Motor():
+class Motor:
     def __init__(self, nome):
         self.nome = nome
         
-class Fabricante():
+class Fabricante:
     def __init__(self, nome):
         self.nome = nome
 

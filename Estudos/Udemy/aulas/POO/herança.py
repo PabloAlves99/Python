@@ -17,7 +17,7 @@ No contexto do construtor da classe Fabricante, super() retorna um objeto especi
 super()__init__(fabricante, motor): Isso chama o construtor __init__ da classe pai Carro e passa dois argumentos para ele: fabricante e motor.
 """
 
-class Carro(): # classe principal ou superclasse.
+class Carro: # classe principal ou superclasse.
     def __init__(self):
         self._fabricante = None
         self._motor = None
