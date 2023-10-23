@@ -28,9 +28,26 @@ class Ponto():
         class_name = type(self).__name__
         return f'{class_name}(x={self.x!r}, y={self.y!r})' # Mostra a representação correto
     
-p1 = Ponto(1, 2)
-p2 = Ponto('aaa', 25)
+    def __add__(self, other):
+        novo_x = self.x + other.x
+        novo_y = self.y + other.y
+        return Ponto(novo_x, novo_y)
 
-print(p1)# Em regra chama __str__
-print(f'\n{p2}\n')
-print(f'{p2!r}')# !r faz chamar o __repr__
+    def __gt__(self, other):
+        resultado_self = self.x + self.y
+        resultado_other = other.x + other.y
+        return resultado_self > resultado_other
+    
+# p1 = Ponto(1, 2)
+# p2 = Ponto('aaa', 25)
+
+# print(p1)# Em regra chama __str__
+# print(f'{p2!r}')# !r faz chamar o __repr__
+
+if __name__ == '__main__':
+    p1 = Ponto(4, 2)  # 6
+    p2 = Ponto(6, 4)  # 10
+    p3 = p1 + p2
+    print(p3)
+    print('P1 é maior que p2', p1 > p2)
+    print('P2 é maior que p1', p2 > p1)
