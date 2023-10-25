@@ -1,1 +1,1 @@
-from .produtos_modulo import produtos
+from produtos_modulo import produtos

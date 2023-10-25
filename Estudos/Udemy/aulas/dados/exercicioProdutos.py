@@ -1,7 +1,7 @@
 # Udemy com Luiz Otávio Miranda
 
 from copy import deepcopy
-from dados import produtos
+from produtos_modulo import produtos
 
 cores = {
     'fechar': '\033[m',
