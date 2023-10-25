@@ -51,3 +51,4 @@ if __name__ == '__main__':
     print(p3)
     print('P1 é maior que p2', p1 > p2)
     print('P2 é maior que p1', p2 > p1)
+    
