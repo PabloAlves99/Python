@@ -18,24 +18,37 @@
 # Ex:
 # with open('aula149.txt', 'w') as arquivo:
 #     ...
-class MyOpen:
-    def __init__(self, caminho_arquivo, modo):
-        self.caminho_arquivo = caminho_arquivo
-        self.modo = modo
-        self._arquivo = None
+# class MyOpen:
+#     def __init__(self, caminho_arquivo, modo):
+#         self.caminho_arquivo = caminho_arquivo
+#         self.modo = modo
+#         self._arquivo = None
 
-    def __enter__(self):
-        print('ABRINDO ARQUIVO')
-        self._arquivo = open(self.caminho_arquivo, self.modo, encoding='utf8')
-        return self._arquivo
+#     def __enter__(self):
+#         print('ABRINDO ARQUIVO')
+#         self._arquivo = open(self.caminho_arquivo, self.modo, encoding='utf8')
+#         return self._arquivo
 
-    def __exit__(self, class_exception, exception_, traceback_):
-        print('FECHANDO ARQUIVO')
-        self._arquivo.close()
+#     def __exit__(self, class_exception, exception_, traceback_):
+#         print('FECHANDO ARQUIVO')
+#         self._arquivo.close()
 
+from contextlib import contextmanager
 
-with MyOpen('aula149.txt', 'w') as arquivo:
-    arquivo.write('Linha 1\n')
-    arquivo.write('Linha 2\n')
-    arquivo.write('Linha 3\n')
+@contextmanager
+def my_open(caminho_arquivo, modo):
+    try:
+        print('Abrindo arquivo')
+        arquivo = open(caminho_arquivo, modo, encoding='utf8')
+        yield arquivo
+    # except Exception as e:
+    #     print('Ocorreu erro', e)
+    finally:
+        print('fechando arquivo')
+        arquivo.close()
+        
+with my_open('aula150.txt', 'w') as arquivo:
+    arquivo.write('Linha 12\n')
+    arquivo.write('Linha 23\n')
+    arquivo.write('Linha 34\n')
     print('WITH', arquivo)
