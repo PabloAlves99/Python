@@ -43,24 +43,25 @@ def remake(listTasks, removed):
     time.sleep(2)
   
   
-def toSave(listTasks):
-    with open('tarefas.json', 'w+', encoding='utf8' ) as tarefas:
+def toSave(listTasks, tasks):
+    with open(tasks, 'w+', encoding='utf8' ) as tarefas:
         json.dump(listTasks, tarefas, indent=2, ensure_ascii=False)      
     
     
-def command(listTasks, removed):
-    
+def command(listTasks, removed, tasks = 'tarefas.json'):
+
     dados = []
-    with open ('tarefas.json', 'r', encoding='utf8') as arquivo:
-        dados = json.load(arquivo)
-        
+    if os.path.exists(tasks):
+        with open (tasks, 'r', encoding='utf8') as arquivo:
+            dados = json.load(arquivo)
+    
     if len(dados) > 0:
         listTasks = [*dados]
     
     while True:
         limpar_tela()
         presentation(listTasks)     
-          
+        
         try:
             funcao = input('\nOpções:\n [I]nserir    [D]esfazer    [R]efazer    [C]oncluir ').upper()
             
@@ -68,7 +69,7 @@ def command(listTasks, removed):
                 'I': lambda: insertTask(listTasks),           
                 'D': lambda: removed.append(toUndo(listTasks)),
                 'R': lambda: remake(listTasks, removed),
-                'C': lambda: toSave(listTasks)
+                'C': lambda: toSave(listTasks, tasks)
             }    
             
             comandos.get(funcao)() # os '()' chama a execução
@@ -82,28 +83,8 @@ def command(listTasks, removed):
         if funcao == 'C':
             break
 
-            # PARA EXECUTAR ESSE CÓDIGO VAI PRECISAR DE ALTERAR AS FUNCOES
-        # if funcao == ('I' or 'INSERIR'): # Inserir tarefa
-        #     insertTask(listTasks)
-            
-        # elif funcao == ('D' or 'DESFAZER'): # Remover ultima tarefa
-        #     if listTasks:
-        #         removed.append(toUndo(listTasks))
-        #     else:
-        #         print('\n\nNão existe tarefas para desfazer')
-        #         time.sleep(2)
-            
-        # elif funcao == ('R' or 'REFAZER'): # Adicionar novamente tarefas removidas
-        #     remake(listTasks, removed)
-            
-        # elif funcao == ('C' or 'CONCLUIR'): # Parar o while infinito
-        #     return listTasks
-        # else:
-        #     print('\n\nDigite apenas uma das opções válida\n\n')
-        #     time.sleep(2)
-
 if __name__ == '__main__':
     listTasks = []
     removed = []       
-    command(listTasks, removed)
+    command(listTasks, removed, 'tarefas.json')
             
