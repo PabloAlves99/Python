@@ -2,6 +2,7 @@ from random import randint
 from time import sleep
 import os
 
+# Criar opção de mais de uma pessoa tentar acertar
 
 def limpar_tela():
     sistema_operacional = os.name
