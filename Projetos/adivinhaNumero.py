@@ -1,9 +1,18 @@
 from random import randint
-from time import sleep
 import os
 
+"""
+Manipulação de Exceções: Adicionar tratamento de exceções para lidar com entradas não numéricas.
 
-def limpar_tela():
+Limite de Tentativas: Adicionar um limite de tentativas para evitar que o jogo continue indefinidamente.
+
+Validação de Entrada: Garantir que a entrada do usuário esteja dentro do intervalo válido.
+
+Melhorar a Interface do Usuário: Adicionar mensagens mais descritivas e claras para orientar o jogador.
+
+Organização do Código: Separar a lógica do jogo em funções para melhorar a legibilidade e reutilização.
+"""
+def clear_screen():
     sistema_operacional = os.name
     if sistema_operacional == 'nt':  # Windows
         os.system('cls')
@@ -22,7 +31,7 @@ def random_number_game():
         
     attempts.append(attempt)  
     while attempt != number_random:
-        limpar_tela()
+        clear_screen()
         if attempt < number_random:
             print('O número é maior')
         else:
@@ -31,7 +40,7 @@ def random_number_game():
         attempt = int(input('Tente adivinhar novamente: '))
         attempts.append(attempt)
     
-    limpar_tela()
+    clear_screen()
     print(f'\t\tParabens, você acertou!!\n\nO número aleatório é: {attempt}.\nVocê acertou com {len(attempts)} tentativas.')
     print('\nNúmeros tentados:')
     print(*attempts, sep='\t')
