@@ -2,7 +2,6 @@ from random import randint
 from time import sleep
 import os
 
-# Criar opção de mais de uma pessoa tentar acertar
 
 def limpar_tela():
     sistema_operacional = os.name
@@ -12,13 +11,15 @@ def limpar_tela():
         os.system('clear')
 
 
-def random_game():
+def random_number_game():
     attempts = []
     number_random = randint(1, 1000)   
-    attempt = int(input('Tente adivinhar o número: '))
     
+    attempt = int(input('Tente adivinhar o número: '))
     if attempt == number_random:
-        print('DE PRIMEIRAAA!!!')
+        print('\tDE PRIMEIRAAA!!!')
+        return
+        
     attempts.append(attempt)  
     while attempt != number_random:
         limpar_tela()
@@ -36,5 +37,4 @@ def random_game():
     print(*attempts, sep='\t')
         
         
-random_game()
-# print(number_random)
+random_number_game()
