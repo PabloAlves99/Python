@@ -1,14 +1,13 @@
 from abc import ABC, abstractmethod
 
-
-class ContaCorrente():
-    pass
-
-class ContaPoupanca():
-    pass
-
 class Conta(ABC):
     # Agregação da classe ContaCorrente ou ContaPoupanca
+    pass
+
+class ContaCorrente(Conta):
+    pass
+
+class ContaPoupanca(Conta):
     pass
 
 class Pessoa(ABC):
