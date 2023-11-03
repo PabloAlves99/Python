@@ -31,12 +31,3 @@ class Cliente(Pessoa, Conta):
     def __init__(self, nome=None, idade=None, conta=None):
         super().__init__(nome, idade)
         self.conta = conta       
-
-        
-henrique = Cliente('Henrique Alves', 23)
-print(henrique.__dict__)
-print()
-pablo = Cliente()
-pablo.criar_pessoa = 'Pablo Alves', 21
-
-print(pablo.__dict__)
