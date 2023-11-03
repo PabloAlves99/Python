@@ -33,9 +33,10 @@ class Cliente(Pessoa, Conta):
         self.conta = conta       
 
         
+henrique = Cliente('Henrique Alves', 23)
+print(henrique.__dict__)
+print()
 pablo = Cliente()
-print(pablo.__dict__)
-
-pablo.criar_pessoa = 'Pablo Alves', 0
+pablo.criar_pessoa = 'Pablo Alves', 21
 
 print(pablo.__dict__)
