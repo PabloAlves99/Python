@@ -7,7 +7,8 @@ class ContaCorrente():
 class ContaPoupanca():
     pass
 
-class Conta(ABC, ContaCorrente, ContaPoupanca):
+class Conta(ABC):
+    # Agregação da classe ContaCorrente ou ContaPoupanca
     pass
 
 class Pessoa(ABC):
