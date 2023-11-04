@@ -39,6 +39,10 @@ class Conta(ABC):
             "Número da Conta": self.numero_conta,
             "Saldo": self.saldo
         }
+        
+    def depositar(self):
+        valor = float(input(f'Saldo atual: {self.saldo} \nDeseja depositar qual valor em sua conta? '))
+        self.saldo += valor
 
 class ContaCorrente(Conta):
     def __init__(self):
@@ -85,5 +89,5 @@ class Cliente(Pessoa):
              
 conta = ContaCorrente()
 pablo = Cliente('Pablo', 23, conta)
-
+pablo.conta.depositar()
 print(pablo.ver_dados())
