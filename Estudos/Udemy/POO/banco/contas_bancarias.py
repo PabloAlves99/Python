@@ -81,6 +81,8 @@ class Cliente(Pessoa):
         }        
         return {**_, **self.conta.visualizar_dados()}
              
+             
+             
 conta = ContaCorrente()
 pablo = Cliente('Pablo', 23, conta)
 
