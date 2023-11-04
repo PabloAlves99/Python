@@ -60,11 +60,11 @@ class Pessoa(ABC):
         self.idade = idade
         
     @property    
-    def criar_pessoa(self):
+    def editar_pessoa(self):
         return self.nome, self.idade
     
-    @criar_pessoa.setter
-    def criar_pessoa(self, _dados):
+    @editar_pessoa.setter
+    def editar_pessoa(self, _dados):
         nome, idade = _dados
         self.nome = nome
         self.idade = idade       
