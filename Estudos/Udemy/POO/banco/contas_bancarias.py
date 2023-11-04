@@ -19,16 +19,40 @@
 # Banco autentica por um método.
 
 from abc import ABC, abstractmethod
+from random import randint
 
 class Conta(ABC):
-    # Agregação da classe ContaCorrente ou ContaPoupanca
-    pass
+    def __init__(self, conta, agencia, numero_conta):
+        self.conta = conta
+        self.agencia = agencia
+        self.numero_conta = numero_conta
+        self.saldo = 0
+    
+    @abstractmethod
+    def tipo_conta(self):
+        pass
+        
+    def visualizar_dados(self):
+        return {
+            'Conta': self.tipo_conta(),
+            "Agência": self.agencia,
+            "Número da Conta": self.numero_conta,
+            "Saldo": self.saldo
+        }
 
 class ContaCorrente(Conta):
-    pass
+    def __init__(self):
+        super().__init__("Corrente", "001", '1' + f"{randint(100,200)}")
 
+    def tipo_conta(self):
+        return "Corrente"
+    
 class ContaPoupanca(Conta):
-    pass
+    def __init__(self):
+        super().__init__("Poupança", "002", '2' + f"{randint(200,300)}")
+
+    def tipo_conta(self):
+        return "Poupança"
 
 class Pessoa(ABC):
     def __init__(self, nome = None, idade= None):
@@ -43,11 +67,21 @@ class Pessoa(ABC):
     def criar_pessoa(self, _dados):
         nome, idade = _dados
         self.nome = nome
-        self.idade = idade
-        return 'Cadastrado com sucesso'
-        
+        self.idade = idade       
 
-class Cliente(Pessoa, Conta):
+class Cliente(Pessoa):
     def __init__(self, nome=None, idade=None, conta=None):
-        super().__init__(nome, idade)
-        self.conta = conta       
+        super().__init__(nome, idade)   
+        self.conta = conta    
+        
+    def ver_dados(self):
+        _= {
+            'Nome': self.nome,
+            'Idade': self.idade
+        }        
+        return {**_, **self.conta.visualizar_dados()}
+             
+conta = ContaCorrente()
+pablo = Cliente('Pablo', 23, conta)
+
+help(pablo)
