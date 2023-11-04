@@ -86,4 +86,4 @@ class Cliente(Pessoa):
 conta = ContaCorrente()
 pablo = Cliente('Pablo', 23, conta)
 
-help(pablo)
+print(pablo.ver_dados())
