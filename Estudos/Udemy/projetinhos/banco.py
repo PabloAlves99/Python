@@ -32,10 +32,10 @@ Banco será responsável autenticar o cliente e as contas da seguinte maneira:
 Só será possível sacar se passar na autenticação do banco (descrita acima)
 Banco autentica por um método.
 """
-from abc import ABC, abstractclassmethod
+from abc import ABC, abstractmethod
 from random import randint
 
-class Account():
+class Account(ABC):
     # Essa classe recebe o número da agenca, conta e saldo
     # Tem o metodo de depositar nessa classe e o metodo sacar abstrado
     
@@ -47,19 +47,31 @@ class Account():
     def deposit(self, value):
         self.balance += value
         
-    @abstractclassmethod
-    def withdraw():...
+    @abstractmethod
+    def withdraw(self, value):
+        pass
     
     
 class SavingsAccount(Account):   
     def __init__(self):
-        super().__init__('001', randint(1000, 2000), 0)
-        
+        super().__init__('001', randint(1000, 2000), 0)  
+    
+    def withdraw(self, value):
+        if self.balance > 0:
+            self.balance -= value
+        else:
+            print('Saldo insuficiente')
+    
 class CurrentAccount(Account):
     def __init__(self):
         super().__init__('002', randint(2000, 3000), 0)
-        
-
+         
+    def withdraw(self, value):
+        if self.balance > 0:
+            self.balance -= value
+        else:
+            print('Saldo insuficiente')
+    
 class Person(ABC):
     # Essa função cria e edita os dados da pessoa
     
@@ -94,7 +106,8 @@ class Customer(Person):
         self.bank_account = account
         
         
-pablo = CurrentAccount()
+pablo = SavingsAccount()
 pablo.deposit(200)
+pablo.withdraw(50)
 
 print(pablo.__dict__)
