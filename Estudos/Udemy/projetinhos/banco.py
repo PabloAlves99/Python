@@ -41,7 +41,7 @@ class Account(ABC):
     
     def __init__(self, agency, account_number, balance):
         self.agency = agency
-        self.acount_number = account_number
+        self.account_number = account_number
         self.balance = balance
     
     def deposit(self, value):
@@ -51,43 +51,57 @@ class Account(ABC):
     def withdraw(self, value):
         pass
     
+    @abstractmethod
+    def account_type(self):
+        ...
     
+    def account_data(self):
+        return {
+            'Conta': self.account_type(),
+            'Agency': self.agency,
+            'Account number': self.account_number,
+            'Balance': self.balance,
+        }
+
+
 class SavingsAccount(Account):   
     def __init__(self):
         super().__init__('001', randint(1000, 2000), 0)  
     
     def withdraw(self, value):
-        if self.balance > 0:
+        if self.balance >= value:
             self.balance -= value
         else:
             print('Saldo insuficiente')
+            
+    def account_type(self):
+        return "Poupança"
     
 class CurrentAccount(Account):
     def __init__(self):
         super().__init__('002', randint(2000, 3000), 0)
          
     def withdraw(self, value):
-        if self.balance > 0:
+        if self.balance >= value:
             self.balance -= value
         else:
             print('Saldo insuficiente')
     
+    def account_type(self):
+        return "Corrente"
+    
 class Person(ABC):
-    # Essa função cria e edita os dados da pessoa
+    # Essa função cria a pessoa
     
     def __init__(self, name, age):
         self.name = name
         self.age = age
+        
+    def contact(self):
+        # Essa função foi criada apenas para ter mais funcionalidades, precisa editar
+        self.email = input('Digite seu email: ')
+        self.number = input('Digite seu número: ')
 
-    @property
-    def edit_data(self):
-        return self.name, self.age
-    
-    @edit_data.setter
-    def edit_data(self, _data):
-        name, age = _data
-        self.name = name
-        self.age = age
        
 class Customer(Person):
     # Essa classe herda a criação de pessoas da classe Person 
@@ -105,9 +119,18 @@ class Customer(Person):
     def insert_account(self, account):
         self.bank_account = account
         
-        
-pablo = SavingsAccount()
-pablo.deposit(200)
-pablo.withdraw(50)
+    def complete_data(self):
+        _data = {
+            'Name': self.name,
+            'Age': self.age,    
+            'Email': self.email,
+            'Number': self.number       
+        }
+        account_data = self.bank_account.account_data() if self.bank_account else {}
+        return {**_data, **account_data}
+    
+pablo = Customer('Pablo Alves', 23, CurrentAccount())
+pablo.contact()
 
-print(pablo.__dict__)
+for data, value in pablo.complete_data().items():
+    print(f'{data}: {value}')
