@@ -11,15 +11,7 @@ from random import randint
 class PabloBank():
     """
     Banco responsável pela verificação de contas.
-    """
-    # Método para verificar a validade da conta  
-    # Buscar um doc com todos os nomes seria melhor
-    # EX:
-    # with open('name_customers.json', 'w+') as arquivo:
-    #     ...
-    # Ler os existentes e escrever mais nomes se quiser.
-    # Não será implementado porque esta é uma verificação simples
-    
+    """   
     def verify_account(self,agency, account):
         """
         Verifica se a agência e número da conta estão dentro dos limites permitidos.
@@ -30,10 +22,7 @@ class PabloBank():
 
         Returns:
         bool: True se a conta for válida, False caso contrário.
-        """
-        # Implementação do método verify_account
-        # Verifica se a agência e o número da conta estão nos limites permitidos
-        
+        """       
         __agency = ['001', '002']
         check_agency = agency in __agency
         check_account = account >= 1000 and account <= 3000
@@ -47,7 +36,6 @@ class Account(ABC):
     """
     Classe abstrata representando uma conta genérica.
     """
-    # Classe abstrata para contas
     def __init__(self, agency, account_number, balance):
         """
         Inicializa uma conta com a agência, número e saldo.
@@ -57,7 +45,6 @@ class Account(ABC):
         account_number (int): Número da conta.
         balance (float): Saldo inicial.
         """
-        # Implementação do método __init__
         self.agency = agency
         self.account_number = account_number
         self.balance = balance
@@ -69,7 +56,6 @@ class Account(ABC):
         Parameters:
         value (float): Valor a ser depositado.
         """
-        # Implementação do método deposit
         self.balance += value
         
     @abstractmethod
@@ -77,7 +63,6 @@ class Account(ABC):
         """
         Método abstrato para saque.
         """
-        # Implementação do método withdraw
         pass
     
     @abstractmethod
@@ -85,7 +70,6 @@ class Account(ABC):
         """
         Método abstrato para o tipo de conta.
         """
-        # Implementação do método account_type
         ...
     
     def account_details(self):
@@ -95,7 +79,6 @@ class Account(ABC):
         Returns:
         dict: Detalhes da conta, incluindo o tipo, agência, número e saldo.
         """
-        # Implementação do método account_details
         return {
             'Conta': self.account_type(),
             'Agency': self.agency,
@@ -159,7 +142,7 @@ class Person(ABC):
         self.age = age
         
     # def contact(self):
-    # #     Essa função foi criada apenas para ter mais funcionalidades, precisa editar
+    # #     Essa função foi criada apenas para ter mais funcionalidades. Entretanto não é tão necessária. Mas poderia ajudar a obter informações para um possível contato com o cliente.
     #     self.email = input('Digite seu email: ')
     #     self.number = input('Digite seu número: ')
      
