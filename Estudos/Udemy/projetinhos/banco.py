@@ -9,15 +9,31 @@ from abc import ABC, abstractmethod
 from random import randint
 
 class PabloBank():
-    # def register(self, name):
-    #     # Criando um doc com todos os nomes seria melhor
-    #     # EX:
-    #     # with open('name_customers.json', 'w+') as arquivo:
-    #     #     ...
-    #     # Não será implementado porque esta é uma verificação simples
-    #     pass
+    """
+    Banco responsável pela verificação de contas.
+    """
+    # Método para verificar a validade da conta  
+    # Buscar um doc com todos os nomes seria melhor
+    # EX:
+    # with open('name_customers.json', 'w+') as arquivo:
+    #     ...
+    # Ler os existentes e escrever mais nomes se quiser.
+    # Não será implementado porque esta é uma verificação simples
     
-    def to_check(self,agency, account):
+    def verify_account(self,agency, account):
+        """
+        Verifica se a agência e número da conta estão dentro dos limites permitidos.
+
+        Parameters:
+        agency (str): Número da agência.
+        account (int): Número da conta.
+
+        Returns:
+        bool: True se a conta for válida, False caso contrário.
+        """
+        # Implementação do método verify_account
+        # Verifica se a agência e o número da conta estão nos limites permitidos
+        
         __agency = ['001', '002']
         check_agency = agency in __agency
         check_account = account >= 1000 and account <= 3000
@@ -27,29 +43,59 @@ class PabloBank():
         else:
             return False 
          
-        
-
 class Account(ABC):
-    # Essa classe recebe o número da agenca, conta e saldo
-    # Tem o metodo de depositar nessa classe e o metodo sacar abstrado
-    
+    """
+    Classe abstrata representando uma conta genérica.
+    """
+    # Classe abstrata para contas
     def __init__(self, agency, account_number, balance):
+        """
+        Inicializa uma conta com a agência, número e saldo.
+
+        Parameters:
+        agency (str): Número da agência.
+        account_number (int): Número da conta.
+        balance (float): Saldo inicial.
+        """
+        # Implementação do método __init__
         self.agency = agency
         self.account_number = account_number
         self.balance = balance
     
     def deposit(self, value):
+        """
+        Realiza um depósito na conta.
+
+        Parameters:
+        value (float): Valor a ser depositado.
+        """
+        # Implementação do método deposit
         self.balance += value
         
     @abstractmethod
     def withdraw(self, value):
+        """
+        Método abstrato para saque.
+        """
+        # Implementação do método withdraw
         pass
     
     @abstractmethod
     def account_type(self):
+        """
+        Método abstrato para o tipo de conta.
+        """
+        # Implementação do método account_type
         ...
     
-    def account_data(self):
+    def account_details(self):
+        """
+        Obtém os detalhes da conta.
+
+        Returns:
+        dict: Detalhes da conta, incluindo o tipo, agência, número e saldo.
+        """
+        # Implementação do método account_details
         return {
             'Conta': self.account_type(),
             'Agency': self.agency,
@@ -57,8 +103,8 @@ class Account(ABC):
             'Balance': self.balance,
         }
 
-
 class SavingsAccount(Account):   
+    # Classe de conta poupança
     def __init__(self):
         super().__init__('001', randint(1000, 2000), 0)  
         self.check_bank = PabloBank()
@@ -67,7 +113,7 @@ class SavingsAccount(Account):
         __agency = self.agency
         __account = self.account_number
         
-        if self.check_bank.to_check(__agency, __account):
+        if self.check_bank.verify_account(__agency, __account):
             if self.balance >= value:
                 self.balance -= value
             else:
@@ -79,17 +125,17 @@ class SavingsAccount(Account):
         return "Poupança"
     
 class CurrentAccount(Account):   
+     # Classe de conta corrente
     def __init__(self):
         super().__init__('002', randint(2000, 3000), 0)
         self.check_bank = PabloBank()
         self.extra_value = 200
          
     def withdraw(self, value):
-        # Função de saque, aqui é verificado no banco se as informações pertinentes são verdadeiras e a conta corrente conta com 200 a mais de limite pro saque
         __agency = self.agency
         __account = self.account_number
         
-        if self.check_bank.to_check(__agency, __account): # Verificar no banco
+        if self.check_bank.verify_account(__agency, __account): # Verificar no banco
             
             if self.balance >= value: # Verificar o saldo
                 self.balance -= value
@@ -104,10 +150,9 @@ class CurrentAccount(Account):
     
     def account_type(self):
         return "Corrente"
-    
-    
+     
 class Person(ABC):
-    # Essa função cria a pessoa. Totalmente desnecessária, entretanto feita a pedido do professor.
+    # Classe abstrata para pessoa. Incluída a pedido do professor, mas desnecessária.
     
     def __init__(self, name, age):
         self.name = name
@@ -117,39 +162,37 @@ class Person(ABC):
     # #     Essa função foi criada apenas para ter mais funcionalidades, precisa editar
     #     self.email = input('Digite seu email: ')
     #     self.number = input('Digite seu número: ')
-
-       
+     
 class Customer(Person):
-    # Essa classe herda a criação de pessoas da classe Person 
-    # Recebe a conta do banco já criada (Agregação da classe conta)
+    # Classe para o cliente, incluindo a conta bancária associada
     
     def __init__(self, name= None, age= None, bank_account= None):
         super().__init__(name, age)
         self.bank_account = bank_account
-
-        
+     
     @property
-    def insert_account(self):
+    def set_account(self):
         return self.bank_account
     
-    @insert_account.setter
-    def insert_account(self, account):
+    @set_account.setter
+    def set_account(self, account):
         self.bank_account = account
         
-    def complete_data(self):
+    def  fetch_account_info(self):
+        # Obtém os detalhes do cliente e da conta associada
         _data = {
             'Name': self.name,
             'Age': self.age,    
             # 'Email': self.email,
             # 'Number': self.number       
         }
-        account_data = self.bank_account.account_data() if self.bank_account else {}
-        return {**_data, **account_data}
+        account_details = self.bank_account.account_details() if self.bank_account else {}
+        return {**_data, **account_details}
     
 if __name__ == '__main__':
     pablo = Customer('Pablo Alves', 23, CurrentAccount())
     pablo.bank_account.deposit(150)
     pablo.bank_account.withdraw(250)
 
-    for data, value in pablo.complete_data().items():
+    for data, value in pablo. fetch_account_info().items():
         print(f'{data}: {value}')
