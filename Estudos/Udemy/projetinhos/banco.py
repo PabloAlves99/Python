@@ -54,7 +54,7 @@ class Account(ABC):
         self.account_number = account_number
         self.balance = balance
 
-    def deposit(self, value: float = 0) -> None:
+    def deposit(self, value: float = 0):
         """
         Realiza um depósito na conta.
 
@@ -210,7 +210,7 @@ class Customer(Person):
         None
     """
 
-    def __init__(self, name, age, bank_account):
+    def __init__(self, name: str, age: int, bank_account: Account):
         super().__init__(name, age)
         self.bank_account = bank_account
 
@@ -225,7 +225,7 @@ class Customer(Person):
         return self.bank_account
 
     @set_account.setter
-    def set_account(self, account):
+    def set_account(self, account: Account):
         self.bank_account = account
 
     def fetch_account_info(self):
