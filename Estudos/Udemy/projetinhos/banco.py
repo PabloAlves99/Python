@@ -12,7 +12,7 @@ class PabloBank():
     """
     Banco responsável pela verificação de contas.
     """   
-    def verify_account(self,agency, account):
+    def verify_account(self,agency: str, account: float) -> bool:
         """
         Verifica se a agência e número da conta estão dentro dos limites permitidos.
 
@@ -36,7 +36,7 @@ class Account(ABC):
     """
     Classe abstrata representando uma conta genérica.
     """
-    def __init__(self, agency, account_number, balance):
+    def __init__(self, agency:str, account_number: int, balance: float = 0):
         """
         Inicializa uma conta com a agência, número e saldo.
 
@@ -49,7 +49,7 @@ class Account(ABC):
         self.account_number = account_number
         self.balance = balance
     
-    def deposit(self, value):
+    def deposit(self, value: float = 0)-> None:
         """
         Realiza um depósito na conta.
 
@@ -59,7 +59,7 @@ class Account(ABC):
         self.balance += value
         
     @abstractmethod
-    def withdraw(self, value):
+    def withdraw(self, value: float = 0):
         """
         Método abstrato para saque.
         """
@@ -92,7 +92,7 @@ class SavingsAccount(Account):
         super().__init__('001', randint(1000, 2000), 0)  
         self.check_bank = PabloBank()
     
-    def withdraw(self, value):
+    def withdraw(self, value: float= 0):
         __agency = self.agency
         __account = self.account_number
         
@@ -114,7 +114,7 @@ class CurrentAccount(Account):
         self.check_bank = PabloBank()
         self.extra_value = 200
          
-    def withdraw(self, value):
+    def withdraw(self, value: float= 0):
         __agency = self.agency
         __account = self.account_number
         
@@ -149,7 +149,7 @@ class Person(ABC):
 class Customer(Person):
     # Classe para o cliente, incluindo a conta bancária associada
     
-    def __init__(self, name= None, age= None, bank_account= None):
+    def __init__(self, name, age, bank_account):
         super().__init__(name, age)
         self.bank_account = bank_account
      
