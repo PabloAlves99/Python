@@ -22,11 +22,9 @@
       }
     },
     "python.languageServer": "Pylance",
-    
     "python.testing.unittestEnabled": false,
     "python.testing.pytestEnabled": true,
     "python.analysis.diagnosticSeverityOverrides": {},
     "python.analysis.typeCheckingMode": "basic",
-    "cSpell.enabled": false,
     "python.analysis.autoImportCompletions": true
   }
