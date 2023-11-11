@@ -62,6 +62,7 @@ class Account(ABC):
         value (float): Valor a ser depositado.
         """
         self.balance += value
+        self._balance('Depositar', value)
 
     @abstractmethod
     def withdraw(self, value: float = 0):
@@ -113,10 +114,13 @@ class SavingsAccount(Account):
         __account = self.account_number
 
         if self.check_bank.verify_account(__agency, __account):
+
             if self.balance >= value:
                 self.balance -= value
+                self._balance('Sacar', value)
             else:
                 print('Saldo insuficiente')
+
         else:
             print('Erro em validar com o Banco')
 
@@ -149,14 +153,16 @@ class CurrentAccount(Account):
 
             if self.balance >= value:  # Verificar o saldo
                 self.balance -= value
+                self._balance('Sacar', value)
             elif self.extra_value >= value - self.balance:
                 self.extra_value -= value - self.balance
-                print(
-                    f'Você ainda tem R${self.extra_value} para ser utilizado'
-                    'como extra.')
+                print(f'Você ainda tem R${self.extra_value} para ser '
+                      'utilizado como extra.')
+                self._balance('Sacar', value)
                 self.balance = 0
             else:
                 print('Saldo insuficiente')
+
         else:
             print('Erro em validar com o Banco')
 
@@ -243,7 +249,7 @@ class Customer(Person):
 
 if __name__ == '__main__':
     pablo = Customer('Pablo Alves', 23, CurrentAccount())
-    pablo.bank_account.deposit(150)
+    pablo.bank_account.deposit(50)
     pablo.bank_account.withdraw(250)
 
     for data, x in pablo. fetch_account_info().items():
