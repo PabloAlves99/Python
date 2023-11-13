@@ -7,6 +7,7 @@ possa sacar/depositar nessa conta. Contas corrente tem um limite extra.
 """
 from abc import ABC, abstractmethod
 from random import randint
+from dataclasses import dataclass
 
 
 class PabloBank():
@@ -94,6 +95,7 @@ class Account(ABC):
         print(f'Você acabou de {_type} R${value}.')
 
     def __repr__(self):
+        # Poderia usar o repr no lugar de criar a função para mostrar os dados
         class_name = type(self).__name__
         attrs = f'(Agency: {self.agency!r},' \
             f' Account Number: {self.account_number!r},'\
@@ -178,10 +180,15 @@ class CurrentAccount(Account):
         return "Corrente"
 
 
+@dataclass
 class Person:
     """ Classe abstrata para criar pessoa
     Incluída a pedido do professor, mas é uma classe desnecessária.
     """
+    name: str
+    age: int
+    # Com o data class, não tem necessidade do init e nem do repr
+
     def __init__(self, name: str, age: int):
         self.name = name
         self.age = age
@@ -262,4 +269,8 @@ if __name__ == '__main__':
 
     for data, x in pablo. fetch_account_info().items():
         print(f'{data}: {x}')
-    print(pablo.bank_account)
+
+    joaozinho = Person('Joãozinho', 19)
+    print('\n')
+    print(joaozinho)  # dataclass
+    print(pablo.bank_account)  # repr
