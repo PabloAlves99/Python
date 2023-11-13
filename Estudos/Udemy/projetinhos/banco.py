@@ -93,6 +93,14 @@ class Account(ABC):
     def _balance(self, _type, value):
         print(f'Você acabou de {_type} R${value}.')
 
+    def __repr__(self):
+        class_name = type(self).__name__
+        attrs = f'(Agency: {self.agency!r},' \
+            f' Account Number: {self.account_number!r},'\
+            f' Balance: {self.balance!r})'
+
+        return f'{class_name}{attrs}'
+
 
 class SavingsAccount(Account):
     """
@@ -254,3 +262,4 @@ if __name__ == '__main__':
 
     for data, x in pablo. fetch_account_info().items():
         print(f'{data}: {x}')
+    print(pablo.bank_account)
