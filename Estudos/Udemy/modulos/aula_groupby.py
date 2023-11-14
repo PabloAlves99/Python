@@ -1,5 +1,3 @@
-# Udemy com Luiz Otávio Miranda
-
 # groupby - agrupando valores (itertools)
 from itertools import groupby
 
@@ -16,8 +14,8 @@ alunos = [
 ]
 
 
-def ordena(aluno):
-    return aluno['nota']
+def ordena(_aluno):
+    return _aluno['nota']
 
 
 alunos_agrupados = sorted(alunos, key=ordena)
