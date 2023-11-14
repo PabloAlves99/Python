@@ -15,10 +15,11 @@
 # https://dateutil.readthedocs.io/en/stable/relativedelta.html
 # https://docs.python.org/3/library/datetime.html#timedelta-objects
 
-from datetime import datetime, timedelta
+from datetime import datetime  # , timedelta
 from pytz import timezone
 
 data = datetime.now(timezone('America/Sao_paulo'))
+print(data)
 
 # fmt = '%d/%m/%Y %H:%M:%S'
 # data_inicio = datetime.strptime('20/04/1987 09:30:30', fmt)
@@ -35,4 +36,3 @@ data = datetime.now(timezone('America/Sao_paulo'))
 # print(data_fim < data_inicio)
 # print(data_fim == data_inicio)
 
-print(data)
