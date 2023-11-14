@@ -176,9 +176,9 @@ class CurrentAccount(Account):
                 self._balance('Sacar', value)
             elif self.extra_value >= value - self.balance:
                 self.extra_value -= value - self.balance
+                self._balance('Sacar', value)
                 print(f'Você ainda tem R${self.extra_value} para ser '
                       'utilizado como extra.')
-                self._balance('Sacar', value)
                 self.balance = 0
             else:
                 print('Saldo insuficiente')
@@ -275,7 +275,7 @@ if __name__ == '__main__':
 
     pabloC.bank_account.deposit(50)
     pabloC.bank_account.withdraw(250)
-    print('#'*50)
+    print('')
 
     pabloP = Customer('Pablo Alves', 23, SavingsAccount())
     for data, x in pabloP. fetch_account_info().items():
@@ -283,8 +283,8 @@ if __name__ == '__main__':
     pabloP.bank_account.deposit(50)
     pabloP.bank_account.withdraw(250)
 
-
-    print('\nDesativando o repr da conta corrente, no dataclass, o repr da'
-          'Account será executado')
+    # Desativando o repr da conta corrente, no dataclass, o repr da Account
+    # será executado
+    print('')
     print(pabloC.bank_account)  # repr desativado
     print(pabloP.bank_account)  # repr
