@@ -104,6 +104,7 @@ class Account(ABC):
         return f'{class_name}{attrs}'
 
 
+@dataclass
 class SavingsAccount(Account):
     """
     Classe representando uma conta poupança.
@@ -114,9 +115,13 @@ class SavingsAccount(Account):
     Returns:
         str: Tipo de conta (poupança).
     """
+    agency: str = '001'
+    balance: float = 0
 
     def __init__(self):
-        super().__init__('001', randint(1000, 2000), 0)
+        self.number_account = randint(2000, 3000)
+        super().__init__(SavingsAccount.agency, self.number_account,
+                         SavingsAccount.balance)
         self.check_bank = PabloBank()
 
     def withdraw(self, value: float = 0):
@@ -138,6 +143,7 @@ class SavingsAccount(Account):
         return "Poupança"
 
 
+@dataclass(repr=False)
 class CurrentAccount(Account):
     """
     Classe representando uma conta corrente.
@@ -148,9 +154,13 @@ class CurrentAccount(Account):
     Returns:
         str: Tipo de conta (corrente).
     """
+    agency: str = '002'
+    balance: float = 0
 
     def __init__(self):
-        super().__init__('002', randint(2000, 3000), 0)
+        self.number_account = randint(2000, 3000)
+        super().__init__(CurrentAccount.agency, self.number_account,
+                         CurrentAccount.balance)
         self.check_bank = PabloBank()
         self.extra_value = 200
 
@@ -180,15 +190,10 @@ class CurrentAccount(Account):
         return "Corrente"
 
 
-@dataclass
 class Person:
     """ Classe abstrata para criar pessoa
     Incluída a pedido do professor, mas é uma classe desnecessária.
     """
-    name: str
-    age: int
-    # Com o data class, não tem necessidade do init e nem do repr
-
     def __init__(self, name: str, age: int):
         self.name = name
         self.age = age
@@ -263,14 +268,23 @@ class Customer(Person):
 
 
 if __name__ == '__main__':
-    pablo = Customer('Pablo Alves', 23, CurrentAccount())
-    pablo.bank_account.deposit(50)
-    pablo.bank_account.withdraw(250)
 
-    for data, x in pablo. fetch_account_info().items():
+    pabloC = Customer('Pablo Alves', 23, CurrentAccount())
+    for data, x in pabloC. fetch_account_info().items():
         print(f'{data}: {x}')
 
-    joaozinho = Person('Joãozinho', 19)
-    print('\n')
-    print(joaozinho)  # dataclass
-    print(pablo.bank_account)  # repr
+    pabloC.bank_account.deposit(50)
+    pabloC.bank_account.withdraw(250)
+    print('#'*50)
+
+    pabloP = Customer('Pablo Alves', 23, SavingsAccount())
+    for data, x in pabloP. fetch_account_info().items():
+        print(f'{data}: {x}')
+    pabloP.bank_account.deposit(50)
+    pabloP.bank_account.withdraw(250)
+
+
+    print('\nDesativando o repr da conta corrente, no dataclass, o repr da'
+          'Account será executado')
+    print(pabloC.bank_account)  # repr desativado
+    print(pabloP.bank_account)  # repr
