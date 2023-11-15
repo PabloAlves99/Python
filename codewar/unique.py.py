@@ -9,4 +9,5 @@ def unique_in_order(sequence):
         x = i
     return list
 
+
 print(unique_in_order('ABCabcABCabc'))
