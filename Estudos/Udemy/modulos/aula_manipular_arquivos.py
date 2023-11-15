@@ -6,7 +6,7 @@
 # Apagar arquivos -> os.unlink
 # Renomear/Mover -> shutil.move ou os.rename
 import os
-import shutil
+# import shutil
 
 HOME = os.path.abspath('')
 DESKTOP = os.path.join(HOME, 'Estudos', 'Udemy', 'modulos')
@@ -18,8 +18,8 @@ NOVA_PASTA = os.path.join(DESKTOP, 'pasta2')
 # shutil.copytree(PASTA_ORIGINAL, NOVA_PASTA)
 # # shutil.move(NOVA_PASTA, NOVA_PASTA + '_EITA')
 
-with open(PASTA_1, 'w+') as arquivo:
-    ...
+with open(PASTA_1, 'x', encoding='UTF-8') as arquivo:
+    arquivo.write('teste')
 # for root, dirs, files in os.walk(PASTA_1):
 #     for dir_ in dirs:
 #         caminnho_novo_diretorio = os.path.join(
