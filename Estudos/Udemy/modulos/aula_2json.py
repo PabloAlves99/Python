@@ -20,3 +20,11 @@ filme = {
     'characters': ['Frodo', 'Sam', 'Gandalf', 'Legolas', 'Boromir'],
     'budget': None
 }
+
+with open(CAMINHO_ABSOLUTO_ARQUIVO, 'w', encoding='utf8') as arquivo:
+    json.dump(filme, arquivo, ensure_ascii=False, indent=2)
+
+with open(CAMINHO_ABSOLUTO_ARQUIVO, 'r', encoding='utf8') as arquivo:
+    dados = json.load(arquivo)
+    for chave, valor in dados.items():
+        print(f"{chave}: {valor}")
