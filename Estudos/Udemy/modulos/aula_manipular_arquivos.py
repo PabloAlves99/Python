@@ -10,28 +10,26 @@ import shutil
 
 HOME = os.path.abspath('')
 DESKTOP = os.path.join(HOME, 'Estudos', 'Udemy', 'modulos')
-PASTA_ORIGINAL = os.path.join(DESKTOP, 'pasta1')
+PASTA_1 = os.path.join(DESKTOP, 'pasta1')
 NOVA_PASTA = os.path.join(DESKTOP, 'pasta2')
 
-print(NOVA_PASTA)
-
 # shutil.rmtree(NOVA_PASTA, ignore_errors=True) # ISSO APAGA SEM VOLTA. CUIDADO
+# os.makedirs(PASTA_1, exist_ok=True) # cria pasta
 # shutil.copytree(PASTA_ORIGINAL, NOVA_PASTA)
 # # shutil.move(NOVA_PASTA, NOVA_PASTA + '_EITA')
 
-
-# os.makedirs(NOVA_PASTA, exist_ok=True)
-
-# for root, dirs, files in os.walk(PASTA_ORIGINAL):
+with open(PASTA_1, 'w+') as arquivo:
+    ...
+# for root, dirs, files in os.walk(PASTA_1):
 #     for dir_ in dirs:
 #         caminnho_novo_diretorio = os.path.join(
-#             root.replace(PASTA_ORIGINAL, NOVA_PASTA), dir_
+#             root.replace(PASTA_1, NOVA_PASTA), dir_
 #         )
 #         os.makedirs(caminnho_novo_diretorio, exist_ok=True)
 
 #     for file in files:
 #         caminho_arquivo = os.path.join(root, file)
 #         caminnho_novo_arquivo = os.path.join(
-#             root.replace(PASTA_ORIGINAL, NOVA_PASTA), file
+#             root.replace(PASTA_1, NOVA_PASTA), file
 #         )
 #         shutil.copy(caminho_arquivo, caminnho_novo_arquivo)
