@@ -75,5 +75,5 @@ def main():
 
 if __name__ == "__main__":
     call = main()
-    attempts, number_random = random_number_game()
-    call(number_random, attempts)
+    tentativas, numeros_aleatorios = random_number_game()
+    call(numeros_aleatorios, tentativas)
