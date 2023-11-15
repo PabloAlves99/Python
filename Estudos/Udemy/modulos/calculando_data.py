@@ -14,9 +14,7 @@ import locale
 FORMATO = '%d/%m/%Y'
 locale.setlocale(locale.LC_ALL, 'pt_BR.UTF-8')
 VALOR_EMPRESTIMO = 1_000_000
-
 data_emprestimo = datetime(2020, 12, 20)
-data_final = data_emprestimo + timedelta(days=365*5)
 
 for datas in range(60):
     parcela = locale.currency(VALOR_EMPRESTIMO / 60, grouping=True)
