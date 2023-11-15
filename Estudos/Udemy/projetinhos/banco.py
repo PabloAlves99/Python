@@ -287,4 +287,4 @@ if __name__ == '__main__':
     # será executado
     print('')
     print(pabloC.bank_account)  # repr desativado
-    print(pabloP.bank_account)  # repr
+    print(pabloP.bank_account)  # repr da conta poupança
