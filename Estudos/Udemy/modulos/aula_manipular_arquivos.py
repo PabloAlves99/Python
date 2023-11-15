@@ -9,16 +9,16 @@ import os
 import shutil
 
 HOME = os.path.abspath('')
-DESKTOP = os.path.join(HOME, 'Estudos', 'modulos')
-PASTA_ORIGINAL = os.path.join(DESKTOP, 'teste1')
-NOVA_PASTA = os.path.join(DESKTOP, 'pasta_teste')
+DESKTOP = os.path.join(HOME, 'Estudos', 'Udemy', 'modulos')
+PASTA_ORIGINAL = os.path.join(DESKTOP, 'pasta1')
+NOVA_PASTA = os.path.join(DESKTOP, 'pasta2')
 
 print(NOVA_PASTA)
 
-shutil.rmtree(NOVA_PASTA, ignore_errors=True)
+# shutil.rmtree(NOVA_PASTA, ignore_errors=True) # ISSO APAGA SEM VOLTA. CUIDADO
 # shutil.copytree(PASTA_ORIGINAL, NOVA_PASTA)
 # # shutil.move(NOVA_PASTA, NOVA_PASTA + '_EITA')
-# shutil.rmtree(NOVA_PASTA, ignore_errors=True)
+
 
 # os.makedirs(NOVA_PASTA, exist_ok=True)
 
