@@ -10,27 +10,28 @@ def clear_screen():
         os.system('clear')
 
 
-def get_user_attempt(attempts):
+def get_user_attempt(__attempts):
 
     # Retorna um int de tentativa válida do usuario
 
     _attempt = input('Tente adivinhar o número: ')
     if _attempt.isdigit():
         _attempt = int(_attempt)
-        attempts.append(_attempt)
+        __attempts.append(_attempt)
         return _attempt
     else:
         print('Só é permitido números inteiros neste programa...')
-        return get_user_attempt(attempts)
+        return get_user_attempt(__attempts)
 
 
-def verify_attempt(_attempt, number_random):
+def verify_attempt(_attempt, __number_random):
 
-    # Retorna um booleano true se a tentativa for correta, False se for incorreto a tentativa.
+    # Retorna um booleano true se a tentativa for correta,
+    # False se for incorreto a tentativa.
 
-    if _attempt == number_random:
+    if _attempt == __number_random:
         return True
-    elif _attempt < number_random:
+    elif _attempt < __number_random:
         print('O número é maior')
     else:
         print('O número é menor')
@@ -62,12 +63,13 @@ def main():
     print('\tBem vindo ao jogo de adivinha')
     print('Neste jogo só é permitido números inteiros...')
 
-    def finish(_attempt, attempts):
+    def finish(_attempt, _attempts):
         clear_screen()
         print(
-            f'\t\tParabens, você acertou!!\n\nO número aleatório é: {_attempt}.\nVocê acertou com {len(attempts)} tentativas.')
+            f'\t\tParabens, você acertou!!\n\nO número aleatório é: {_attempt}'
+            f'.\nVocê acertou com {len(_attempts)} tentativas.')
         print('\nNúmeros tentados:')
-        print(*attempts, sep='\t')
+        print(*_attempts, sep='\t')
     return finish
 
 
