@@ -2,7 +2,7 @@
   "editor.hover.enabled": true,
   "workbench.startupEditor": "none",
   "explorer.compactFolders": false,
-  "terminal.integrated.fontSize": 24,
+  "terminal.integrated.fontSize": 14,
   "editor.rulers": [80, 120],
   "code-runner.executorMap": {
     "python": "clear ; python -u"
