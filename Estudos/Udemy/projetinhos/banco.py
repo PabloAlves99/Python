@@ -84,6 +84,7 @@ class Account(ABC):
         Returns:
         dict: Detalhes da conta, incluindo o tipo, agência, número e saldo.
         """
+        # Poderia usar o repr no lugar de criar a função para mostrar os dados
         return {
             'Conta': self.account_type(),
             'Agency': self.agency,
@@ -95,7 +96,6 @@ class Account(ABC):
         print(f'Você acabou de {_type} R${value}.')
 
     def __repr__(self):
-        # Poderia usar o repr no lugar de criar a função para mostrar os dados
         class_name = type(self).__name__
         attrs = f'(Agency: {self.agency!r},' \
             f' Account Number: {self.account_number!r},'\
