@@ -40,7 +40,7 @@ lista_clientes = [
     {'nome': 'Alves', 'idade': 21}
 ]
 
-with open(CAMINHO, 'w+', encoding='utf8') as arquivo:
+with open(CAMINHO, 'w+', encoding='utf8', newline='') as arquivo:
     nome_colunas = lista_clientes[0].keys()
     # csv.writer(arquivo).writerow(nome_colunas)
 
