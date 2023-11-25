@@ -47,7 +47,7 @@ def letter_password():
     1- Maiúscula e minúscula
     2- Só maiúscula
     3- Só minúscula
-    Digite o número da opção desejada: 1
+    Digite o número da opção desejada: 2
     'P'
 
     Raises:
@@ -58,18 +58,19 @@ def letter_password():
                             '2- Só maiúscula\n'
                             '3- Só minuscula '))
     if letter_type == 1:
-        unit = string.ascii_letters
+        _unit = string.ascii_letters
     elif letter_type == 2:
-        unit = string.ascii_uppercase
+        _unit = string.ascii_uppercase
     elif letter_type == 3:
-        unit = string.ascii_lowercase
+        _unit = string.ascii_lowercase
     else:
         raise ValueError('Opção escolhida não é permitida')
 
-    return unit
+    return _unit
 
-
-def createPassword():
+def creat_password()
+...
+def password_settings():
     try:
         digits = int(input('Com quantos dígitos você deseja sua senha? '))
 
@@ -87,19 +88,16 @@ def createPassword():
         if (password_types < 1) or (password_types > 4):
             print('\n*** ESCOLHA UM NÚMERO DAS OPÇÕES ACIMA. ***\n')
         elif password_types == 1:
-            letter_password()
-
+            unit = letter_password()
         elif password_types == 2:
             unit = string.digits
-
         elif password_types == 3:
             unit = string.ascii_letters + string.digits
-
         elif password_types == 4:
             unit = string.ascii_letters + string.digits + string.punctuation
 
-
-createPassword()
+    creat_password()
+password_settings()
 
 
 #     password = ''
