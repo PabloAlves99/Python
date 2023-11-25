@@ -1,0 +1,9 @@
+Prezado, $nome
+
+Agradecemos por sua compra do serviço de $servico, no valor de $valor
+Entraremos em contato com você no número informado $numero.
+
+
+att, Pablo Alves.
+
+$data
