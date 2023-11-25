@@ -5,8 +5,9 @@
 # O motivo disso é que quando temos uma mesma entrada e um mesmo algorítimo,
 # a saída pode ser previsível.
 # doc: https://docs.python.org/pt-br/3/library/random.html
-import random
+import secrets
 
+random = secrets.SystemRandom()
 # Funções:
 # seed
 #   -> Inicializa o gerador de random (por isso "números pseudoaleatórios")
