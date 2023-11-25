@@ -1,5 +1,5 @@
 import string
-from random import choice
+from secrets import choice
 import os
 
 
@@ -25,10 +25,10 @@ def limpar_tela():
         os.system('clear')
 
 
-def letter_password():
+def letter_password() -> str:
     """
-    Solicita ao usuário o tipo de letras desejado para a senha e retorna um
-    caracter correspondente.
+    Solicita ao usuário o tipo de letra desejado para a senha e retorna um
+    conjunto de caracteres correspondente.
 
     O usuário pode escolher entre três opções:
     1. Maiúsculas e minúsculas.
@@ -39,7 +39,7 @@ def letter_password():
     Nenhum.
 
     Retorna:
-    str: Caracter correspondente à escolha do usuário.
+    str: Conjunto de caracteres correspondente à escolha do usuário.
 
     Exemplo:
     >>>letter_password()
@@ -47,13 +47,14 @@ def letter_password():
     1- Maiúscula e minúscula
     2- Só maiúscula
     3- Só minúscula
-    Digite o número da opção desejada: 2
-    'P'
+    Digite o número da opção desejada: 1
+    'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ'
 
     Raises:
     ValueError: Se o usuário inserir uma opção inválida.
     """
-    letter_type = int(input('\nAs lestras podem ser:\n'
+    limpar_tela()
+    letter_type = int(input('\tAs lestras podem ser:\n'
                             '1- Maiúscula e minúscula\n'
                             '2- Só maiúscula\n'
                             '3- Só minuscula '))
@@ -64,18 +65,62 @@ def letter_password():
     elif letter_type == 3:
         _unit = string.ascii_lowercase
     else:
-        raise ValueError('Opção escolhida não é permitida')
+        raise ValueError('*** Opção escolhida não é permitida ***')
 
     return _unit
 
-def creat_password()
-...
-def password_settings():
+
+def creat_password(digits: int, unit: str) -> str:
+    """
+    Gera e retorna uma senha aleatória com o número especificado de dígitos.
+
+    Parâmetros:
+    - digits (int): Número de dígitos desejados na senha.
+    - unit (str): Conjunto de caracteres a partir do qual a senha será gerada.
+
+    Retorna:
+    str: Senha aleatória gerada.
+    """
+    return ''.join(choice(unit) for _ in range(digits))
+
+
+def password_settings() -> str | None:
+    """
+    Solicita ao usuário as configurações desejadas para a geração de senha.
+
+    Solicita o número desejado de dígitos e o tipo de caracteres para a senha,
+    permitindo escolher entre opções que incluem apenas letras, apenas números,
+    letras e números, ou letras, números e caracteres especiais.
+
+    Parâmetros:
+    Nenhum.
+
+    Retorna:
+    str: Senha gerada de acordo com as configurações escolhidas.
+
+    Exemplo:
+    >>>password_settings()
+    Com quantos dígitos você deseja sua senha? 8
+    Como você deseja sua senha?
+    1- Apenas letras
+    2- Apenas Números
+    3- Letras e números
+    4- Letras, números e caracteres especiais
+    Digite o número da opção desejada: 3
+    'aB3zR7qE'
+
+    Raises:
+    ValueError: Se o usuário inserir um número inválido ou se a quantidade de
+    dígitos for menor ou igual a 0.
+    """
     try:
         digits = int(input('Com quantos dígitos você deseja sua senha? '))
+        if digits <= 0:
+            print('\n*** Não existe senha com 0 ou menos digitos ***\n')
+            return None
 
     except ValueError as ve:
-        raise ValueError('Informe apenas números inteiros') from ve
+        raise ValueError('***Digite apenas números inteiros***') from ve
 
     while True:
         password_types = int(
@@ -86,33 +131,24 @@ def password_settings():
                   '4- Letras, números e caracteres especiais '))
 
         if (password_types < 1) or (password_types > 4):
-            print('\n*** ESCOLHA UM NÚMERO DAS OPÇÕES ACIMA. ***\n')
+            raise ValueError('\n*** Escolha apenas um numero das opções ***\n')
         elif password_types == 1:
             unit = letter_password()
+            limpar_tela()
+            return creat_password(digits, unit)
         elif password_types == 2:
             unit = string.digits
+            limpar_tela()
+            return creat_password(digits, unit)
         elif password_types == 3:
-            unit = string.ascii_letters + string.digits
+            unit = letter_password() + string.digits
+            limpar_tela()
+            return creat_password(digits, unit)
         elif password_types == 4:
-            unit = string.ascii_letters + string.digits + string.punctuation
-
-    creat_password()
-password_settings()
-
-
-#     password = ''
-#     for i in range(end):
-#         password += choice(unit)
-#     limpar_tela()
-#     return password
+            unit = letter_password() + string.digits + string.punctuation
+            limpar_tela()
+            return creat_password(digits, unit)
 
 
-# # Segundo a documentação, não é seguro criar uma senha usando o modulo random
-# if __name__ == '__main__':
-#     limpar_tela()
-
-#     # except:
-#     #     print(
-#     #         f'\n{colors["vermelho"]}*** ERRO NÃO RECONHECIDO, execute \
-#     #         novamente usando apenas números inteiros ***\
-#     #         {colors["fechar"]}\n')
+if __name__ == '__main__':
+    print(f'Senha aleatória: {password_settings()}')
