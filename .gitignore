@@ -5,7 +5,7 @@ venv/
 __pycache__/
 
 # Ambientes virtuais criados pelo venv
-.env/
+.env
 
 # Ambientes virtuais criados pelo virtualenv
 env/
