@@ -7,6 +7,7 @@ def computador_escolhe_jogada(n, m):
     # Caso não seja possível deixar uma quantidade que mantenha a propriedade acima, o computador retira o máximo possível
     return m
 
+
 def usuario_escolhe_jogada(n, m):
     jogada = 0
     while jogada <= 0 or jogada > m or jogada > n:
@@ -16,46 +17,48 @@ def usuario_escolhe_jogada(n, m):
 
     return jogada
 
+
 def partida():
     n = int(input("Quantas peças? "))
-    m = int(input("Limite de peças por jogada? "))   
+    m = int(input("Limite de peças por jogada? "))
 
     if n % (m + 1) == 0:
         print("\nVoce começa!")
         vezUsuario = True
     else:
         print("\nComputador começa!")
-        vezUsuario = False     
-        
+        vezUsuario = False
+
     while n > 0:
         if vezUsuario:
             jogada = usuario_escolhe_jogada(n, m)
             vezUsuario = False
             if jogada == 1:
-                print("Você tirou uma peça.")    
+                print("Você tirou uma peça.")
             else:
-                print("Você tirou", jogada, "peças.")        
+                print("Você tirou", jogada, "peças.")
         else:
-            jogada = computador_escolhe_jogada(n, m) 
+            jogada = computador_escolhe_jogada(n, m)
             vezUsuario = True
             if jogada == 1:
-                print("\nO computador tirou uma peça.")    
+                print("\nO computador tirou uma peça.")
             else:
                 print("\nO computador tirou", jogada, "peças.")
-            
-        n -= jogada # type: ignore
+
+        n -= jogada  # type: ignore
         if n > 0:
             if n == 1:
-                print("Agora resta apenas uma peça no tabuleiro.")    
+                print("Agora resta apenas uma peça no tabuleiro.")
             else:
                 print("Agora restam", n, "peças no tabuleiro.")
-        
+
     if vezUsuario:
         print("Fim de jogo! O computador ganhou!")
         return False
     else:
         print("\nVocê ganhou!")
         return True
+
 
 def campeonato():
     vitorias_usuario = 0
@@ -69,9 +72,10 @@ def campeonato():
             vitorias_computador += 1
 
     print("\n**** Final do campeonato! ****\n")
-    print("Placar: Você", vitorias_usuario, "X", vitorias_computador, "Computador")
-    
-      
+    print("Placar: Você", vitorias_usuario, "X",
+          vitorias_computador, "Computador")
+
+
 print("Bem-vindo ao jogo do NIM! Escolha:")
 print("\n1 - para jogar uma partida isolada")
 modo = int(input("2 - para jogar um campeonato "))
