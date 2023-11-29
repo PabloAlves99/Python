@@ -1,0 +1,15 @@
+
+# Arquivos gerados pelo ambiente virtual Python
+venv/
+*.pyc
+__pycache__/
+
+# Ambientes virtuais criados pelo venv
+.env/
+
+# Ambientes virtuais criados pelo virtualenv
+env/
+
+# Arquivos específicos do pipenv
+Pipfile
+Pipfile.lock
