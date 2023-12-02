@@ -10,49 +10,57 @@ cores = {
 }
 
 # Função para limpar a tela com base no sistema operacional
+
+
 def limpar_tela():
     sistema_operacional = os.name
     if sistema_operacional == 'nt':  # Windows
         os.system('cls')
     else:  # Unix/Linux/Mac
         os.system('clear')
-        
+
+
 def quiz(questions):
     acerto = 0
-    
-    for question in questions:       
+
+    for question in questions:
         limpar_tela()
         for chave, valor in question.items():
             print(f'{cores["amarelo"]}{chave}: {valor} ')
             print('\nOpções: ')
-            
+
             for i, opç in enumerate(question['Opções']):
                 print(f'{i}) {opç}')
-                
+
             x = input('Resposta: {}{}'.format(cores['fechar'], cores['cinza']))
-            
-            if x.isdigit(): 
+
+            if x.isdigit():
                 xint = int(x)
                 if (xint >= 0) and (xint < 4):
-                    if x == question['resposta']:     
-                        print('\n{}{}VOCÊ ACERTOU!!{}'.format(cores['fechar'], cores['verde'], cores['fechar']))
+                    if x == question['resposta']:
+                        print('\n{}{}VOCÊ ACERTOU!!{}'.format(
+                            cores['fechar'], cores['verde'], cores['fechar']))
                         acerto += 1
                         sleep(2)
-                        break   
-                    else:             
-                        print('\n{}VOCÊ ERROU!!{}'.format(cores['vermelho'], cores['fechar']))
+                        break
+                    else:
+                        print('\n{}VOCÊ ERROU!!{}'.format(
+                            cores['vermelho'], cores['fechar']))
                         sleep(2)
                         break
                 else:
-                    print(f'\n{cores["vermelho"]}VOCê ERROU!! Digite apenas os números das opções{cores["fechar"]}')
+                    print(
+                        f'\n{cores["vermelho"]}VOCê ERROU!! Digite apenas os números das opções{cores["fechar"]}')
                 sleep(3)
                 break
-                    
+
             else:
-                print(f'\n{cores["vermelho"]}Digite apenas os números das opções, você errou essa pergunta!{cores["fechar"]}')
+                print(
+                    f'\n{cores["vermelho"]}Digite apenas os números das opções, você errou essa pergunta!{cores["fechar"]}')
                 sleep(3)
                 break
     return acerto
+
 
 def createQuestions():
     questions = [
@@ -74,17 +82,21 @@ def createQuestions():
     ]
     return questions
 
+
 def main():
-  
+
     questions = createQuestions()
     right = quiz(questions)
     limpar_tela()
     if right > 0:
         mensagem = f'Você acertou {right} de {len(questions)} perguntas'
-        print(f'{cores["verde"]}-='*20 , f'\n{mensagem.center(40)}\n' , '=-'*20 , f'{cores["fechar"]}')
+        print(f'{cores["verde"]}-='*20, f'\n{mensagem.center(40)}\n',
+              '=-'*20, f'{cores["fechar"]}')
     else:
         mensagem = 'Infelizmente você não conhece nada de Harry Potter!'
-        print(f'{cores["ciano"]}-='*30 , f'\n{mensagem.center(60)}\n' , '=-'*30 , f'{cores["fechar"]}')
-        
+        print(f'{cores["ciano"]}-='*30, f'\n{mensagem.center(60)}\n',
+              '=-'*30, f'{cores["fechar"]}')
+
+
 if __name__ == '__main__':
     main()
