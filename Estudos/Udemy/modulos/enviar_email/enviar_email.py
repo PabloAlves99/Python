@@ -34,7 +34,7 @@ compra = {
     'numero': '+55 (31) 99423-4449'
 }
 
-# Mensagem de textp
+# Mensagem de texto
 with open(CAMINHO_MSG, 'r', encoding='utf-8') as email:
     txt = email.read()
     template = Template(txt)
