@@ -16,6 +16,7 @@
     "editor.tabSize": 4,
     "editor.insertSpaces": true,
     "editor.formatOnSave": true,
+    "editor.fontLigatures": true,
     "editor.codeActionsOnSave": {
       "source.fixAll": true,
       "source.fixAll.unusedImports": true,
