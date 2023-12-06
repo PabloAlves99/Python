@@ -15,8 +15,8 @@ update - atualiza um dicionário com outro
 """
 
 pessoa = {
-    'nome' : 'Pablo',
-    'sobrenome' : 'Alves',
+    'nome': 'Pablo',
+    'sobrenome': 'Alves',
     # 'idade' : 28
 }
 
