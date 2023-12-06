@@ -15,5 +15,5 @@ import json
 
 with open('pessoas.json', 'r', encoding='utf8') as arquivo:
     pessoa = json.load(arquivo)
-    
+
 print(pessoa)
