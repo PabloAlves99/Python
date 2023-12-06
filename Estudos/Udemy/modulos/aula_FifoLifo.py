@@ -1,3 +1,4 @@
+# pylint: disable= missing-docstring
 # Deque - Trabalhando com LIFO e FIFO
 # deque - Double-ended queue
 #
