@@ -38,8 +38,8 @@ Bem-vindo ao meu diário de estudos em Python! Este é o lugar onde registro min
 - [Livros](https://github.com/PabloAlves99/Python/tree/main/Estudos/livros) 📚<br><br>
 
   **Entendendo algoritmos. Um guia ilustrado para programadores e outros curiosos - Aditya Y. Bhargava** 📖<br>
-   O objetivo principal do livro é proporcionar uma compreensão clara e acessível dos conceitos fundamentais de algoritmos e estruturas de dados. Ele é projetado visando tornar esses tópicos complexos mais compreensíveis por meio de explicações claras e exemplos práticos. O livro é amplamente utilizado como uma introdução sólida à ciência da computação e algoritmos para estudantes e entusiastas da programação.
-    - Busca Binária: Um algoritmo eficiente para encontrar um elemento em uma lista ordenada.
+   O objetivo principal do livro é proporcionar uma compreensão clara e acessível dos conceitos fundamentais de algoritmos e estruturas de dados. Ele é projetado visando tornar esses tópicos complexos mais compreensíveis por meio de explicações claras e exemplos práticos.<!-- O livro é amplamente utilizado como uma introdução sólida à ciência da computação e algoritmos para estudantes e entusiastas da programação. -->
+    <!--- Busca Binária: Um algoritmo eficiente para encontrar um elemento em uma lista ordenada.
     - Ordenação Rápida (Quicksort): Um algoritmo de ordenação eficiente com aplicação prática.
     - Programação Dinâmica: Uma técnica para resolver problemas dividindo-os em subproblemas menores.
     - Algoritmo de Dijkstra: Um algoritmo de caminho mais curto em grafos ponderados.
@@ -47,7 +47,7 @@ Bem-vindo ao meu diário de estudos em Python! Este é o lugar onde registro min
     - Algoritmo de Bellman-Ford: Um algoritmo de caminho mais curto em grafos que pode lidar com arestas ponderadas negativamente.
     - Hashing e Tabelas Hash: Técnicas para associar chaves a valores em uma estrutura de dados eficiente.
     - Grafos e Algoritmo de Busca em Largura (BFS): Exploração de estruturas de grafos e um algoritmo de busca em largura.
-    - Programação Linear: Uma técnica para otimização de problemas lineares.
+    - Programação Linear: Uma técnica para otimização de problemas lineares.-->
 
 - [Codewar](https://github.com/PabloAlves99/Python/tree/main/Estudos/codewar) 🏆<br><br>
   Alguns desafios simples que se revelaram fundamentais para o meu aprendizado. Esses pequenos desafios proporcionam uma experiência prática e divertida.
