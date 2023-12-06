@@ -36,6 +36,7 @@ imagem0 = page0.images[0]  # pylint: disable= no-member
 #     fp.write(imagem0.data)
 
 # PDFWriter
+
 # print(page0.extract_text())
 # with open(PASTA_NOVA / imagem0.name, 'wb') as fp:
 #     fp.write(imagem0.data)
@@ -46,3 +47,18 @@ for i, page in enumerate(reader.pages):
     with open(PASTA_NOVA / f'page{i}.pdf', 'wb') as arquivo:
         writer.add_page(page)
         writer.write(arquivo)  # type: ignore
+
+# PDFMerger
+
+files = [
+    PASTA_NOVA / 'page1.pdf',
+    PASTA_NOVA / 'page0.pdf',
+
+]
+
+merger = PdfMerger()
+for file in files:
+    merger.append(file)  # type: ignore
+
+merger.write(PASTA_NOVA / 'MERGED.pdf')  # type: ignore
+merger.close()
