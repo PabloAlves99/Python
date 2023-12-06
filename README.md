@@ -2,6 +2,10 @@
 
 Bem-vindo ao meu diário de estudos em Python! Este é o lugar onde registro minhas aventuras, aprendizados e desafios enquanto mergulho mais fundo na linguagem de programação Python.
 
+
+📂 Pastas com Projetos: Loading...
+
+
 ## Minha Jornada Pessoal 🗺️📚
 
 - **[Udemy com Luiz Otávio](https://github.com/PabloAlves99/Python/tree/main/Estudos/Udemy)** 🎓 <br><br>
