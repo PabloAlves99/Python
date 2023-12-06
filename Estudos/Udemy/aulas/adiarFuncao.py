@@ -2,6 +2,7 @@
 def soma(x, y):
     return x + y
 
+
 def multiplica(x, y):
     return x * y
 
@@ -13,10 +14,12 @@ def multiplica(x, y):
 #     else:
 #         return funcao(*args)
 
+
 def criarFuncao(funcao, x):
     def interna(y):
         return funcao(x, y)
     return interna
+
 
 somaComCinco = criarFuncao(soma, 5)
 multiplicaPorDez = criarFuncao(multiplica, 10)
