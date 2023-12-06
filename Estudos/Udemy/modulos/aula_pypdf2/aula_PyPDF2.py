@@ -32,8 +32,8 @@ imagem0 = page0.images[0]  # pylint: disable= no-member
 
 
 # print(page0.extract_text())  # pylint: disable= no-member
-# with open(PASTA_NOVA / imagem0.name, 'wb') as fp:
-#     fp.write(imagem0.data)
+with open(PASTA_NOVA / imagem0.name, 'wb') as fp:
+    fp.write(imagem0.data)
 
 # PDFWriter
 
