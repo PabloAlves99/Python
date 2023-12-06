@@ -1,4 +1,4 @@
-# Estudos de Python
+# <p align="center">Estudos de Python</p>
 
 Repositório de estudos de Python com projetos reais. 
 
