@@ -76,3 +76,7 @@ while NODO is not None:
     processados.append(NODO)
     # Encontra o novo vertice e reinicia
     NODO = ache_custo_mais_baixo(custos)
+
+# Resultados finais
+print("Custos finais:", custos)
+print("Pais finais:", pais)
