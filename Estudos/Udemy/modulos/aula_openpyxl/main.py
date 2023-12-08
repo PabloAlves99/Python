@@ -35,8 +35,11 @@ students = [
     ['Jack', 24, 9.2]
 ]
 
-for i, student_row in enumerate(students, start=2):
-    for j, student_column in enumerate(student_row, start=1):
-        worksheet.cell(i, j, student_column)
+# for i, student_row in enumerate(students, start=2):
+#     for j, student_column in enumerate(student_row, start=1):
+#         worksheet.cell(i, j, student_column)
+
+for student in students:
+    worksheet.append(student)
 
 workbook.save(WORKBOOK_PATH)
