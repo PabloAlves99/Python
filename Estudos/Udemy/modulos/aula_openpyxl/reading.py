@@ -1,4 +1,5 @@
 # pylint: disable=missing-docstring
+# type: ignore
 from pathlib import Path
 from openpyxl import Workbook, load_workbook
 from openpyxl.cell import Cell
@@ -20,6 +21,11 @@ row: tuple[Cell]
 for row in worksheet.iter_rows():
     for cell in row:
         print(cell.value, end='\t')
+
+        if cell.value == 'Eva':
+            worksheet.cell(cell.row, 2, 25)
     print()
 
-# workbook.save(WORKBOOK_PATH)
+    worksheet['B3'].value = 30
+
+workbook.save(WORKBOOK_PATH)
