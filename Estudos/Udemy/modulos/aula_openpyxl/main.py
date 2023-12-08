@@ -8,6 +8,20 @@
 # Instalação necessária: pip install openpyxl
 # Documentação: https://openpyxl.readthedocs.io/en/stable/
 
+from pathlib import Path
+from openpyxl import Workbook
+from openpyxl.worksheet.worksheet import Worksheet
+
+ROOT_FOLDER = Path(__file__).parent
+WORKBOOK_PATH = ROOT_FOLDER / 'workbook.xlsx'
+
+workbook = Workbook()
+worksheet: Worksheet = workbook.active
+# Criando cabeçalhos
+worksheet.cell(1, 1, 'Nome')
+worksheet.cell(1, 2, 'idade')
+worksheet.cell(1, 3, 'nota')
+
 students = [
     ['Alice', 23, 8.5],
     ['Bob', 21, 7.2],
@@ -20,3 +34,5 @@ students = [
     ['Ivy', 20, 7.5],
     ['Jack', 24, 9.2]
 ]
+
+workbook.save(WORKBOOK_PATH)
