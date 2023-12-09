@@ -10,9 +10,7 @@ from PySide6.QtWidgets import QApplication, QPushButton
 app = QApplication(sys.argv)
 
 botao = QPushButton('Testo do botão')
-botao.setStyleSheet('font-size: 40px;')
+botao.setStyleSheet('font-size: 40px; color:red;')
 botao.show()
-
-botao = QPushButton('Testo do botão')
 
 app.exec()
