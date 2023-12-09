@@ -1,0 +1,8 @@
+Arquivo criado apenas para informar que este módulo foi feito no início do curso
+O propósito de não atualizar e manter ele dessa forma é para comparar a evolução
+
+Atualmente tem uma pasta ignorada com .gitignore que chama "Projetos", 
+nessa pasta irei colocar alguns projetos mais elaborados ou até mesmo estes 
+projetos feito com mais conhecimento e aplicações mais avançadas.
+
+Irei colocar alguns projetos e retirar do .gitignore
