@@ -32,14 +32,15 @@ texto e background por padrão (da para colocar outras cores):
 
 
 *** string ***
-endswith() o método retorna True se a string terminar com o valor especificado, caso contrário, False.
+endswith() o método retorna True se a string terminar com o valor especificado,
+caso contrário, False.
 count() retorna quantas vezes tal coisa aparece
 split() retorna uma lista com as palavras do texto
 strip() tira os espaços no inicio e no fim
 lstrip() tira o espaço do inicio
 rstrip() tira o espaço do final
 
-join() une as strings ex: 
+join() une as strings ex:
 lista_aleatoria = ['texto1 aleatório', 'texto2 aleatório']
 
 i = ', '.join(lista_aleatória)

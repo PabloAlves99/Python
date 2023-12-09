@@ -1,10 +1,10 @@
 # Udemy com Luiz Otávio Miranda
 
-a = 18
-b = 0
+A = 18
+B = 0
 
 try:
-    c = a / b
+    c = A / B
 
 except ZeroDivisionError as e:  # Informar qual erro será tratado
     print(e.__class__.__name__)
@@ -27,7 +27,7 @@ print('Continuar')
 
 try:
     print('Open file.')
-    8/0
+    8 / 0
 
 except ZeroDivisionError:
     print('Divison by zero.')
@@ -35,5 +35,5 @@ except ZeroDivisionError:
 else:
     print('No error.')
 
-finally: # sempre será executado independente das exceções
+finally:  # sempre será executado independente das exceções
     print('Close file.')

@@ -20,7 +20,7 @@ def mustbe_int_float(n):
     return True
 
 
-def divide (n, d):
+def divide(n, d):
     mustbe_int_float(n)
     mustbe_int_float(d)
     non_zeros(d)

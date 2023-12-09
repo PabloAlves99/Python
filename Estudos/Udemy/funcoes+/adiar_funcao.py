@@ -8,7 +8,8 @@ def multiplica(x, y):
 
 # def criarFuncao(funcao, *args):
 #     if len(args) == 1:
-#         print('Precisamos de 2 valores,\nAutomaticamente consideramos o segundo como "0"')
+#         print('Precisamos de 2 valores,\nAutomaticamente consideramos o
+#               segundo como "0"')
 #         y = 0
 #         return funcao(*args, y)
 #     else:

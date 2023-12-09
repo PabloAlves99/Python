@@ -1,4 +1,5 @@
 #  pylint: disable=missing-docstring
+#  pylint: disable=no-name-in-module
 #  type: ignore
 import sys
 import random

@@ -13,12 +13,14 @@ lista = [
     {"Nome": "Julia", "Sobrenome": "Almeida"}
 ]
 
+
 def exibirLista(lista):
     for item in lista:
         print(item)
-    
-l1 = sorted(lista, key = lambda item: item['Nome'])
-l2 = sorted ( lista, key = lambda item: item['Sobrenome'])
+
+
+l1 = sorted(lista, key=lambda item: item['Nome'])
+l2 = sorted(lista, key=lambda item: item['Sobrenome'])
 
 print('\033[1;31mListas ordenadas pelo NOME \033[m')
 exibirLista(l1)

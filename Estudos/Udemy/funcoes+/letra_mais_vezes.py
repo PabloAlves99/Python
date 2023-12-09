@@ -10,16 +10,18 @@ letra = ''
 
 while i < len(frase):
     letra_atual = frase[i]
-    
+
     if letra_atual == ' ':
         i += 1
         continue
-    
+
     apareceu = frase.count(letra_atual)
-    
+
     if maior < apareceu:
         maior = apareceu
         letra = letra_atual
     i += 1
 
-print(f'A letra que apareceu mais vezes foi: -> {letra} <-. Que apareceu {maior}x')
+print(
+    f'A letra que apareceu mais vezes foi: -> {letra} <-. Que apareceu '
+    f'{maior}x')
