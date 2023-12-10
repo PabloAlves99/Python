@@ -2,13 +2,13 @@
 #  pylint: disable=no-name-in-module
 #  type: ignore
 import sys
-
 from PySide6.QtWidgets import (QApplication, QWidget, QMainWindow, QVBoxLayout,
                                QLineEdit, QLabel)
 from PySide6.QtGui import QIcon
 from PySide6.QtCore import Qt
 from variables import (WINDOW_ICON_PATH, BIG_FONT_SIZE, TEXT_MARGIN,
                        MINIMUM_WIDTH, SMALL_FONT_SIZE)
+from styles import setup_theme
 
 
 class Info(QLabel):
@@ -43,7 +43,6 @@ class MainWindow(QMainWindow):
         self.cw.setLayout(self.v_layout)
         self.setCentralWidget(self.cw)
         self.resize(400, 550)
-        self.setStyleSheet('background-color: #262626; color: #A6A6A6;')
 
         self.setWindowTitle('Pablo Alves - Calculator')
 
@@ -51,6 +50,7 @@ class MainWindow(QMainWindow):
 if __name__ == '__main__':
     # Cria a aplicação
     app = QApplication(sys.argv)
+    setup_theme()
     window = MainWindow()
 
     # Cria o icone
