@@ -4,11 +4,20 @@
 import sys
 
 from PySide6.QtWidgets import (QApplication, QWidget, QMainWindow, QVBoxLayout,
-                               QLineEdit,)
+                               QLineEdit, QLabel)
 from PySide6.QtGui import QIcon
 from PySide6.QtCore import Qt
 from variables import (WINDOW_ICON_PATH, BIG_FONT_SIZE, TEXT_MARGIN,
-                       MINIMUM_WIDTH)
+                       MINIMUM_WIDTH, SMALL_FONT_SIZE)
+
+
+class Info(QLabel):
+    def __init__(self, parent: QWidget | None = None, *args, **kwargs) -> None:
+        super().__init__(parent, *args, **kwargs)
+
+    def config_style(self):
+        self.setStyleSheet(f'{SMALL_FONT_SIZE}px;')
+        self.alignment(Qt.AlignmentFlag.AlignRight)
 
 
 class Display(QLineEdit):
@@ -48,6 +57,10 @@ if __name__ == '__main__':
     icon = QIcon(str(WINDOW_ICON_PATH))
     window.setWindowIcon(icon)
     app.setWindowIcon(icon)
+
+    # Info
+    info = Info()
+    window.v_layout.addWidget(info)
 
     # Display
     display = Display()
