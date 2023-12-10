@@ -6,11 +6,14 @@ from PySide6.QtWidgets import (QApplication, QWidget, QMainWindow, QVBoxLayout,
                                QLineEdit, QLabel, QPushButton)
 from PySide6.QtGui import QIcon
 from PySide6.QtCore import Qt
+
+# Importa variáveis e estilos de arquivos externos
 from variables import (WINDOW_ICON_PATH, BIG_FONT_SIZE, TEXT_MARGIN,
                        MINIMUM_WIDTH, SMALL_FONT_SIZE, MEDIUM_FONT_SIZE)
 from styles import setup_theme
 
 
+# Define uma classe para botões com estilos personalizados
 class Button(QPushButton):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
@@ -31,6 +34,7 @@ class Button(QPushButton):
         self.setProperty("cssClass", "specialButton")
 
 
+# Define uma classe para exibição de informações
 class Info(QLabel):
     def __init__(self, parent: QWidget | None = None, *args, **kwargs) -> None:
         super().__init__(parent, *args, **kwargs)
@@ -41,6 +45,7 @@ class Info(QLabel):
         self.alignment(Qt.AlignmentFlag.AlignRight)
 
 
+# Define uma classe para o visor (display)
 class Display(QLineEdit):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
@@ -66,24 +71,29 @@ class Display(QLineEdit):
         self.setTextMargins(*[TEXT_MARGIN for _ in range(4)])
 
 
+# Define a classe da janela principal da aplicação
 class MainWindow(QMainWindow):
     def __init__(self, parent: QWidget | None = None, *args, **kwargs) -> None:
         super().__init__(parent, *args, **kwargs)
 
         # Configurando o layout básico
-        self.cw = QWidget()
-        self.v_layout = QVBoxLayout()
-        self.cw.setLayout(self.v_layout)
-        self.setCentralWidget(self.cw)
-        self.resize(400, 550)
+        self.cw = QWidget()  # Cria um widget para ser o central widget
+        self.v_layout = QVBoxLayout()  # Cria um layout vertical
 
+        # Define o layout principal do widget central
+        self.cw.setLayout(self.v_layout)
+
+        # Define o widget central da janela principal
+        self.setCentralWidget(self.cw)
+
+        self.resize(400, 550)  # Define a largura e altura da janela
+
+        # Define o titulo para a janela principal
         self.setWindowTitle('Pablo Alves - Calculator')
 
 
 if __name__ == '__main__':
     # Cria a aplicação
-
-    # Cria uma instância da aplicação com argumentos do sistema
     app = QApplication(sys.argv)
 
     # Definição do tema da aplicação
@@ -93,22 +103,22 @@ if __name__ == '__main__':
     window = MainWindow()
 
     # Cria o icone
-    icon = QIcon(str(WINDOW_ICON_PATH))
-    window.setWindowIcon(icon)
-    app.setWindowIcon(icon)
+    icon = QIcon(str(WINDOW_ICON_PATH))  # Caminho do icone
+    window.setWindowIcon(icon)  # Define o icone para a janela
+    app.setWindowIcon(icon)  # Define o icone para a aplicação
 
     # Info
     info = Info()
-    window.v_layout.addWidget(info)
+    window.v_layout.addWidget(info)  # Adiciona a info na aplicação
 
     # Display
     display = Display()
-    window.v_layout.addWidget(display)
+    window.v_layout.addWidget(display)  # Adiciona o display na aplicação
 
     # button
     button = Button('Texto')
-    window.v_layout.addWidget(button)
+    window.v_layout.addWidget(button)  # Adiciona o botão na aplicação
 
-    # Executa
+    # Executa a aplicação
     window.show()
     sys.exit(app.exec())
