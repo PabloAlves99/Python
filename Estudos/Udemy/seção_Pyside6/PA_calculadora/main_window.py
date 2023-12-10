@@ -13,5 +13,7 @@ class MainWindow(QMainWindow):
         self.v_layout = QVBoxLayout()
         self.cw.setLayout(self.v_layout)
         self.setCentralWidget(self.cw)
+        self.resize(400, 550)
+        self.setStyleSheet('background-color: #262626; color: #A6A6A6;')
 
         self.setWindowTitle('Pablo Alves - Calculator')
