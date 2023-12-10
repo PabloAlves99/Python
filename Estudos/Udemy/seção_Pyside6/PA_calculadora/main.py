@@ -3,12 +3,25 @@
 #  type: ignore
 import sys
 from PySide6.QtWidgets import (QApplication, QWidget, QMainWindow, QVBoxLayout,
-                               QLineEdit, QLabel)
+                               QLineEdit, QLabel, QPushButton)
 from PySide6.QtGui import QIcon
 from PySide6.QtCore import Qt
 from variables import (WINDOW_ICON_PATH, BIG_FONT_SIZE, TEXT_MARGIN,
-                       MINIMUM_WIDTH, SMALL_FONT_SIZE)
+                       MINIMUM_WIDTH, SMALL_FONT_SIZE, MEDIUM_FONT_SIZE)
 from styles import setup_theme
+
+
+class Button(QPushButton):
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.button_style()
+
+    def button_style(self):
+        font = self.font()
+        font.setPixelSize(MEDIUM_FONT_SIZE)
+        self.setFont(font)
+        self.setMinimumSize(75, 75)
+        self.setProperty("cssClass", "specialButton")
 
 
 class Info(QLabel):
@@ -65,6 +78,10 @@ if __name__ == '__main__':
     # Display
     display = Display()
     window.v_layout.addWidget(display)
+
+    # button
+    button = Button('Texto')
+    window.v_layout.addWidget(button)
 
     # Executa
     window.show()
