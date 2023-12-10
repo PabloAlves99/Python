@@ -17,10 +17,17 @@ class Button(QPushButton):
         self.button_style()
 
     def button_style(self):
-        font = self.font()
+        """
+        Aplica estilos personalizados ao botão.
+        """
+        font = self.font()  # Obtém a fonte atual do botão
+
+        # Define o tamanho do texto no botão
         font.setPixelSize(MEDIUM_FONT_SIZE)
-        self.setFont(font)
-        self.setMinimumSize(75, 75)
+        self.setFont(font)  # Aplica a fonte modificada ao botão
+        self.setMinimumSize(75, 75)  # Define o tamanho mínimo do botão
+
+        # Define a classe CSS para estilização externa
         self.setProperty("cssClass", "specialButton")
 
 
@@ -29,6 +36,7 @@ class Info(QLabel):
         super().__init__(parent, *args, **kwargs)
 
     def config_style(self):
+        # Define o tamanho da info e o alinhamento
         self.setStyleSheet(f'{SMALL_FONT_SIZE}px;')
         self.alignment(Qt.AlignmentFlag.AlignRight)
 
@@ -39,10 +47,22 @@ class Display(QLineEdit):
         self.config_style()
 
     def config_style(self):
+        """
+        Aplica estilos personalizados ao "visor".
+        """
+        #  Define o tamanho da fonte do "visor"
         self.setStyleSheet(f'font-size: {BIG_FONT_SIZE}px;')
+
+        # Define a altura mínima do "visor" com base no tamanho da fonte
         self.setMinimumHeight(BIG_FONT_SIZE * 2)
+
+        # Define a largura mínima do "visor"
         self.setMinimumWidth(MINIMUM_WIDTH)
+
+        # Alinha o texto no "visor" à direita
         self.setAlignment(Qt.AlignmentFlag.AlignRight)
+
+        # Define as margens internas do "visor"
         self.setTextMargins(*[TEXT_MARGIN for _ in range(4)])
 
 
@@ -62,8 +82,14 @@ class MainWindow(QMainWindow):
 
 if __name__ == '__main__':
     # Cria a aplicação
+
+    # Cria uma instância da aplicação com argumentos do sistema
     app = QApplication(sys.argv)
+
+    # Definição do tema da aplicação
     setup_theme()
+
+    # Cria uma instância da classe MainWindow (janela principal da aplicação)
     window = MainWindow()
 
     # Cria o icone
