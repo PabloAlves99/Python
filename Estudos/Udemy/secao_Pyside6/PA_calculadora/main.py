@@ -31,47 +31,6 @@ class Button(QPushButton):
         self.setMinimumSize(60, 60)  # Define o tamanho mínimo do botão
 
 
-class ButtonsGrid(QGridLayout):
-    def __init__(self, _display, *args, **kwargs) -> None:
-        super().__init__(*args, **kwargs)
-
-        self._grid_mask = [
-            ['%', 'CE', 'C', '←'],
-            ['½', '^', '√', '/'],
-            ['7', '8', '9', '*'],
-            ['4', '5', '6', '-'],
-            ['1', '2', '3', '+'],
-            ['±', '0', ',', '='],
-        ]
-        self.display = _display
-        self.create_buttons()
-
-    def create_buttons(self):
-        for i, row in enumerate(self._grid_mask):
-            for column, text_grid in enumerate(row):
-                _button = Button(text_grid)
-
-                if _button.text() == '=':
-                    # Define a classe CSS para estilização externa
-                    _button.setProperty("cssClass", "specialButton")
-
-                self.addWidget(_button, i, column)
-
-                button_slot = self._make_button_slot(
-                    self.insert_text_display, _button)
-
-                _button.clicked.connect(button_slot)
-
-    def _make_button_slot(self, func, *args, **kwargs):
-        @Slot()
-        def real_slot():
-            func(*args, **kwargs)
-        return real_slot
-
-    def insert_text_display(self, _button):
-        self.display.insert(_button.text())
-
-
 # Define uma classe para exibição de informações
 class Info(QLabel):
     def __init__(self, parent: QWidget | None = None, *args, **kwargs) -> None:
@@ -109,6 +68,43 @@ class Display(QLineEdit):
 
         # Define as margens internas do "visor"
         self.setTextMargins(*[TEXT_MARGIN for _ in range(4)])
+
+
+class ButtonsGrid(QGridLayout):
+    def __init__(self, _display: Display, *args, **kwargs) -> None:
+        super().__init__(*args, **kwargs)
+
+        self._grid_mask = [
+            ['%', 'CE', 'C', '←'],
+            ['½', '^', '√', '/'],
+            ['7', '8', '9', '*'],
+            ['4', '5', '6', '-'],
+            ['1', '2', '3', '+'],
+            ['±', '0', ',', '='],
+        ]
+        self.display = _display
+        self.create_buttons()
+
+    def create_buttons(self):
+        for i, row in enumerate(self._grid_mask):
+            for column, text_grid in enumerate(row):
+                _button = Button(text_grid)
+
+                if _button.text() == '=':
+                    # Define a classe CSS para estilização externa
+                    _button.setProperty("cssClass", "specialButton")
+
+                self.addWidget(_button, i, column)
+
+                button_slot = self._make_button_slot(_button)
+
+                _button.clicked.connect(button_slot)
+
+    def _make_button_slot(self, _button):
+        @Slot()
+        def insert_text_display():
+            self.display.insert(_button.text())
+        return insert_text_display
 
 
 # Define a classe da janela principal da aplicação
