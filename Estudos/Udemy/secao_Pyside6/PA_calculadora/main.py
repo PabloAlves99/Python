@@ -2,7 +2,6 @@
 #  pylint: disable=no-name-in-module
 #  type: ignore
 import sys
-from typing import Optional
 from PySide6.QtWidgets import (QApplication, QWidget, QMainWindow, QVBoxLayout,
                                QLineEdit, QLabel, QPushButton, QGridLayout)
 from PySide6.QtGui import QIcon
@@ -29,10 +28,7 @@ class Button(QPushButton):
         # Define o tamanho do texto no botão
         font.setPixelSize(MEDIUM_FONT_SIZE)
         self.setFont(font)  # Aplica a fonte modificada ao botão
-        self.setMinimumSize(75, 75)  # Define o tamanho mínimo do botão
-
-        # Define a classe CSS para estilização externa
-        self.setProperty("cssClass", "specialButton")
+        self.setMinimumSize(60, 60)  # Define o tamanho mínimo do botão
 
 
 class ButtonsGrid(QGridLayout):
@@ -52,7 +48,13 @@ class ButtonsGrid(QGridLayout):
         for i, row in enumerate(self._grid_mask):
             for j, text_grid in enumerate(row):
                 _button = Button(text_grid)
+
+                if text_grid == '=':
+                    # Define a classe CSS para estilização externa
+                    _button.setProperty("cssClass", "specialButton")
+
                 self.addWidget(_button, i, j)
+
 
 # Define uma classe para exibição de informações
 
@@ -108,7 +110,8 @@ class MainWindow(QMainWindow):
         # Define o widget central da janela principal
         self.setCentralWidget(self.cw)
 
-        self.resize(400, 550)  # Define a largura e altura da janela
+        # Defina o tamanho máximo da janela
+        self.setMaximumSize(450, 500)
 
         # Define o titulo para a janela principal
         self.setWindowTitle('Pablo Alves - Calculator')
@@ -136,10 +139,6 @@ if __name__ == '__main__':
     # Display
     display = Display()
     window.v_layout.addWidget(display)  # Adiciona o display na aplicação
-
-    # button
-    button = Button('Texto')
-    window.v_layout.addWidget(button)  # Adiciona o botão na aplicação
 
     # Button Grid
     button_grid = ButtonsGrid()
