@@ -2,8 +2,9 @@
 #  pylint: disable=no-name-in-module
 #  type: ignore
 import sys
+from typing import Optional
 from PySide6.QtWidgets import (QApplication, QWidget, QMainWindow, QVBoxLayout,
-                               QLineEdit, QLabel, QPushButton)
+                               QLineEdit, QLabel, QPushButton, QGridLayout)
 from PySide6.QtGui import QIcon
 from PySide6.QtCore import Qt
 
@@ -34,7 +35,28 @@ class Button(QPushButton):
         self.setProperty("cssClass", "specialButton")
 
 
+class ButtonsGrid(QGridLayout):
+    def __init__(self, *args, **kwargs) -> None:
+        super().__init__(*args, **kwargs)
+
+        self._grid_mask = [
+            ['%', 'CE', 'C', '←'],
+            ['7', '8', '9', 'x'],
+            ['4', '5', '6', '-'],
+            ['1', '2', '3', '+'],
+            ['±', '0', ',', '='],
+        ]
+        self.create_buttons()
+
+    def create_buttons(self):
+        for i, row in enumerate(self._grid_mask):
+            for j, text_grid in enumerate(row):
+                _button = Button(text_grid)
+                self.addWidget(_button, i, j)
+
 # Define uma classe para exibição de informações
+
+
 class Info(QLabel):
     def __init__(self, parent: QWidget | None = None, *args, **kwargs) -> None:
         super().__init__(parent, *args, **kwargs)
@@ -119,6 +141,9 @@ if __name__ == '__main__':
     button = Button('Texto')
     window.v_layout.addWidget(button)  # Adiciona o botão na aplicação
 
+    # Button Grid
+    button_grid = ButtonsGrid()
+    window.v_layout.addLayout(button_grid)
     # Executa a aplicação
     window.show()
     sys.exit(app.exec())
