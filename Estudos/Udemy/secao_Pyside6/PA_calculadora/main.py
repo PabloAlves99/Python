@@ -48,17 +48,17 @@ class ButtonsGrid(QGridLayout):
 
     def create_buttons(self):
         for i, row in enumerate(self._grid_mask):
-            for j, text_grid in enumerate(row):
+            for column, text_grid in enumerate(row):
                 _button = Button(text_grid)
 
-                if text_grid == '=':
+                if _button.text() == '=':
                     # Define a classe CSS para estilização externa
                     _button.setProperty("cssClass", "specialButton")
 
-                self.addWidget(_button, i, j)
+                self.addWidget(_button, i, column)
 
-                button_slot = (self._make_button_slot(
-                    self.insert_text_display, _button))
+                button_slot = self._make_button_slot(
+                    self.insert_text_display, _button)
 
                 _button.clicked.connect(button_slot)
 
