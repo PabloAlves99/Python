@@ -5,7 +5,7 @@ import sys
 from PySide6.QtWidgets import (QApplication, QWidget, QMainWindow, QVBoxLayout,
                                QLineEdit, QLabel, QPushButton, QGridLayout)
 from PySide6.QtGui import QIcon
-from PySide6.QtCore import Qt
+from PySide6.QtCore import Qt, Slot
 
 # Importa variáveis e estilos de arquivos externos
 from variables import (WINDOW_ICON_PATH, BIG_FONT_SIZE, TEXT_MARGIN,
@@ -56,13 +56,20 @@ class ButtonsGrid(QGridLayout):
                     _button.setProperty("cssClass", "specialButton")
 
                 self.addWidget(_button, i, j)
-                _button.pressed.connect(
-                    lambda value=text_grid: self.insert_display(value))
 
-    def insert_display(self, value):
-        current_text = self.display.text()
-        new_text = current_text + str(value)
-        self.display.setText(new_text)
+                button_slot = (self._make_button_slot(
+                    self.insert_text_display, _button))
+
+                _button.clicked.connect(button_slot)
+
+    def _make_button_slot(self, func, *args, **kwargs):
+        @Slot()
+        def real_slot():
+            func(*args, **kwargs)
+        return real_slot
+
+    def insert_text_display(self, text):
+        self.display.insert(text.text())
 
 
 # Define uma classe para exibição de informações
