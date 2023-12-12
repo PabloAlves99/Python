@@ -37,7 +37,8 @@ class ButtonsGrid(QGridLayout):
 
         self._grid_mask = [
             ['%', 'CE', 'C', '←'],
-            ['7', '8', '9', 'x'],
+            ['½', '^', '√', '/'],
+            ['7', '8', '9', '*'],
             ['4', '5', '6', '-'],
             ['1', '2', '3', '+'],
             ['±', '0', ',', '='],
@@ -57,25 +58,24 @@ class ButtonsGrid(QGridLayout):
 
 
 # Define uma classe para exibição de informações
-
-
 class Info(QLabel):
     def __init__(self, parent: QWidget | None = None, *args, **kwargs) -> None:
         super().__init__(parent, *args, **kwargs)
+        self.config_style_info()
 
-    def config_style(self):
+    def config_style_info(self):
         # Define o tamanho da info e o alinhamento
         self.setStyleSheet(f'{SMALL_FONT_SIZE}px;')
-        self.alignment(Qt.AlignmentFlag.AlignRight)
+        self.setAlignment(Qt.AlignmentFlag.AlignRight)
 
 
 # Define uma classe para o visor (display)
 class Display(QLineEdit):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        self.config_style()
+        self.config_style_display()
 
-    def config_style(self):
+    def config_style_display(self):
         """
         Aplica estilos personalizados ao "visor".
         """
@@ -111,7 +111,9 @@ class MainWindow(QMainWindow):
         self.setCentralWidget(self.cw)
 
         # Defina o tamanho máximo da janela
-        self.setMaximumSize(450, 500)
+        self.setMaximumSize(418, 550)
+
+        self.resize(418, 550)
 
         # Define o titulo para a janela principal
         self.setWindowTitle('Pablo Alves - Calculator')
@@ -133,7 +135,7 @@ if __name__ == '__main__':
     app.setWindowIcon(icon)  # Define o icone para a aplicação
 
     # Info
-    info = Info()
+    info = Info('2')
     window.v_layout.addWidget(info)  # Adiciona a info na aplicação
 
     # Display
@@ -143,6 +145,7 @@ if __name__ == '__main__':
     # Button Grid
     button_grid = ButtonsGrid()
     window.v_layout.addLayout(button_grid)
+
     # Executa a aplicação
     window.show()
     sys.exit(app.exec())
