@@ -113,7 +113,7 @@ class MainWindow(QMainWindow):
         # Defina o tamanho máximo da janela
         self.setMaximumSize(418, 550)
 
-        self.resize(418, 550)
+        self.resize(418, 500)
 
         # Define o titulo para a janela principal
         self.setWindowTitle('Pablo Alves - Calculator')
