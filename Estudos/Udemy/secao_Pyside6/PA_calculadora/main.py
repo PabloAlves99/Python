@@ -83,6 +83,7 @@ class ButtonsGrid(QGridLayout):
             ['±', '0', ',', '='],
         ]
         self.display = _display
+        self.setSpacing(3)
         self.create_buttons()
 
     def create_buttons(self):
