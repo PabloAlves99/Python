@@ -101,9 +101,11 @@ class ButtonsGrid(QGridLayout):
                 _button.clicked.connect(button_slot)
 
     def _make_button_slot(self, _button):
+
         @Slot()
         def insert_text_display():
             self.display.insert(_button.text())
+
         return insert_text_display
 
 
@@ -147,7 +149,7 @@ if __name__ == '__main__':
     app.setWindowIcon(icon)  # Define o icone para a aplicação
 
     # Info
-    info = Info('2')
+    info = Info()
     window.v_layout.addWidget(info)  # Adiciona a info na aplicação
 
     # Display
