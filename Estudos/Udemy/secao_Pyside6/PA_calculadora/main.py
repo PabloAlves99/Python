@@ -68,8 +68,8 @@ class ButtonsGrid(QGridLayout):
             func(*args, **kwargs)
         return real_slot
 
-    def insert_text_display(self, text):
-        self.display.insert(text.text())
+    def insert_text_display(self, _button):
+        self.display.insert(_button.text())
 
 
 # Define uma classe para exibição de informações
