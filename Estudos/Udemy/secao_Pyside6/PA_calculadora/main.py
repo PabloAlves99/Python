@@ -32,7 +32,7 @@ class Button(QPushButton):
 
 
 class ButtonsGrid(QGridLayout):
-    def __init__(self, *args, **kwargs) -> None:
+    def __init__(self, _display, *args, **kwargs) -> None:
         super().__init__(*args, **kwargs)
 
         self._grid_mask = [
@@ -43,6 +43,7 @@ class ButtonsGrid(QGridLayout):
             ['1', '2', '3', '+'],
             ['±', '0', ',', '='],
         ]
+        self.display = _display
         self.create_buttons()
 
     def create_buttons(self):
@@ -55,12 +56,20 @@ class ButtonsGrid(QGridLayout):
                     _button.setProperty("cssClass", "specialButton")
 
                 self.addWidget(_button, i, j)
+                _button.pressed.connect(
+                    lambda value=text_grid: self.insert_display(value))
+
+    def insert_display(self, value):
+        current_text = self.display.text()
+        new_text = current_text + str(value)
+        self.display.setText(new_text)
 
 
 # Define uma classe para exibição de informações
 class Info(QLabel):
     def __init__(self, parent: QWidget | None = None, *args, **kwargs) -> None:
         super().__init__(parent, *args, **kwargs)
+
         self.config_style_info()
 
     def config_style_info(self):
@@ -113,7 +122,7 @@ class MainWindow(QMainWindow):
         # Defina o tamanho máximo da janela
         self.setMaximumSize(418, 550)
 
-        self.resize(418, 500)
+        self.resize(418, 530)
 
         # Define o titulo para a janela principal
         self.setWindowTitle('Pablo Alves - Calculator')
@@ -143,7 +152,7 @@ if __name__ == '__main__':
     window.v_layout.addWidget(display)  # Adiciona o display na aplicação
 
     # Button Grid
-    button_grid = ButtonsGrid()
+    button_grid = ButtonsGrid(display)
     window.v_layout.addLayout(button_grid)
 
     # Executa a aplicação
