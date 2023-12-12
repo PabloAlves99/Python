@@ -104,7 +104,12 @@ class ButtonsGrid(QGridLayout):
 
         @Slot()
         def insert_text_display():
-            self.display.insert(_button.text())
+
+            text = _button.text()
+            if text.isdigit():
+                self.display.insert(text)
+            else:
+                print(text)
 
         return insert_text_display
 
