@@ -71,7 +71,7 @@ class Display(QLineEdit):
 
 
 class ButtonsGrid(QGridLayout):
-    def __init__(self, _display: Display, *args, **kwargs) -> None:
+    def __init__(self, _display: Display, _info: Info, *args, **kwargs) -> None:
         super().__init__(*args, **kwargs)
 
         self._grid_mask = [
@@ -80,9 +80,10 @@ class ButtonsGrid(QGridLayout):
             ['7', '8', '9', '*'],
             ['4', '5', '6', '-'],
             ['1', '2', '3', '+'],
-            ['±', '0', ',', '='],
+            ['±', '0', '.', '='],
         ]
         self.display = _display
+        self.info = _info
         self.setSpacing(3)
         self.create_buttons()
 
@@ -102,16 +103,16 @@ class ButtonsGrid(QGridLayout):
                 _button.clicked.connect(button_slot)
 
     def _make_button_slot(self, _button):
-
         @Slot()
         def insert_text_display():
 
             text = _button.text()
-            if text.isdigit():
-                self.display.insert(text)
-            else:
-                print(text)
-
+            new_display_text = self.display.text() + text
+            try:
+                float(new_display_text)
+                self.display.setText(new_display_text)
+            except ValueError:
+                print('Não é um número valido')
         return insert_text_display
 
 
@@ -131,9 +132,7 @@ class MainWindow(QMainWindow):
         self.setCentralWidget(self.cw)
 
         # Defina o tamanho máximo da janela
-        self.setMaximumSize(418, 550)
-
-        self.resize(418, 530)
+        self.setFixedSize(418, 500)
 
         # Define o titulo para a janela principal
         self.setWindowTitle('Pablo Alves - Calculator')
@@ -155,7 +154,7 @@ if __name__ == '__main__':
     app.setWindowIcon(icon)  # Define o icone para a aplicação
 
     # Info
-    info = Info()
+    info = Info('Sua conta')
     window.v_layout.addWidget(info)  # Adiciona a info na aplicação
 
     # Display
@@ -163,7 +162,7 @@ if __name__ == '__main__':
     window.v_layout.addWidget(display)  # Adiciona o display na aplicação
 
     # Button Grid
-    button_grid = ButtonsGrid(display)
+    button_grid = ButtonsGrid(display, info)
     window.v_layout.addLayout(button_grid)
 
     # Executa a aplicação
