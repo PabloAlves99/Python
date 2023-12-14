@@ -2,6 +2,7 @@
 #  pylint: disable=no-name-in-module
 #  type: ignore
 import sys
+import button_function as bf
 from PySide6.QtWidgets import (QApplication, QWidget, QMainWindow, QVBoxLayout,
                                QLineEdit, QLabel, QPushButton, QGridLayout)
 from PySide6.QtGui import QIcon
@@ -71,7 +72,8 @@ class Display(QLineEdit):
 
 
 class ButtonsGrid(QGridLayout):
-    def __init__(self, _display: Display, _info: Info, *args, **kwargs) -> None:
+    def __init__(
+            self, _display: Display, _info: Info, *args, **kwargs) -> None:
         super().__init__(*args, **kwargs)
 
         self._grid_mask = [
@@ -85,7 +87,17 @@ class ButtonsGrid(QGridLayout):
         self.display = _display
         self.info = _info
         self.setSpacing(3)
+        self._equation = ''
         self.create_buttons()
+
+    @property
+    def equation(self):
+        return self.equation
+
+    @equation.setter
+    def equation(self, value):
+        self._equation = value
+        self.info.setText(value)
 
     def create_buttons(self):
         for i, row in enumerate(self._grid_mask):
@@ -93,27 +105,42 @@ class ButtonsGrid(QGridLayout):
                 _button = Button(text_grid)
 
                 if _button.text() == '=':
-                    # Define a classe CSS para estilização externa
                     _button.setProperty("cssClass", "specialButton")
 
+                if not bf.is_num_or_dot(text_grid):
+                    self._config_special_button(_button)
+
                 self.addWidget(_button, i, column)
+                slot = self._make_slot(self.insert_text_display, _button)
+                self._connect_button_clicked(_button, slot)
 
-                button_slot = self._make_button_slot(_button)
+    def _connect_button_clicked(self, button, slot):
+        button.clicked.connect(slot)
 
-                _button.clicked.connect(button_slot)
+    def _config_special_button(self, button):
+        text = button.text()
 
-    def _make_button_slot(self, _button):
+        if text == 'C':
+            button.clicked.connect(self.display.clear)
+
+    def _make_slot(self, func, *args, **kwargs):
         @Slot()
-        def insert_text_display():
+        def real_slot():
+            func(*args, **kwargs)
+        return real_slot
 
-            text = _button.text()
-            new_display_text = self.display.text() + text
-            try:
-                float(new_display_text)
-                self.display.setText(new_display_text)
-            except ValueError:
-                print('Não é um número valido')
-        return insert_text_display
+    def insert_text_display(self, _button):
+        text = _button.text()
+        new_display_text = self.display.text() + text
+
+        if not bf.is_valid_number(new_display_text):
+            return
+
+        self.display.insert(text)
+
+    def clear_display(self):
+        print('Clear Display Called')
+        self.display.clear()
 
 
 # Define a classe da janela principal da aplicação
