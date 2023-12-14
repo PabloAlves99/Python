@@ -86,6 +86,9 @@ class ButtonsGrid(QGridLayout):
         ]
         self.display = _display
         self.info = _info
+        self._left = None
+        self._right = None
+        self._op = None
         self.setSpacing(3)
         self._equation = ''
         self.create_buttons()
@@ -114,14 +117,27 @@ class ButtonsGrid(QGridLayout):
                 slot = self._make_slot(self.insert_text_display, _button)
                 self._connect_button_clicked(_button, slot)
 
+    def clear_display_and_info(self):
+        self.display.clear()
+        self.info.clear()
+        self._op = None
+        self._left = None
+        self._right = None
+
     def _connect_button_clicked(self, button, slot):
         button.clicked.connect(slot)
 
-    def _config_special_button(self, button):
-        text = button.text()
+    def _config_special_button(self, _button):
+        text = _button.text()
 
         if text == 'C':
-            button.clicked.connect(self.display.clear)
+            _button.clicked.connect(self.clear_display_and_info)
+        elif text == 'CE':
+            _button.clicked.connect(self.display.clear)
+
+        if text in '+-*/%½^√':
+            self._connect_button_clicked(
+                _button, self._make_slot(self._operator_clicked, _button))
 
     def _make_slot(self, func, *args, **kwargs):
         @Slot()
@@ -138,8 +154,36 @@ class ButtonsGrid(QGridLayout):
 
         self.display.insert(text)
 
-    def clear_display(self):
-        print('Clear Display Called')
+    def _define_info(self):
+        self._left = float(self.display.text())
+        self.info.setText(str(self._left))
+
+    def _define_operator(self, text):
+        self._op = text
+        print(f'Oeração = {text}')
+
+    def calculate(self):
+        if self._left is not None:
+            if self._op == '+':
+                self._left = float(self._left) + float(self.display.text())
+            if self._op == '-':
+                self._left = float(self._left) - float(self.display.text())
+            if self._op == '*':
+                self._left = float(self._left) * float(self.display.text())
+            if self._op == '/':
+                self._left = float(self._left) / float(self.display.text())
+            self.info.setText(str(self._left))
+
+    def _operator_clicked(self, _button):
+        text = _button.text()
+        current_display_text = self.display.text().strip()
+
+        if self._left is None and current_display_text:
+            self._define_info()
+        elif current_display_text:
+            self.calculate()
+
+        self._define_operator(text)
         self.display.clear()
 
 
