@@ -46,11 +46,10 @@ class ButtonsGrid(QGridLayout):
             for column, text_grid in enumerate(row):
                 _button = Button(text_grid)
 
-                if _button.text() == '=':
-                    _button.setProperty("cssClass", "specialButton")
-
                 if not self.is_num_or_dot(text_grid):
                     self._config_special_button(_button)
+                    if _button.text() == '=':
+                        _button.setProperty("cssClass", "specialButton")
 
                 self.addWidget(_button, i, column)
                 slot = self._make_slot(self.insert_text_display, _button)
@@ -69,9 +68,14 @@ class ButtonsGrid(QGridLayout):
     def _config_special_button(self, _button):
         text = _button.text()
 
+        if text in '=':
+            self._connect_button_clicked(
+                _button, self._make_slot(self._operator_clicked, _button))
+
         if text == 'C':
             _button.clicked.connect(self.clear_display_and_info)
-        elif text == 'CE':
+
+        if text == 'CE':
             _button.clicked.connect(self.display.clear)
 
         if text in '+-*/%½^√':
@@ -84,7 +88,9 @@ class ButtonsGrid(QGridLayout):
             func(*args, **kwargs)
         return real_slot
 
+    @Slot()
     def insert_text_display(self, _button):
+
         text = _button.text()
         new_display_text = self.display.text() + text
 
@@ -92,26 +98,7 @@ class ButtonsGrid(QGridLayout):
             return
 
         self.display.insert(text)
-
-    def _define_info(self):
-        self._left = float(self.display.text())
-        self.info.setText(str(self._left))
-
-    def _define_operator(self, text):
-        self._op = text
-        print(f'Oeração = {text}')
-
-    def calculate(self):
-        if self._left is not None:
-            if self._op == '+':
-                self._left = float(self._left) + float(self.display.text())
-            if self._op == '-':
-                self._left = float(self._left) - float(self.display.text())
-            if self._op == '*':
-                self._left = float(self._left) * float(self.display.text())
-            if self._op == '/':
-                self._left = float(self._left) / float(self.display.text())
-            self.info.setText(str(self._left))
+        self.display.setFocus()
 
     def is_num_or_dot(self, string: str):
         return bool(NUM_OR_DOT_REGEX.search(string))
@@ -149,13 +136,40 @@ class ButtonsGrid(QGridLayout):
     def calculate_percentage(self, number, percentage):
         return (float(percentage) / 100) * float(number)
 
+    def _get_display_text_stripped(self):
+        return self.display.text().strip()
+
+    def _define_info(self):
+        self._left = float(self.display.text())
+        self.info.setText(str(self._left))
+
+    def _define_operator(self, text):
+        if text == '=':
+            print(f'Resultado = {self.info.text()}')
+            return
+        self._op = text
+        print(f'Oeração = {text}')
+
+    def calculate(self):
+
+        if self._op == '+':
+            self._left = float(self._left) + float(self._right)
+        if self._op == '-':
+            self._left = float(self._left) - float(self._right)
+        if self._op == '*':
+            self._left = float(self._left) * float(self._right)
+        if self._op == '/':
+            self._left = float(self._left) / float(self._right)
+        self.info.setText(str(self._left))
+
     def _operator_clicked(self, _button):
         text = _button.text()
-        current_display_text = self.display.text().strip()
+        if self._get_display_text_stripped():
+            self._right = self.display.text()
 
-        if self._left is None and current_display_text:
+        if self._left is None and self._get_display_text_stripped():
             self._define_info()
-        elif current_display_text:
+        elif self._right is not None and text == '=':
             self.calculate()
 
         self._define_operator(text)

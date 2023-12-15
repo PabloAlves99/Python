@@ -41,7 +41,7 @@ class Info(QLabel):
 
     def config_style_info(self):
         # Define o tamanho da info e o alinhamento
-        self.setStyleSheet(f'{SMALL_FONT_SIZE}px;')
+        self.setStyleSheet(f'font-size: {SMALL_FONT_SIZE}px;')
         self.setAlignment(Qt.AlignmentFlag.AlignRight)
 
 
@@ -109,7 +109,7 @@ if __name__ == '__main__':
     app.setWindowIcon(icon)  # Define o icone para a aplicação
 
     # Info
-    info = Info('Sua conta')
+    info = Info()
     window.v_layout.addWidget(info)  # Adiciona a info na aplicação
 
     # Display
