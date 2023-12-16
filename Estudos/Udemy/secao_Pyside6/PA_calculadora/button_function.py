@@ -150,16 +150,20 @@ class ButtonsGrid(QGridLayout):
         self._op = text
         print(f'Oeração = {text}')
 
-    def calculate(self):
+    def perform_custom_operation(self):
+        if self._op == 
+
+    def perform_basic_calculation(self):
 
         if self._op == '+':
             self._left = float(self._left) + float(self._right)
-        if self._op == '-':
+        elif self._op == '-':
             self._left = float(self._left) - float(self._right)
-        if self._op == '*':
+        elif self._op == '*':
             self._left = float(self._left) * float(self._right)
-        if self._op == '/':
+        elif self._op == '/':
             self._left = float(self._left) / float(self._right)
+
         self.info.setText(str(self._left))
 
     def _operator_clicked(self, _button):
@@ -169,8 +173,8 @@ class ButtonsGrid(QGridLayout):
 
         if self._left is None and self._get_display_text_stripped():
             self._define_info()
-        elif self._right is not None and text == '=':
-            self.calculate()
+        elif self._right is not None and self._op is not None:
+            self.perform_basic_calculation()
 
         self._define_operator(text)
         self.display.clear()
