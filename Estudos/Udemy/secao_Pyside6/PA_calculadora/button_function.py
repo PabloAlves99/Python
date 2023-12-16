@@ -28,6 +28,7 @@ class ButtonsGrid(QGridLayout):
         self._left = None
         self._right = None
         self._op = None
+        self._special_op = None
         self.setSpacing(3)
         self._equation = ''
         self.create_buttons()
@@ -59,6 +60,7 @@ class ButtonsGrid(QGridLayout):
         self.display.clear()
         self.info.clear()
         self._op = None
+        self._special_op = None
         self._left = None
         self._right = None
 
@@ -115,9 +117,9 @@ class ButtonsGrid(QGridLayout):
     def reverse_number(self, text):
         return float(text) * -1
 
-    def root_square(self, text):
+    def root_square(self):
         try:
-            number = float(text)
+            number = float(self._left)
             if number < 0:
                 raise ValueError(
                     "A raiz quadrada de um número negativo não é definida.")
@@ -146,12 +148,22 @@ class ButtonsGrid(QGridLayout):
     def _define_operator(self, text):
         if text == '=':
             print(f'Resultado = {self.info.text()}')
+            self._op = None
             return
+
+        elif text in '%^√½±':
+            self._special_op = text
+            print(f'Caclulo Especial = {text}')
+            return
+
         self._op = text
         print(f'Oeração = {text}')
 
     def perform_custom_operation(self):
-        if self._op == 
+
+        if self._special_op == '√':
+            # self._left = float(self.root_square())
+            ...
 
     def perform_basic_calculation(self):
 
@@ -178,3 +190,8 @@ class ButtonsGrid(QGridLayout):
 
         self._define_operator(text)
         self.display.clear()
+
+    # Criar uma lógica para calculo especial
+    # Se _special_op is not None o calcula todo seguinte é feito dentro do
+    # calculo especial, que após um gatilho dará o calculo final.
+    # Alguns calculos especiais precisam de números seguintes para funcionar
