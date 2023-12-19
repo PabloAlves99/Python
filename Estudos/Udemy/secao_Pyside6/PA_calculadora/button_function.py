@@ -183,13 +183,14 @@ class ButtonsGrid(QGridLayout):
         if self._get_display_text_stripped():
             self._right = self.display.text()
 
-        if self._left is None and self._get_display_text_stripped():
-            self._define_info()
-        elif self._right is not None and self._op is not None:
-            self.perform_basic_calculation()
+        if self._special_op is None:
+            if self._left is None and self._get_display_text_stripped():
+                self._define_info()
+            elif self._right is not None and self._op is not None:
+                self.perform_basic_calculation()
 
-        self._define_operator(text)
-        self.display.clear()
+            self._define_operator(text)
+            self.display.clear()
 
     # Criar uma lógica para calculo especial
     # Se _special_op is not None o calcula todo seguinte é feito dentro do
