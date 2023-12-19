@@ -70,13 +70,17 @@ class ButtonsGrid(QGridLayout):
     def _config_special_button(self, _button):
         text = _button.text()
 
+        if text in '=':
+            self._connect_button_clicked(
+                _button, self._make_slot(self._operator_clicked, _button))
+
         if text == 'C':
             _button.clicked.connect(self.clear_display_and_info)
 
         if text == 'CE':
             _button.clicked.connect(self.display.clear)
 
-        if text in '+-*/%½^√=':
+        if text in '+-*/%½^√':
             self._connect_button_clicked(
                 _button, self._make_slot(self._operator_clicked, _button))
 
@@ -172,21 +176,25 @@ class ButtonsGrid(QGridLayout):
         elif self._op == '/':
             self._left = float(self._left) / float(self._right)
 
+        self._op = None
         self.info.setText(str(self._left))
 
     def _operator_clicked(self, _button):
         text = _button.text()
+        # Se tiver alguma coisa no display faça...
         if self._get_display_text_stripped():
             self._right = self.display.text()
 
-        if self._special_op is None:
-            if self._left is None and self._get_display_text_stripped():
-                self._define_info()
-            elif self._right is not None and self._op is not None:
-                self.perform_basic_calculation()
+        # Se não tiver valor na esquerda e tiver no display
+        # define o valor da esquerda
+        if self._left is None and self._get_display_text_stripped():
+            self._define_info()
 
-            self._define_operator(text)
-            self.display.clear()
+        elif self._right is not None and self._op is not None:
+            self.perform_basic_calculation()
+
+        self._define_operator(text)
+        self.display.clear()
 
     # Criar uma lógica para calculo especial
     # Se _special_op is not None o calcula todo seguinte é feito dentro do
