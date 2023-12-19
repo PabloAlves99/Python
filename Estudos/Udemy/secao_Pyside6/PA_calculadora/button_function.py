@@ -70,17 +70,13 @@ class ButtonsGrid(QGridLayout):
     def _config_special_button(self, _button):
         text = _button.text()
 
-        if text in '=':
-            self._connect_button_clicked(
-                _button, self._make_slot(self._operator_clicked, _button))
-
         if text == 'C':
             _button.clicked.connect(self.clear_display_and_info)
 
         if text == 'CE':
             _button.clicked.connect(self.display.clear)
 
-        if text in '+-*/%½^√':
+        if text in '+-*/%½^√=':
             self._connect_button_clicked(
                 _button, self._make_slot(self._operator_clicked, _button))
 
