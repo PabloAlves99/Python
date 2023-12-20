@@ -180,10 +180,6 @@ class ButtonsGrid(QGridLayout):
         print(f'Operação = {self._op}')
         self.display.clear()
 
-    # Criar uma lógica para calculo especial
-    # Se _special_op is not None o calcula todo seguinte é feito dentro do
-    # calculo especial, que após um gatilho dará o calculo final.
-    # Alguns calculos especiais precisam de números seguintes para funcionar
     def _eq(self):
         text = self.display.text()
 
