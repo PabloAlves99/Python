@@ -148,6 +148,7 @@ class ButtonsGrid(QGridLayout):
             ...
 
     def perform_basic_calculation(self):
+        self.equation = f'{self._left} {self._op} {self._right}'
 
         if self._op == '+':
             self._left = float(self._left) + float(self._right)
@@ -162,6 +163,7 @@ class ButtonsGrid(QGridLayout):
                 print('Zero Division Error')
 
         print(f'Resultado = {self._left}')
+        self.info.setText(f'{self.info.text()} = {self._left}')
 
     def _operator_clicked(self, _button):
         text = _button.text()
@@ -172,6 +174,7 @@ class ButtonsGrid(QGridLayout):
                 self.equation = f'{self._left} {text} '
             else:
                 self._right = float(self.display.text())
+                self.perform_basic_calculation()
 
         self._op = text
         print(f'Operação = {self._op}')
@@ -184,14 +187,10 @@ class ButtonsGrid(QGridLayout):
     def _eq(self):
         text = self.display.text()
 
-        if not self.is_valid_number(text):
-            print('Não é possível calcular')
-            return
+        if self.is_valid_number(text):
+            self._right = float(text)
 
         if self._left:
-            self._right = float(text)
-            self.equation = f'{self._left} {self._op} {self._right}'
             self.perform_basic_calculation()
 
         self.display.clear()
-        self.info.setText(f'{self.info.text()} = {self._left}')
