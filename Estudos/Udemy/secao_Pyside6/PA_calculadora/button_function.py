@@ -72,7 +72,7 @@ class ButtonsGrid(QGridLayout):
 
         if text in '=':
             self._connect_button_clicked(
-                _button, self._make_slot(self._operator_clicked, _button))
+                _button, self._eq)
 
         if text == 'C':
             _button.clicked.connect(self.clear_display_and_info)
@@ -141,24 +141,6 @@ class ButtonsGrid(QGridLayout):
     def _get_display_text_stripped(self):
         return self.display.text().strip()
 
-    def _define_info(self):
-        self._left = float(self.display.text())
-        self.info.setText(str(self._left))
-
-    def _define_operator(self, text):
-        if text == '=':
-            print(f'Resultado = {self.info.text()}')
-            self._op = None
-            return
-
-        elif text in '%^√½±':
-            self._special_op = text
-            print(f'Caclulo Especial = {text}')
-            return
-
-        self._op = text
-        print(f'Oeração = {text}')
-
     def perform_custom_operation(self):
 
         if self._special_op == '√':
@@ -174,29 +156,42 @@ class ButtonsGrid(QGridLayout):
         elif self._op == '*':
             self._left = float(self._left) * float(self._right)
         elif self._op == '/':
-            self._left = float(self._left) / float(self._right)
+            try:
+                self._left = float(self._left) / float(self._right)
+            except ZeroDivisionError:
+                print('Zero Division Error')
 
-        self._op = None
-        self.info.setText(str(self._left))
+        print(f'Resultado = {self._left}')
 
     def _operator_clicked(self, _button):
         text = _button.text()
-        # Se tiver alguma coisa no display faça...
+
         if self._get_display_text_stripped():
-            self._right = self.display.text()
+            if self._left is None:
+                self._left = float(self.display.text())
+                self.equation = f'{self._left} {text} '
+            else:
+                self._right = float(self.display.text())
 
-        # Se não tiver valor na esquerda e tiver no display
-        # define o valor da esquerda
-        if self._left is None and self._get_display_text_stripped():
-            self._define_info()
-
-        elif self._right is not None and self._op is not None:
-            self.perform_basic_calculation()
-
-        self._define_operator(text)
+        self._op = text
+        print(f'Operação = {self._op}')
         self.display.clear()
 
     # Criar uma lógica para calculo especial
     # Se _special_op is not None o calcula todo seguinte é feito dentro do
     # calculo especial, que após um gatilho dará o calculo final.
     # Alguns calculos especiais precisam de números seguintes para funcionar
+    def _eq(self):
+        text = self.display.text()
+
+        if not self.is_valid_number(text):
+            print('Não é possível calcular')
+            return
+
+        if self._left:
+            self._right = float(text)
+            self.equation = f'{self._left} {self._op} {self._right}'
+            self.perform_basic_calculation()
+
+        self.display.clear()
+        self.info.setText(f'{self.info.text()} = {self._left}')
