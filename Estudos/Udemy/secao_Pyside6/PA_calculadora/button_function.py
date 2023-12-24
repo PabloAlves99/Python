@@ -117,6 +117,13 @@ class ButtonsGrid(QGridLayout):
             valid = False
         return valid
 
+    def handle_exception(self, error_message):
+        # Método para exibir mensagens de erro ao usuário.
+        print(f"Erro: {error_message}")
+
+    def _get_display_text_stripped(self):
+        return self.display.text().strip()
+
     def display_special_calculation(self, result):
         equation_text = f'{self._op}({self._left}) = {result}'
         self.equation = equation_text
@@ -226,9 +233,6 @@ class ButtonsGrid(QGridLayout):
 
         self.info.setText(f'{self.info.text()} = {self._left}')
 
-    def _get_display_text_stripped(self):
-        return self.display.text().strip()
-
     def _operator_clicked(self, _button):
         text = _button.text()
 
@@ -271,7 +275,3 @@ class ButtonsGrid(QGridLayout):
             self._left = None
 
         self.display.clear()
-
-    def handle_exception(self, error_message):
-        # Método para exibir mensagens de erro ao usuário.
-        print(f"Erro: {error_message}")
