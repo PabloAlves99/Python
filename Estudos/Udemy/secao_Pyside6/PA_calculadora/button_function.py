@@ -70,7 +70,7 @@ class ButtonsGrid(QGridLayout):
     def _config_special_button(self, _button):
         text = _button.text()
 
-        if text in '=':
+        if text == '=':
             self._connect_button_clicked(
                 _button, self._eq)
 
@@ -80,9 +80,12 @@ class ButtonsGrid(QGridLayout):
         if text == 'CE':
             _button.clicked.connect(self.display.clear)
 
-        if text in '+-*/%½^√':
+        if text in '+-*/%½^√±':
             self._connect_button_clicked(
                 _button, self._make_slot(self._operator_clicked, _button))
+
+        if text == '←':
+            self._connect_button_clicked(_button, self.remove_last_character)
 
     def _make_slot(self, func, *args, **kwargs):
         @Slot()
@@ -114,8 +117,38 @@ class ButtonsGrid(QGridLayout):
             valid = False
         return valid
 
+    def display_special_calculation(self, result):
+        equation_text = f'{self._op}({self._left}) = {result}'
+        self.equation = equation_text
+        self._right = None
+
+    def special_calculation(self, text):
+        if text == '√':
+            self._op = text
+            self._left = self.root_square()
+            self.display.clear()
+
+        elif text == '½':
+            self._op = text
+            self._left = self.calculate_half()
+            self.display.clear()
+
+        elif text == '±':
+            self._op = text
+            self.reverse_number()
+            self.display.clear()
+
+    def remove_last_character(self):
+        if self._get_display_text_stripped():
+            new_display = self.display.text()
+            self.display.setText(new_display[:-1])
+
     def reverse_number(self):
-        return self._left * -1
+        result = self._left * -1
+        self._left = result
+        self.equation = str(result)
+        self._right = None
+        return result
 
     def root_square(self):
         if self._left is not None:
@@ -128,18 +161,16 @@ class ButtonsGrid(QGridLayout):
                 "A raiz quadrada de um número negativo não é definida.")
 
         result = math.sqrt(number)
-        equation_text = f'√({self._left}) = {result}'
-        self.equation = equation_text
-        self.info.setText(equation_text)
-
-        self._right = None
+        self.display_special_calculation(result)
         return result
 
     def calculate_power(self):
         return self._left ** self._right
 
     def calculate_half(self):
-        return 0.5 * self._left
+        result = 0.5 * self._left
+        self.display_special_calculation(result)
+        return result
 
     def calculate_percentage(self):
         return (self._left / 100) * self._right
@@ -157,6 +188,9 @@ class ButtonsGrid(QGridLayout):
         return self._left / self._right
 
     def perform_operations(self):
+        if self._right is None:
+            self._right = 0
+
         self.equation = f'{self._left} {self._op} {self._right}'
 
         button_functions = {
@@ -168,7 +202,6 @@ class ButtonsGrid(QGridLayout):
             '√': self.root_square,
             '½': self.calculate_half,
             '%': self.calculate_percentage,
-            # '←': self.remove_last_character,
             '±': self.reverse_number,
         }
         if self._op in button_functions:
@@ -181,16 +214,14 @@ class ButtonsGrid(QGridLayout):
             except OverflowError:
                 print('Essa conta não pode ser realizada.')
                 self._left = None
-            except TypeError:
-                print('Erro de tipo')
-                self._left = None
-            except ValueError:
-                print('Valor incorreto')
+            except (TypeError, ValueError):
+                self.handle_exception(
+                    'Erro de tipo. Verifique os valores inseridos.')
                 self._left = None
 
         print(f'Resultado = {self._left}')
 
-        if self._op == '√':
+        if self._op in '√½±':
             return
 
         self.info.setText(f'{self.info.text()} = {self._left}')
@@ -202,15 +233,12 @@ class ButtonsGrid(QGridLayout):
         text = _button.text()
 
         if self._get_display_text_stripped():
+
             if self._left is None:
                 self._left = float(self.display.text())
-
-                if text == '√':
-                    self._left = self.root_square()
-                    self._op = text
+                if text in '√½±':
+                    self.special_calculation(text)
                     return
-
-                self.equation = f'{self._left} {text} '
             else:
                 self._right = float(self.display.text())
                 self.perform_operations()
@@ -228,10 +256,22 @@ class ButtonsGrid(QGridLayout):
         if self.is_valid_number(text):
             self._right = float(text)
 
-        if self._left:
-            self.perform_operations()
-        else:
-            self._left = float(text)
-            self.equation = f'{self._left} '
+        try:
+            if self._left:
+                self.perform_operations()
+            else:
+                self._left = float(text)
+                self.equation = f'{self._left} '
+                if self._op in '√½±':
+                    self.special_calculation(text)
+
+        except ValueError:
+            self.handle_exception(
+                "Entrada inválida. Insira um número válido.")
+            self._left = None
 
         self.display.clear()
+
+    def handle_exception(self, error_message):
+        # Método para exibir mensagens de erro ao usuário.
+        print(f"Erro: {error_message}")
