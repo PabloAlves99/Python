@@ -114,56 +114,89 @@ class ButtonsGrid(QGridLayout):
             valid = False
         return valid
 
-    def reverse_number(self, text):
-        return float(text) * -1
+    def reverse_number(self):
+        return self._left * -1
 
     def root_square(self):
-        try:
+        if self._left is not None:
             number = float(self._left)
-            if number < 0:
-                raise ValueError(
-                    "A raiz quadrada de um número negativo não é definida.")
-            return math.sqrt(number)
-        except ValueError as e:
-            return f"Erro: {e}"
-        except OverflowError as e:
-            return f"Erro: {e}"
+        else:
+            number = 0
 
-    def calculate_power(self, base, exponent):
-        return float(base) ** exponent
+        if number < 0:
+            raise ValueError(
+                "A raiz quadrada de um número negativo não é definida.")
 
-    def calculate_half(self, text):
-        return 0.5 * float(text)
+        result = math.sqrt(number)
+        equation_text = f'√({self._left}) = {result}'
+        self.equation = equation_text
+        self.info.setText(equation_text)
 
-    def calculate_percentage(self, number, percentage):
-        return (float(percentage) / 100) * float(number)
+        self._right = None
+        return result
+
+    def calculate_power(self):
+        return self._left ** self._right
+
+    def calculate_half(self):
+        return 0.5 * self._left
+
+    def calculate_percentage(self):
+        return (self._left / 100) * self._right
+
+    def perform_addition(self):
+        return self._left + self._right
+
+    def perform_subtraction(self):
+        return self._left - self._right
+
+    def perform_multiplication(self):
+        return self._left * self._right
+
+    def perform_division(self):
+        return self._left / self._right
+
+    def perform_operations(self):
+        self.equation = f'{self._left} {self._op} {self._right}'
+
+        button_functions = {
+            '+': self.perform_addition,
+            '-': self.perform_subtraction,
+            '*': self.perform_multiplication,
+            '/': self.perform_division,
+            '^': self.calculate_power,
+            '√': self.root_square,
+            '½': self.calculate_half,
+            '%': self.calculate_percentage,
+            # '←': self.remove_last_character,
+            '±': self.reverse_number,
+        }
+        if self._op in button_functions:
+            try:
+                self._left = float(button_functions[self._op]())
+
+            except ZeroDivisionError:
+                print('Zero Division Error')
+                self._left = None
+            except OverflowError:
+                print('Essa conta não pode ser realizada.')
+                self._left = None
+            except TypeError:
+                print('Erro de tipo')
+                self._left = None
+            except ValueError:
+                print('Valor incorreto')
+                self._left = None
+
+        print(f'Resultado = {self._left}')
+
+        if self._op == '√':
+            return
+
+        self.info.setText(f'{self.info.text()} = {self._left}')
 
     def _get_display_text_stripped(self):
         return self.display.text().strip()
-
-    def perform_custom_operation(self):
-
-        if self._special_op == '√':
-            # self._left = float(self.root_square())
-            ...
-
-    def perform_basic_calculation(self):
-        self.equation = f'{self._left} {self._op} {self._right}'
-
-        if self._op == '+':
-            self._left = float(self._left) + float(self._right)
-        elif self._op == '-':
-            self._left = float(self._left) - float(self._right)
-        elif self._op == '*':
-            self._left = float(self._left) * float(self._right)
-        elif self._op == '/':
-            try:
-                self._left = float(self._left) / float(self._right)
-            except ZeroDivisionError:
-                print('Zero Division Error')
-
-        print(f'Resultado = {self._left}')
-        self.info.setText(f'{self.info.text()} = {self._left}')
 
     def _operator_clicked(self, _button):
         text = _button.text()
@@ -171,10 +204,19 @@ class ButtonsGrid(QGridLayout):
         if self._get_display_text_stripped():
             if self._left is None:
                 self._left = float(self.display.text())
+
+                if text == '√':
+                    self._left = self.root_square()
+                    self._op = text
+                    return
+
                 self.equation = f'{self._left} {text} '
             else:
                 self._right = float(self.display.text())
-                self.perform_basic_calculation()
+                self.perform_operations()
+
+        if self._left is not None:
+            self.equation = f'{self._left} {text} '
 
         self._op = text
         print(f'Operação = {self._op}')
@@ -187,6 +229,9 @@ class ButtonsGrid(QGridLayout):
             self._right = float(text)
 
         if self._left:
-            self.perform_basic_calculation()
+            self.perform_operations()
+        else:
+            self._left = float(text)
+            self.equation = f'{self._left} '
 
         self.display.clear()
