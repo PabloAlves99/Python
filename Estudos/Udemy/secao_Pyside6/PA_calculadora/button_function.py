@@ -7,7 +7,7 @@ from PySide6.QtWidgets import QGridLayout
 from PySide6.QtCore import Slot
 from main import Info, Display, Button, MainWindow
 
-NUM_OR_DOT_REGEX = re.compile(r'^[0-9.]$')
+NUM_REGEX = re.compile(r'^[0-9]$')
 
 
 class ButtonsGrid(QGridLayout):
@@ -49,10 +49,14 @@ class ButtonsGrid(QGridLayout):
             for column, text_grid in enumerate(row):
                 _button = Button(text_grid)
 
-                if not self.is_num_or_dot(text_grid):
+                if not self.is_num(text_grid):
+
                     self._config_special_button(_button)
+
                     if _button.text() == '=':
                         _button.setProperty("cssClass", "specialButtonSpace")
+                    else:
+                        _button.setProperty("cssClass", "specialButton")
 
                 self.addWidget(_button, i, column)
                 slot = self._make_slot(self.insert_text_display, _button)
@@ -107,8 +111,8 @@ class ButtonsGrid(QGridLayout):
         self._left = None
         self._right = None
 
-    def is_num_or_dot(self, string: str):
-        return bool(NUM_OR_DOT_REGEX.search(string))
+    def is_num(self, string: str):
+        return bool(NUM_REGEX.search(string))
 
     def is_valid_number(self, string: str):
         valid = False
