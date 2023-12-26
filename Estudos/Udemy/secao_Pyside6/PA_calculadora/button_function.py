@@ -122,6 +122,8 @@ class ButtonsGrid(QGridLayout):
     def handle_error(self, error_message):
         msg_box = self.window.make_msg_box()
         msg_box.setText(error_message)
+        msg_box.setIcon(msg_box.Icon.Critical)
+        msg_box.setWindowTitle('ERROR: -> Pablo Alves - Calculator')
         msg_box.exec()
 
     def _get_display_text_stripped(self):
@@ -197,8 +199,6 @@ class ButtonsGrid(QGridLayout):
         return self._left / self._right
 
     def perform_operations(self):
-        if self._right is None:
-            self._right = 0
 
         self.equation = f'{self._left} {self._op} {self._right}'
 
@@ -230,7 +230,7 @@ class ButtonsGrid(QGridLayout):
 
         print(f'Resultado = {self._left}')
 
-        if self._op in '√':
+        if self._op == '√':
             return
 
         self.info.setText(f'{self.info.text()} = {self._left}')
@@ -244,7 +244,7 @@ class ButtonsGrid(QGridLayout):
 
                 if self._op is None:
                     self._left = float(self.display.text())
-                elif self._op in '-':
+                elif self._op == '-':
                     self._left = float(f'{self._op}{self.display.text()}')
                 else:
                     self._left = float(self.display.text())
