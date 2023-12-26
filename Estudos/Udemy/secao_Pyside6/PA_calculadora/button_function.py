@@ -52,7 +52,7 @@ class ButtonsGrid(QGridLayout):
                 if not self.is_num_or_dot(text_grid):
                     self._config_special_button(_button)
                     if _button.text() == '=':
-                        _button.setProperty("cssClass", "specialButton")
+                        _button.setProperty("cssClass", "specialButtonSpace")
 
                 self.addWidget(_button, i, column)
                 slot = self._make_slot(self.insert_text_display, _button)

@@ -3,20 +3,35 @@
 #  type: ignore
 import qdarktheme
 from variables import (
-    PRIMARY_COLOR, DARKER_PRIMARY_COLOR, DARKEST_PRIMARY_COLOR)
+    PRIMARY_COLOR, DARKER_PRIMARY_COLOR, DARKEST_PRIMARY_COLOR,
+    ESPECIAL_PRIMARY_COLOR, ESPECIAL_DARKER_PRIMARY_COLOR,
+    ESPECIAL_DARKEST_PRIMARY_COLOR)
 
 qss = f"""
-    QPushButton[cssClass="specialButton"] {{
+    QPushButton[cssClass="specialButtonSpace"] {{
         color: #fff;
         background: {PRIMARY_COLOR};
     }}
-    QPushButton[cssClass="specialButton"]:hover {{
+    QPushButton[cssClass="specialButtonSpace"]:hover {{
         color: #fff;
         background: {DARKER_PRIMARY_COLOR};
     }}
-    QPushButton[cssClass="specialButton"]:pressed {{
+    QPushButton[cssClass="specialButtonSpace"]:pressed {{
         color: #fff;
         background: {DARKEST_PRIMARY_COLOR};
+    }}
+
+    QPushButton[cssClass="specialButton"] {{
+        color: #fff;
+        background: {ESPECIAL_PRIMARY_COLOR};
+    }}
+    QPushButton[cssClass="specialButton"]:hover {{
+        color: #fff;
+        background: {ESPECIAL_DARKER_PRIMARY_COLOR};
+    }}
+    QPushButton[cssClass="specialButton"]:pressed {{
+        color: #fff;
+        background: {ESPECIAL_DARKEST_PRIMARY_COLOR};
     }}
 """
 
