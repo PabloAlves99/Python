@@ -4,7 +4,7 @@
 import sys
 import button_function as bf
 from PySide6.QtWidgets import (QApplication, QWidget, QMainWindow, QVBoxLayout,
-                               QLineEdit, QLabel, QPushButton)
+                               QLineEdit, QLabel, QPushButton, QMessageBox)
 from PySide6.QtGui import QIcon
 from PySide6.QtCore import Qt
 
@@ -92,6 +92,9 @@ class MainWindow(QMainWindow):
         # Define o titulo para a janela principal
         self.setWindowTitle('Pablo Alves - Calculator')
 
+    def make_msg_box(self):
+        return QMessageBox(self)
+
 
 if __name__ == '__main__':
     # Cria a aplicação
@@ -117,7 +120,7 @@ if __name__ == '__main__':
     window.v_layout.addWidget(display)  # Adiciona o display na aplicação
 
     # Button Grid
-    button_grid = bf.ButtonsGrid(display, info)
+    button_grid = bf.ButtonsGrid(display, info, window)
     window.v_layout.addLayout(button_grid)
 
     # Executa a aplicação
