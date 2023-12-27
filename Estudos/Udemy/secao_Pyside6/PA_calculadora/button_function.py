@@ -45,7 +45,11 @@ class ButtonsGrid(QGridLayout):
         self.info.setText(value)
 
     def create_buttons(self):
-        for i, row in enumerate(self._grid_mask):
+        self.display.eq_pressed.connect(self._eq)
+        self.display.del_pressed.connect(self.display.backspace)
+        self.display.clear_pressed.connect(self.clear_display_and_info)
+
+        for row_number, row in enumerate(self._grid_mask):
             for column, text_grid in enumerate(row):
                 _button = Button(text_grid)
 
@@ -58,7 +62,7 @@ class ButtonsGrid(QGridLayout):
                     else:
                         _button.setProperty("cssClass", "specialButton")
 
-                self.addWidget(_button, i, column)
+                self.addWidget(_button, row_number, column)
 
                 slot = self._make_slot(self.insert_text_display, _button)
                 self._connect_button_clicked(_button, slot)

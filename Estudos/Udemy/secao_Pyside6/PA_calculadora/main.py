@@ -5,8 +5,8 @@ import sys
 import button_function as bf
 from PySide6.QtWidgets import (QApplication, QWidget, QMainWindow, QVBoxLayout,
                                QLineEdit, QLabel, QPushButton, QMessageBox)
-from PySide6.QtGui import QIcon
-from PySide6.QtCore import Qt
+from PySide6.QtGui import QIcon, QKeyEvent
+from PySide6.QtCore import Qt, Signal
 
 # Importa variáveis e estilos de arquivos externos
 from variables import (WINDOW_ICON_PATH, BIG_FONT_SIZE, TEXT_MARGIN,
@@ -47,6 +47,10 @@ class Info(QLabel):
 
 # Define uma classe para o visor (display)
 class Display(QLineEdit):
+    eq_pressed = Signal()
+    del_pressed = Signal()
+    clear_pressed = Signal()
+
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.config_style_display()
@@ -70,8 +74,37 @@ class Display(QLineEdit):
         # Define as margens internas do "visor"
         self.setTextMargins(*[TEXT_MARGIN for _ in range(4)])
 
+    def keyPressEvent(self, event: QKeyEvent) -> None:
+        text = event.text().strip()
+        key = event.key()
+        keys = Qt.Key
+
+        is_enter = key in [keys.Key_Enter, key == keys.Key_Return]
+        is_delet = key in [keys.Key_Backspace, key == keys.Key_Delete]
+        is_esc = key in [keys.Key_Escape, keys.Key_C]
+
+        if is_enter or text == '=':
+            self.eq_pressed.emit()
+            return event.ignore()
+
+        if is_delet:
+            self.del_pressed.emit()
+            return event.ignore()
+
+        if is_esc:
+            self.clear_pressed.emit()
+            return event.ignore()
+
+        # Não passar daqui se não tiver texto
+        if self.is_empty(text):
+            return event.ignore()
+
+    def is_empty(self, string: str):
+        return len(string) == 0
 
 # Define a classe da janela principal da aplicação
+
+
 class MainWindow(QMainWindow):
     def __init__(self, parent: QWidget | None = None, *args, **kwargs) -> None:
         super().__init__(parent, *args, **kwargs)
