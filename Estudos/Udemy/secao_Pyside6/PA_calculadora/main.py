@@ -50,6 +50,7 @@ class Display(QLineEdit):
     eq_pressed = Signal()
     del_pressed = Signal()
     clear_pressed = Signal()
+    input_pressed = Signal()
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
