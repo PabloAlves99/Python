@@ -73,12 +73,14 @@ class ButtonsGrid(QGridLayout):
 
     def _connect_button_clicked(self, button, slot):
         button.clicked.connect(slot)
+        self.display.setFocus()
 
     @Slot()
     def _make_slot(self, func, *args, **kwargs):
         @Slot()
         def real_slot():
             func(*args, **kwargs)
+            self.display.setFocus()
         return real_slot
 
     @Slot()
