@@ -80,8 +80,8 @@ class Display(QLineEdit):
         key = event.key()
         keys = Qt.Key
 
-        is_enter = key in [keys.Key_Enter, key == keys.Key_Return]
-        is_delet = key in [keys.Key_Backspace, key == keys.Key_Delete]
+        is_enter = key in [keys.Key_Enter, keys.Key_Return]
+        is_delet = key in [keys.Key_Backspace, keys.Key_Delete]
         is_esc = key in [keys.Key_Escape, keys.Key_C]
 
         if is_enter or text == '=':
