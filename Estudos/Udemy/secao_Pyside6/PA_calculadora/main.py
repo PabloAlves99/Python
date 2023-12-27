@@ -32,6 +32,7 @@ class Button(QPushButton):
         self.button_style()
 
     def button_style(self):
+        """Aplica estilos personalizados ao botão."""
 
         font = self.font()  # Obtém a fonte atual do botão
 
@@ -57,6 +58,7 @@ class Info(QLabel):
         self.config_style_info()
 
     def config_style_info(self):
+        """Configura o estilo da info."""
 
         # Define o tamanho da info e o alinhamento
         self.setStyleSheet(f'font-size: {SMALL_FONT_SIZE}px;')
@@ -178,6 +180,18 @@ class Display(QLineEdit):
 
 # Define a classe da janela principal da aplicação
 class MainWindow(QMainWindow):
+    """
+    Janela principal da calculadora.
+
+    Métodos:
+    - __init__: Inicializa a janela principal.
+    - make_msg_box: Cria e retorna uma instância de QMessageBox.
+
+    Atributos:
+    - cw: Widget central da janela.
+    - v_layout: Layout vertical do widget central.
+    """
+
     def __init__(self, parent: QWidget | None = None, *args, **kwargs) -> None:
         super().__init__(parent, *args, **kwargs)
 
@@ -198,6 +212,7 @@ class MainWindow(QMainWindow):
         self.setWindowTitle('Pablo Alves - Calculator')
 
     def make_msg_box(self):
+        """Retorna uma instância de QMessageBox."""
         return QMessageBox(self)
 
 
