@@ -30,7 +30,7 @@ class ButtonsGrid(QGridLayout):
         self._left = None
         self._right = None
         self._op = None
-        self._special_op = None
+        self._especial_op = None
         self.setSpacing(3)
         self._equation = ''
         self.create_buttons()
@@ -107,7 +107,6 @@ class ButtonsGrid(QGridLayout):
 
         if text == 'CE':
             _button.clicked.connect(self.display.clear)
-            self.display.setFocus()
 
         if text == '±':
             _button.clicked.connect(self.reverse_number)
@@ -115,7 +114,10 @@ class ButtonsGrid(QGridLayout):
         if text == '½':
             _button.clicked.connect(self.calculate_half)
 
-        if text in '+-*/%^√':
+        if text == '√':
+            _button.clicked.connect(self.root_square)
+
+        if text in '+-*/%^':
             self._connect_button_clicked(
                 _button, self._make_slot(
                     self._operator_clicked, _button.text()))
@@ -127,7 +129,6 @@ class ButtonsGrid(QGridLayout):
         self.display.clear()
         self.info.clear()
         self._op = None
-        self._special_op = None
         self._left = None
         self._right = None
         self.display.setFocus()
@@ -164,6 +165,7 @@ class ButtonsGrid(QGridLayout):
         msg_box.setIcon(msg_box.Icon.Critical)
         msg_box.setWindowTitle('ERROR: -> Pablo Alves - Calculator')
         msg_box.exec()
+        self.display.setFocus()
 
     @Slot()
     def _operator_clicked(self, text):
@@ -173,17 +175,17 @@ class ButtonsGrid(QGridLayout):
             if self._left is None:
 
                 if self._op is None:
-                    self._left = float(self.display.text())
-                elif self._op == '-':
-                    self._left = float(f'{self._op}{self.display.text()}')
-                else:
-                    self._left = float(self.display.text())
+                    self._left = round(float(self.display.text()), 3)
 
-                if text == '√':
-                    self.special_calculation(text)
-                    return
+                elif self._op == '-':
+                    self._left = round(
+                        float(f'{self._op}{self.display.text()}'), 3)
+
+                else:
+                    self._left = round(float(self.display.text()), 3)
+
             else:
-                self._right = float(self.display.text())
+                self._right = round(float(self.display.text()), 3)
                 self.perform_operations()
 
         if self._left is not None:
@@ -200,21 +202,16 @@ class ButtonsGrid(QGridLayout):
 
         if self.is_valid_number(text):
             if self._left is not None:
-                self._right = float(text)
+                self._right = round(float(text), 3)
             else:
-                self._left = float(text)
+                self._left = round(float(text), 3)
                 self.display.clear()
                 self.equation = f'{self._left} '
                 return
 
         try:
-            if self._op == '√':
-                self.special_calculation(self._op)
-                return
-            elif self._op is not None and self._right is not None:
+            if self._op is not None and self._right is not None:
                 self.perform_operations()
-            else:
-                raise ValueError()
 
         except (ValueError, TypeError):
             self.handle_error(
@@ -234,12 +231,11 @@ class ButtonsGrid(QGridLayout):
             '*': self.perform_multiplication,
             '/': self.perform_division,
             '^': self.calculate_power,
-            '√': self.root_square,
             '%': self.calculate_percentage,
         }
         if self._op in button_functions:
             try:
-                self._left = float(button_functions[self._op]())
+                self._left = round(float(button_functions[self._op]()), 3)
 
             except ZeroDivisionError:
                 self.handle_error('Zero Division Error')
@@ -254,66 +250,68 @@ class ButtonsGrid(QGridLayout):
 
         print(f'Resultado = {self._left}')
 
-        if self._op == '√':
-            return
-
         self.info.setText(f'{self.info.text()} = {self._left}')
+        self.display.setFocus()
 
     @Slot()
     def calculate_percentage(self):
-        return (self._left / 100) * self._right
+        return round((self._left / 100) * self._right, 3)
 
     @Slot()
     def perform_addition(self):
-        return self._left + self._right
+        return round(self._left + self._right, 3)
 
     @Slot()
     def perform_subtraction(self):
-        return self._left - self._right
+        return round(self._left - self._right, 3)
 
     @Slot()
     def perform_multiplication(self):
-        return self._left * self._right
+        return round(self._left * self._right, 3)
 
     @Slot()
     def perform_division(self):
-        return self._left / self._right
-
-    @Slot()
-    def display_special_calculation(self, result):
-        equation_text = f'{self._op}({self._left}) = {result}'
-        self.equation = equation_text
-        self._right = None
-        self.display.clear()
-
-    @Slot()
-    def special_calculation(self, text):
-        if text == '√':
-            self._op = text
-            result = self.root_square()
-            self.display_special_calculation(result)
-            self._left = result
+        return round(self._left / self._right, 3)
 
     @Slot()
     def root_square(self):
-        if self._left is not None:
-            number = float(self._left)
-        else:
-            number = 0
+        try:
+            number = float(self.display.text())
 
-        if number < 0:
+            if self.is_valid_number(number):
+
+                if number < 0:
+                    self.handle_error(
+                        "A raiz quadrada de número negativo não é definida.")
+
+                result = round(math.sqrt(number), 3)
+                equation_text = f'√({self.display.text()})'
+
+                if self._left is not None:
+
+                    if self._right is None:
+                        self.equation += equation_text
+                    else:
+                        self.equation = (
+                            f'{self._left} {self._op} {equation_text}')
+
+                else:
+                    self.equation = equation_text
+
+                self.display.setText(str(result))
+
+        except (TypeError, ValueError):
             self.handle_error(
-                "A raiz quadrada de um número negativo não é definida.")
-
-        result = math.sqrt(number)
-        return result
+                'Erro de tipo. Verifique os valores inseridos.')
 
     @Slot()
     def reverse_number(self):
+
         try:
             number = float(self.display.text())
+
             if self.is_valid_number(number):
-                self.display.setText(str(number * -1))
+                self.display.setText(str(round(number * -1, 3)))
 
         except (TypeError, ValueError):
             self.handle_error(
@@ -321,10 +319,12 @@ class ButtonsGrid(QGridLayout):
 
     @Slot()
     def calculate_half(self):
+
         try:
             number = float(self.display.text())
+
             if self.is_valid_number(number):
-                self.display.setText(str(0.5 * number))
+                self.display.setText(str(round(0.5 * number, 3)))
 
         except (TypeError, ValueError):
             self.handle_error(
@@ -332,4 +332,4 @@ class ButtonsGrid(QGridLayout):
 
     @Slot()
     def calculate_power(self):
-        return self._left ** self._right
+        return round(self._left ** self._right, 3)
