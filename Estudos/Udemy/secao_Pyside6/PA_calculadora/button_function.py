@@ -349,7 +349,9 @@ class ButtonsGrid(QGridLayout):
         limit = 1e15  # Defina o limite conforme necessário
 
         if float(result) > limit:
-            error_message = "O resultado é muito grande para ser exibido."
+            error_message = (
+                f"O resultado é muito grande para ser exibido.\n"
+                f"O resultado é {result:.15f}...")
             self.handle_error(error_message)
             return True
 
