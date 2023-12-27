@@ -83,7 +83,6 @@ class ButtonsGrid(QGridLayout):
             self.display.setFocus()
         return real_slot
 
-    @Slot()
     def insert_text_display(self, text):
 
         new_display_text = self.display.text() + text
