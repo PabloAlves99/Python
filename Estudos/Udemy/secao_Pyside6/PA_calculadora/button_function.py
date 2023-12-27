@@ -159,7 +159,6 @@ class ButtonsGrid(QGridLayout):
     def _get_display_text_stripped(self):
         return self.display.text().strip()
 
-    @Slot()
     def handle_error(self, error_message):
         msg_box = self.window.make_msg_box()
         msg_box.setText(error_message)
@@ -202,6 +201,10 @@ class ButtonsGrid(QGridLayout):
         text = self.display.text()
 
         if self.is_valid_number(text):
+
+            if self.handle_large_result(text):
+                return
+
             if self._left is not None:
                 self._right = round(float(text), 3)
             else:
@@ -236,7 +239,11 @@ class ButtonsGrid(QGridLayout):
         }
         if self._op in button_functions:
             try:
-                self._left = round(float(button_functions[self._op]()), 3)
+                number = round(float(button_functions[self._op]()), 3)
+                if not self.handle_large_result(number):
+                    self._left = number
+                else:
+                    return
 
             except ZeroDivisionError:
                 self.handle_error('Zero Division Error')
@@ -334,3 +341,16 @@ class ButtonsGrid(QGridLayout):
     @Slot()
     def calculate_power(self):
         return round(self._left ** self._right, 3)
+
+    def handle_large_result(self, result):
+        """
+        Exibe um erro se o resultado for maior que um limite específico.
+        """
+        limit = 1e15  # Defina o limite conforme necessário
+
+        if float(result) > limit:
+            error_message = "O resultado é muito grande para ser exibido."
+            self.handle_error(error_message)
+            return True
+
+        return False
