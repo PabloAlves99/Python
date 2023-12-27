@@ -48,6 +48,8 @@ class ButtonsGrid(QGridLayout):
         self.display.eq_pressed.connect(self._eq)
         self.display.del_pressed.connect(self.display.backspace)
         self.display.clear_pressed.connect(self.clear_display_and_info)
+        self.display.input_pressed.connect(self.insert_text_display)
+        self.display.operator_pressed.connect(self._operator_clicked)
 
         for row_number, row in enumerate(self._grid_mask):
             for column, text_grid in enumerate(row):
@@ -64,7 +66,9 @@ class ButtonsGrid(QGridLayout):
 
                 self.addWidget(_button, row_number, column)
 
-                slot = self._make_slot(self.insert_text_display, _button)
+                slot = self._make_slot(
+                    self.insert_text_display, text_grid)
+
                 self._connect_button_clicked(_button, slot)
 
     def _connect_button_clicked(self, button, slot):
@@ -77,16 +81,14 @@ class ButtonsGrid(QGridLayout):
         return real_slot
 
     @Slot()
-    def insert_text_display(self, _button):
+    def insert_text_display(self, text):
 
-        text = _button.text()
         new_display_text = self.display.text() + text
 
         if not self.is_valid_number(new_display_text):
             return
 
         self.display.insert(text)
-        self.display.setFocus()
 
     def _config_special_button(self, _button):
         text = _button.text()
@@ -106,7 +108,8 @@ class ButtonsGrid(QGridLayout):
 
         if text in '+-*/%½^√±':
             self._connect_button_clicked(
-                _button, self._make_slot(self._operator_clicked, _button))
+                _button, self._make_slot(
+                    self._operator_clicked, _button.text()))
 
     def clear_display_and_info(self):
         self.display.clear()
@@ -143,8 +146,7 @@ class ButtonsGrid(QGridLayout):
         msg_box.setWindowTitle('ERROR: -> Pablo Alves - Calculator')
         msg_box.exec()
 
-    def _operator_clicked(self, _button):
-        text = _button.text()
+    def _operator_clicked(self, text):
 
         if self._get_display_text_stripped():
 

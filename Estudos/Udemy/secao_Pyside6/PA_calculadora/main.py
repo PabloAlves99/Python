@@ -2,6 +2,7 @@
 #  pylint: disable=no-name-in-module
 #  type: ignore
 import sys
+import re
 import button_function as bf
 from PySide6.QtWidgets import (QApplication, QWidget, QMainWindow, QVBoxLayout,
                                QLineEdit, QLabel, QPushButton, QMessageBox)
@@ -13,8 +14,10 @@ from variables import (WINDOW_ICON_PATH, BIG_FONT_SIZE, TEXT_MARGIN,
                        MINIMUM_WIDTH, SMALL_FONT_SIZE, MEDIUM_FONT_SIZE)
 from styles import setup_theme
 
-
+NUM_OR_DOT_REGEX = re.compile(r'^[0-9.]$')
 # Define uma classe para botões com estilos personalizados
+
+
 class Button(QPushButton):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
@@ -50,7 +53,8 @@ class Display(QLineEdit):
     eq_pressed = Signal()
     del_pressed = Signal()
     clear_pressed = Signal()
-    input_pressed = Signal()
+    input_pressed = Signal(str)
+    operator_pressed = Signal(str)
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
@@ -83,6 +87,10 @@ class Display(QLineEdit):
         is_enter = key in [keys.Key_Enter, keys.Key_Return]
         is_delet = key in [keys.Key_Backspace, keys.Key_Delete]
         is_esc = key in [keys.Key_Escape, keys.Key_C]
+        is_operator = key in [
+            keys.Key_Plus, keys.Key_Minus, keys.Key_Slash, keys.Key_Asterisk,
+            keys.Key_P,
+        ]
 
         if is_enter or text == '=':
             self.eq_pressed.emit()
@@ -96,13 +104,26 @@ class Display(QLineEdit):
             self.clear_pressed.emit()
             return event.ignore()
 
+        if is_operator:
+
+            if text.lower() == 'p':
+                text = '^'
+
+            self.operator_pressed.emit(text)
+            return event.ignore()
         # Não passar daqui se não tiver texto
         if self.is_empty(text):
+            return event.ignore()
+
+        if self.is_num_or_dot(text):
+            self.input_pressed.emit(text)
             return event.ignore()
 
     def is_empty(self, string: str):
         return len(string) == 0
 
+    def is_num_or_dot(self, string: str):
+        return bool(NUM_OR_DOT_REGEX.search(string))
 # Define a classe da janela principal da aplicação
 
 
@@ -151,6 +172,7 @@ if __name__ == '__main__':
 
     # Display
     display = Display()
+    display.setFocus()
     window.v_layout.addWidget(display)  # Adiciona o display na aplicação
 
     # Button Grid
