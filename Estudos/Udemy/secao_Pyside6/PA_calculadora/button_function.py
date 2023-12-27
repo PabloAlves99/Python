@@ -44,6 +44,7 @@ class ButtonsGrid(QGridLayout):
         self._equation = value
         self.info.setText(value)
 
+    @Slot()
     def create_buttons(self):
         self.display.eq_pressed.connect(self._eq)
         self.display.del_pressed.connect(self.display.backspace)
@@ -71,9 +72,11 @@ class ButtonsGrid(QGridLayout):
 
                 self._connect_button_clicked(_button, slot)
 
+    @Slot()
     def _connect_button_clicked(self, button, slot):
         button.clicked.connect(slot)
 
+    @Slot()
     def _make_slot(self, func, *args, **kwargs):
         @Slot()
         def real_slot():
@@ -89,7 +92,9 @@ class ButtonsGrid(QGridLayout):
             return
 
         self.display.insert(text)
+        self.display.setFocus()
 
+    @Slot()
     def _config_special_button(self, _button):
         text = _button.text()
 
@@ -105,6 +110,7 @@ class ButtonsGrid(QGridLayout):
 
         if text == 'CE':
             _button.clicked.connect(self.display.clear)
+            self.display.setFocus()
 
         if text == '±':
             _button.clicked.connect(self.reverse_number)
@@ -117,6 +123,9 @@ class ButtonsGrid(QGridLayout):
                 _button, self._make_slot(
                     self._operator_clicked, _button.text()))
 
+        self.display.setFocus()
+
+    @Slot()
     def clear_display_and_info(self):
         self.display.clear()
         self.info.clear()
@@ -124,10 +133,13 @@ class ButtonsGrid(QGridLayout):
         self._special_op = None
         self._left = None
         self._right = None
+        self.display.setFocus()
 
+    @Slot()
     def is_num(self, string: str):
         return bool(NUM_REGEX.search(string))
 
+    @Slot()
     def is_valid_number(self, string: str):
         valid = False
         try:
@@ -137,14 +149,18 @@ class ButtonsGrid(QGridLayout):
             valid = False
         return valid
 
+    @Slot()
     def remove_last_character(self):
         if self._get_display_text_stripped():
             new_display = self.display.text()
             self.display.setText(new_display[:-1])
+            self.display.setFocus()
 
+    @Slot()
     def _get_display_text_stripped(self):
         return self.display.text().strip()
 
+    @Slot()
     def handle_error(self, error_message):
         msg_box = self.window.make_msg_box()
         msg_box.setText(error_message)
@@ -152,6 +168,7 @@ class ButtonsGrid(QGridLayout):
         msg_box.setWindowTitle('ERROR: -> Pablo Alves - Calculator')
         msg_box.exec()
 
+    @Slot()
     def _operator_clicked(self, text):
 
         if self._get_display_text_stripped():
@@ -178,7 +195,9 @@ class ButtonsGrid(QGridLayout):
         self._op = text
         print(f'Operação = {self._op}')
         self.display.clear()
+        self.display.setFocus()
 
+    @Slot()
     def _eq(self):
         text = self.display.text()
 
@@ -187,25 +206,27 @@ class ButtonsGrid(QGridLayout):
                 self._right = float(text)
             else:
                 self._left = float(text)
+                self.display.clear()
+                self.equation = f'{self._left} '
+                return
 
         try:
             if self._op == '√':
                 self.special_calculation(self._op)
                 return
-
-            if self._left:
+            elif self._op is not None and self._right is not None:
                 self.perform_operations()
             else:
-                self._left = float(text)
-                self.equation = f'{self._left} '
+                raise ValueError()
 
         except (ValueError, TypeError):
             self.handle_error(
                 "Entrada inválida. Insira um número válido.")
-            self._left = None
 
         self.display.clear()
+        self.display.setFocus()
 
+    @Slot()
     def perform_operations(self):
 
         self.equation = f'{self._left} {self._op} {self._right}'
@@ -241,27 +262,34 @@ class ButtonsGrid(QGridLayout):
 
         self.info.setText(f'{self.info.text()} = {self._left}')
 
+    @Slot()
     def calculate_percentage(self):
         return (self._left / 100) * self._right
 
+    @Slot()
     def perform_addition(self):
         return self._left + self._right
 
+    @Slot()
     def perform_subtraction(self):
         return self._left - self._right
 
+    @Slot()
     def perform_multiplication(self):
         return self._left * self._right
 
+    @Slot()
     def perform_division(self):
         return self._left / self._right
 
+    @Slot()
     def display_special_calculation(self, result):
         equation_text = f'{self._op}({self._left}) = {result}'
         self.equation = equation_text
         self._right = None
         self.display.clear()
 
+    @Slot()
     def special_calculation(self, text):
         if text == '√':
             self._op = text
@@ -269,6 +297,7 @@ class ButtonsGrid(QGridLayout):
             self.display_special_calculation(result)
             self._left = result
 
+    @Slot()
     def root_square(self):
         if self._left is not None:
             number = float(self._left)
@@ -282,6 +311,7 @@ class ButtonsGrid(QGridLayout):
         result = math.sqrt(number)
         return result
 
+    @Slot()
     def reverse_number(self):
         try:
             number = float(self.display.text())
@@ -292,6 +322,7 @@ class ButtonsGrid(QGridLayout):
             self.handle_error(
                 'Erro de tipo. Verifique os valores inseridos.')
 
+    @Slot()
     def calculate_half(self):
         try:
             number = float(self.display.text())
@@ -302,5 +333,6 @@ class ButtonsGrid(QGridLayout):
             self.handle_error(
                 'Erro de tipo. Verifique os valores inseridos.')
 
+    @Slot()
     def calculate_power(self):
         return self._left ** self._right

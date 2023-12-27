@@ -172,7 +172,6 @@ if __name__ == '__main__':
 
     # Display
     display = Display()
-    display.setFocus()
     window.v_layout.addWidget(display)  # Adiciona o display na aplicação
 
     # Button Grid
