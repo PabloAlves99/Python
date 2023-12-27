@@ -59,6 +59,7 @@ class ButtonsGrid(QGridLayout):
                         _button.setProperty("cssClass", "specialButton")
 
                 self.addWidget(_button, i, column)
+
                 slot = self._make_slot(self.insert_text_display, _button)
                 self._connect_button_clicked(_button, slot)
 
