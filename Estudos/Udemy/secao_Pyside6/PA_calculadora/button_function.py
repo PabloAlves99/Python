@@ -106,7 +106,10 @@ class ButtonsGrid(QGridLayout):
         if text == 'CE':
             _button.clicked.connect(self.display.clear)
 
-        if text in '+-*/%½^√±':
+        if text == '±':
+            _button.clicked.connect(self.reverse_number)
+
+        if text in '+-*/%½^√':
             self._connect_button_clicked(
                 _button, self._make_slot(
                     self._operator_clicked, _button.text()))
@@ -159,7 +162,7 @@ class ButtonsGrid(QGridLayout):
                 else:
                     self._left = float(self.display.text())
 
-                if text in '√½±':
+                if text in '√½':
                     self.special_calculation(text)
                     return
             else:
@@ -183,7 +186,7 @@ class ButtonsGrid(QGridLayout):
                 self._left = float(text)
 
         try:
-            if self._op in '√½±':
+            if self._op in '√½':
                 self.special_calculation(self._op)
                 return
 
@@ -213,7 +216,6 @@ class ButtonsGrid(QGridLayout):
             '√': self.root_square,
             '½': self.calculate_half,
             '%': self.calculate_percentage,
-            '±': self.reverse_number,
         }
         if self._op in button_functions:
             try:
@@ -271,14 +273,6 @@ class ButtonsGrid(QGridLayout):
             self.display_special_calculation(result)
             self._left = result
 
-        elif text == '±':
-            self._op = text
-            result = self.reverse_number()
-            self._left = result
-            self.equation = str(result)
-            self._right = None
-            self.display.clear()
-
     def root_square(self):
         if self._left is not None:
             number = float(self._left)
@@ -293,7 +287,14 @@ class ButtonsGrid(QGridLayout):
         return result
 
     def reverse_number(self):
-        return self._left * -1
+        try:
+            number = float(self.display.text())
+            if self.is_valid_number(number):
+                self.display.setText(str(number * -1))
+
+        except (TypeError, ValueError):
+            self.handle_error(
+                'Erro de tipo. Verifique os valores inseridos.')
 
     def calculate_power(self):
         return self._left ** self._right
