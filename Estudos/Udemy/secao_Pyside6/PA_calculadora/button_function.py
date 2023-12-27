@@ -109,7 +109,10 @@ class ButtonsGrid(QGridLayout):
         if text == '±':
             _button.clicked.connect(self.reverse_number)
 
-        if text in '+-*/%½^√':
+        if text == '½':
+            _button.clicked.connect(self.calculate_half)
+
+        if text in '+-*/%^√':
             self._connect_button_clicked(
                 _button, self._make_slot(
                     self._operator_clicked, _button.text()))
@@ -162,7 +165,7 @@ class ButtonsGrid(QGridLayout):
                 else:
                     self._left = float(self.display.text())
 
-                if text in '√½':
+                if text == '√':
                     self.special_calculation(text)
                     return
             else:
@@ -186,7 +189,7 @@ class ButtonsGrid(QGridLayout):
                 self._left = float(text)
 
         try:
-            if self._op in '√½':
+            if self._op == '√':
                 self.special_calculation(self._op)
                 return
 
@@ -214,7 +217,6 @@ class ButtonsGrid(QGridLayout):
             '/': self.perform_division,
             '^': self.calculate_power,
             '√': self.root_square,
-            '½': self.calculate_half,
             '%': self.calculate_percentage,
         }
         if self._op in button_functions:
@@ -267,12 +269,6 @@ class ButtonsGrid(QGridLayout):
             self.display_special_calculation(result)
             self._left = result
 
-        elif text == '½':
-            self._op = text
-            result = self.calculate_half()
-            self.display_special_calculation(result)
-            self._left = result
-
     def root_square(self):
         if self._left is not None:
             number = float(self._left)
@@ -296,8 +292,15 @@ class ButtonsGrid(QGridLayout):
             self.handle_error(
                 'Erro de tipo. Verifique os valores inseridos.')
 
+    def calculate_half(self):
+        try:
+            number = float(self.display.text())
+            if self.is_valid_number(number):
+                self.display.setText(str(0.5 * number))
+
+        except (TypeError, ValueError):
+            self.handle_error(
+                'Erro de tipo. Verifique os valores inseridos.')
+
     def calculate_power(self):
         return self._left ** self._right
-
-    def calculate_half(self):
-        return 0.5 * self._left
