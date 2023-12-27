@@ -44,7 +44,6 @@ class ButtonsGrid(QGridLayout):
         self._equation = value
         self.info.setText(value)
 
-    @Slot()
     def create_buttons(self):
         self.display.eq_pressed.connect(self._eq)
         self.display.del_pressed.connect(self.display.backspace)
@@ -72,7 +71,6 @@ class ButtonsGrid(QGridLayout):
 
                 self._connect_button_clicked(_button, slot)
 
-    @Slot()
     def _connect_button_clicked(self, button, slot):
         button.clicked.connect(slot)
 
@@ -94,7 +92,6 @@ class ButtonsGrid(QGridLayout):
         self.display.insert(text)
         self.display.setFocus()
 
-    @Slot()
     def _config_special_button(self, _button):
         text = _button.text()
 

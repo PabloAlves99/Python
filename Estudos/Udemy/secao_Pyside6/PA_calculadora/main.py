@@ -19,14 +19,20 @@ NUM_OR_DOT_REGEX = re.compile(r'^[0-9.]$')
 
 
 class Button(QPushButton):
+    """
+    Classe para os botões.
+
+    Métodos:
+    - __init__: Inicializa o botão.
+    - button_style: Aplica estilos personalizados ao botão.
+    """
+
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.button_style()
 
     def button_style(self):
-        """
-        Aplica estilos personalizados ao botão.
-        """
+
         font = self.font()  # Obtém a fonte atual do botão
 
         # Define o tamanho do texto no botão
@@ -37,12 +43,21 @@ class Button(QPushButton):
 
 # Define uma classe para exibição de informações
 class Info(QLabel):
-    def __init__(self, parent: QWidget | None = None, *args, **kwargs) -> None:
-        super().__init__(parent, *args, **kwargs)
+    """
+    Classe para exibição de informações.
+
+    Métodos:
+    - __init__: Inicializa a exibição de informações.
+    - config_style_info: Configura o estilo da informação.
+    """
+
+    def __init__(self, parent: QWidget | None = None) -> None:
+        super().__init__(parent)
 
         self.config_style_info()
 
     def config_style_info(self):
+
         # Define o tamanho da info e o alinhamento
         self.setStyleSheet(f'font-size: {SMALL_FONT_SIZE}px;')
         self.setAlignment(Qt.AlignmentFlag.AlignRight)
@@ -50,6 +65,29 @@ class Info(QLabel):
 
 # Define uma classe para o visor (display)
 class Display(QLineEdit):
+    """
+    Visor (display) da calculadora.
+
+    Sinais:
+    - eq_pressed: Emitido quando a tecla = ou Enter é pressionada.
+    - del_pressed: Emitido quando a tecla delete ou backspace é pressionada.
+    - clear_pressed: Emitido quando a tecla C ou ESC é pressionada.
+    - input_pressed: Emitido quando um dígito numérico ou ponto é inserido.
+    - operator_pressed: Emitido quando um operador é pressionado.
+
+    Métodos:
+    - __init__: Inicializa o visor.
+    - config_style_display: Aplica estilos personalizados.
+    - keyPressEvent: Manipula eventos de tecla.
+
+    Atributos:
+    - eq_pressed: Sinal para tecla = ou Enter.
+    - del_pressed: Sinal para tecla delete ou backspace.
+    - clear_pressed: Sinal para tecla C ou ESC.
+    - input_pressed: Sinal para dígitos numéricos ou ponto.
+    - operator_pressed: Sinal para operadores.
+    """
+    # Define sinais personalizados para eventos específicos
     eq_pressed = Signal()
     del_pressed = Signal()
     clear_pressed = Signal()
@@ -80,10 +118,17 @@ class Display(QLineEdit):
         self.setTextMargins(*[TEXT_MARGIN for _ in range(4)])
 
     def keyPressEvent(self, event: QKeyEvent) -> None:
+        """
+        Manipula eventos de pressionamento de tecla.
+
+        Args:
+            event (QKeyEvent): O evento de pressionamento de tecla.
+        """
         text = event.text().strip()
         key = event.key()
         keys = Qt.Key
 
+        # Verifica se a tecla específica foi pressionada
         is_enter = key in [keys.Key_Enter, keys.Key_Return]
         is_delet = key in [keys.Key_Backspace, keys.Key_Delete]
         is_esc = key in [keys.Key_Escape, keys.Key_C]
@@ -92,6 +137,7 @@ class Display(QLineEdit):
             keys.Key_P,
         ]
 
+        # Emite o sinal correspondente ao evento
         if is_enter or text == '=':
             self.eq_pressed.emit()
             return event.ignore()
@@ -108,25 +154,29 @@ class Display(QLineEdit):
 
             if text.lower() == 'p':
                 text = '^'
-
+            # Emite o sinal correspondente ao operador
             self.operator_pressed.emit(text)
             return event.ignore()
+
         # Não passar daqui se não tiver texto
         if self.is_empty(text):
             return event.ignore()
 
+        # Emite o sinal correspondente à entrada de texto numérico ou ponto
         if self.is_num_or_dot(text):
             self.input_pressed.emit(text)
             return event.ignore()
 
     def is_empty(self, string: str):
+        """Verifica se uma string está vazia."""
         return len(string) == 0
 
     def is_num_or_dot(self, string: str):
+        """Verifica se uma string contém um número ou ponto."""
         return bool(NUM_OR_DOT_REGEX.search(string))
+
+
 # Define a classe da janela principal da aplicação
-
-
 class MainWindow(QMainWindow):
     def __init__(self, parent: QWidget | None = None, *args, **kwargs) -> None:
         super().__init__(parent, *args, **kwargs)
