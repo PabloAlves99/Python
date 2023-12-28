@@ -65,8 +65,24 @@ class ButtonsGrid(QGridLayout):
     def __init__(
             self, _display: Display, _info: Info, window: MainWindow,
             *args, **kwargs) -> None:
+        """
+        Inicia a classe ButtonsGrid.
+
+        Parâmetros:
+            _display (Display): Instância da classe Display, responsável por
+                exibir os números e resultados.
+            _info (Info): Instância da classe Info, usada para exibir a
+                equação atual e o resultado.
+            window (MainWindow): Instância da classe MainWindow, que contém
+                a janela principal da aplicação.
+            *args: Argumentos posicionais adicionais a serem passados para
+                a classe pai (QGridLayout).
+            **kwargs: Argumentos de palavra-chave adicionais a serem passados
+                para a classe pai (QGridLayout).
+        """
         super().__init__(*args, **kwargs)
 
+        # Máscara para disposição dos botões na calculadora
         self._grid_mask = [
             ['%', 'CE', 'C', '←'],
             ['½', '^', '√', '/'],
@@ -75,38 +91,70 @@ class ButtonsGrid(QGridLayout):
             ['1', '2', '3', '+'],
             ['±', '0', '.', '='],
         ]
+        # Instâncias dos objetos principais
         self.display = _display
         self.info = _info
         self.window = window
+
+        # Inicialização de variáveis de estado
         self._left = None
         self._right = None
         self._op = None
-        self.setSpacing(3)
-        self._equation = ''
-        self.create_buttons()
+
+        self.setSpacing(3)  # Configuração do espaçamento entre os botões
+        self._equation = ''  # Inicialização da string de equação
+        self.create_buttons()  # Criação dos botões
 
     @property
     def equation(self):
+        """
+        Getter para a propriedade 'equation'.
+
+        Retorna:
+            str: A equação atual.
+        """
         return self._equation
 
     @equation.setter
     def equation(self, value):
+        """
+        Setter para a propriedade 'equation'.
+
+        Parâmetros:
+            value (str): O novo valor para a equação.
+        """
         self._equation = value
         self.info.setText(value)
 
     def create_buttons(self):
+        """
+        Cria os botões para a calculadora e conecta-os aos métodos
+        correspondentes.
+
+        Este método cria instâncias de botões para cada elemento na máscara
+        da grade e os conecta aos métodos apropriados. Também configura a
+        aparência dos botões especiais.
+
+        Conexões de Sinal:
+            - eq_pressed: Conectado ao método _eq
+            - del_pressed: Conectado ao método display.backspace
+            - clear_pressed: Conectado ao método clear_display_and_info
+            - input_pressed: Conectado ao método insert_text_display
+            - operator_pressed: Conectado ao método _operator_clicked
+        """
         self.display.eq_pressed.connect(self._eq)
         self.display.del_pressed.connect(self.display.backspace)
         self.display.clear_pressed.connect(self.clear_display_and_info)
         self.display.input_pressed.connect(self.insert_text_display)
         self.display.operator_pressed.connect(self._operator_clicked)
 
+        # Loop para criar e adicionar botões à grade
         for row_number, row in enumerate(self._grid_mask):
             for column, text_grid in enumerate(row):
                 _button = Button(text_grid)
 
+                # Configurar botões especiais
                 if not self.is_num(text_grid):
-
                     self._config_special_button(_button)
 
                     if _button.text() == '=':
@@ -116,17 +164,48 @@ class ButtonsGrid(QGridLayout):
 
                 self.addWidget(_button, row_number, column)
 
+                # Conectar o botão ao método apropriado
                 slot = self._make_slot(
                     self.insert_text_display, text_grid)
 
                 self._connect_button_clicked(_button, slot)
 
     def _connect_button_clicked(self, button, slot):
+        """
+        Conecta um botão a um slot e define o foco no display após a conexão.
+
+        Este método conecta um botão a um slot específico e, em seguida, define
+        o foco no display para garantir uma experiência de usuário contínua.
+
+        Parâmetros:
+            - self: Instância da classe ButtonsGrid
+            - button: O botão a ser conectado
+            - slot: O slot ao qual o botão será conectado
+
+        Returns:
+            Nenhum
+        """
         button.clicked.connect(slot)
         self.display.setFocus()
 
     @Slot()
     def _make_slot(self, func, *args, **kwargs):
+        """
+        Cria um slot a partir de uma função com argumentos opcionais.
+
+        Este método cria um slot que chama a função fornecida com argumentos
+        opcionais. Após a execução da função, o foco é definido no display.
+
+        Parâmetros:
+            - self: Instância da classe ButtonsGrid
+            - func: A função a ser encapsulada no slot
+            - *args: Argumentos posicionais a serem passados para a função
+            - **kwargs: Argumentos de palavra-chave a serem passados para a
+            função
+
+        Returns:
+            Nenhum
+        """
         @Slot()
         def real_slot():
             func(*args, **kwargs)
