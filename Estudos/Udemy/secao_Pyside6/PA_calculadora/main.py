@@ -1,6 +1,26 @@
-#  pylint: disable=missing-docstring
 #  pylint: disable=no-name-in-module
+# pylint: disable=invalid-name
 #  type: ignore
+"""
+Módulo principal da aplicação da calculadora.
+
+Este módulo contém a implementação principal da calculadora,
+incluindo a definição de classes para botões, exibição de informações,
+visor e a janela principal.
+
+Módulo: main.py
+Autor: Pablo Alves
+
+Classes:
+    - Button: Classe para os botões da calculadora.
+    - Info: Classe para exibição de informações.
+    - Display: Classe para o visor da calculadora.
+    - MainWindow: Classe para a janela principal da aplicação.
+
+Uso:
+    - Este módulo é executado quando o script é iniciado.
+
+"""
 import sys
 import re
 import button_function as bf
@@ -192,7 +212,7 @@ class MainWindow(QMainWindow):
     - v_layout: Layout vertical do widget central.
     """
 
-    def __init__(self, parent: QWidget | None = None, *args, **kwargs) -> None:
+    def __init__(self, *args, parent: QWidget | None = None, **kwargs) -> None:
         super().__init__(parent, *args, **kwargs)
 
         # Configurando o layout básico
