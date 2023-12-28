@@ -51,7 +51,7 @@ class Button(QPushButton):
         super().__init__(*args, **kwargs)
         self.button_style()
 
-    def button_style(self):
+    def button_style(self) -> None:
         """Aplica estilos personalizados ao botão."""
 
         font = self.font()  # Obtém a fonte atual do botão
@@ -77,7 +77,7 @@ class Info(QLabel):
 
         self.config_style_info()
 
-    def config_style_info(self):
+    def config_style_info(self) -> None:
         """Configura o estilo da info."""
 
         # Define o tamanho da info e o alinhamento
@@ -91,11 +91,13 @@ class Display(QLineEdit):
     Visor (display) da calculadora.
 
     Sinais:
-    - eq_pressed: Emitido quando a tecla = ou Enter é pressionada.
-    - del_pressed: Emitido quando a tecla delete ou backspace é pressionada.
-    - clear_pressed: Emitido quando a tecla C ou ESC é pressionada.
-    - input_pressed: Emitido quando um dígito numérico ou ponto é inserido.
-    - operator_pressed: Emitido quando um operador é pressionado.
+    - eq_pressed (Signal): Emitido quando a tecla = ou Enter é pressionada.
+    - del_pressed (Signal): Emitido quando a tecla delete ou backspace é
+    pressionada.
+    - clear_pressed (Signal): Emitido quando a tecla C ou ESC é pressionada.
+    - input_pressed (Signal): Emitido quando um dígito numérico ou ponto é
+    inserido.
+    - operator_pressed (Signal): Emitido quando um operador é pressionado.
 
     Métodos:
     - __init__: Inicializa o visor.
@@ -120,7 +122,7 @@ class Display(QLineEdit):
         super().__init__(*args, **kwargs)
         self.config_style_display()
 
-    def config_style_display(self):
+    def config_style_display(self) -> None:
         """
         Aplica estilos personalizados ao "visor".
         """
@@ -189,12 +191,29 @@ class Display(QLineEdit):
             self.input_pressed.emit(text)
             return event.ignore()
 
-    def is_empty(self, string: str):
-        """Verifica se uma string está vazia."""
+    def is_empty(self, string: str) -> bool:
+        """
+        Verifica se uma string está vazia.
+
+        Args:
+            string (str): A string a ser verificada.
+
+        Returns:
+            bool: True se a string estiver vazia, False caso contrário.
+        """
         return len(string) == 0
 
-    def is_num_or_dot(self, string: str):
-        """Verifica se uma string contém um número ou ponto."""
+    def is_num_or_dot(self, string: str) -> bool:
+        """
+        Verifica se uma string contém um número ou ponto.
+
+        Args:
+            string (str): A string a ser verificada.
+
+        Returns:
+            bool: True se a string contiver um número ou ponto, False caso
+            contrário.
+        """
         return bool(NUM_OR_DOT_REGEX.search(string))
 
 
