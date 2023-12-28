@@ -1,6 +1,57 @@
 #  pylint: disable=missing-docstring
 #  pylint: disable=no-name-in-module
 #  type: ignore
+
+"""
+Módulo com funções relacionadas aos botões da calculadora.
+
+Este módulo define a classe `ButtonsGrid`, que herda de `QGridLayout` e
+gerencia a disposição e funcionalidade dos botões em uma calculadora.
+As funções específicas associadas aos diferentes tipos de botões são
+usadas para realizar operações quando os botões são pressionados.
+
+Módulo: button_function.py
+Autor: Pablo Alves
+
+Classes:
+    ButtonsGrid: Uma classe que herda de QGridLayout e define a disposição e
+    funcionalidade dos botões em uma calculadora.
+
+Módulo dependente:
+    main: Módulo contendo as definições para Info, Display, Button e MainWindow
+    que são usados pela classe ButtonsGrid.
+
+Funções:
+
+    - perform_addition(): Executa a operação de adição entre os números à
+    esquerda e à direita.
+
+    - perform_subtraction(): Executa a operação de subtração entre os números à
+    esquerda e à direita.
+
+    - perform_multiplication(): Executa a operação de multiplicação entre os
+    números à esquerda e à direita.
+
+    - perform_division(): Executa a operação de divisão entre os números à
+    esquerda e à direita.
+
+    - calculate_power(): Calcula a potência do número à esquerda elevado ao
+    número à direita.
+
+    - calculate_percentage(): Calcula a porcentagem do número à esquerda em
+    relação ao número à direita.
+
+    - root_square(): Calcula a raiz quadrada do número exibido no display.
+
+    - reverse_number(): Inverte o sinal do número exibido no display.
+
+    - calculate_half(): Calcula a metade do número exibido no display.
+
+Observações:
+    - Este módulo deve ser importado no módulo principal (main.py)
+      para ser utilizado na lógica dos botões da calculadora.
+
+"""
 import math
 import re
 from PySide6.QtWidgets import QGridLayout
