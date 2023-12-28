@@ -213,7 +213,20 @@ class ButtonsGrid(QGridLayout):
         return real_slot
 
     def insert_text_display(self, text):
+        """
+        Insere texto no display e ajusta o foco.
 
+        Este método insere o texto fornecido no display da calculadora,
+        verificando se o resultado seria um número válido. Após a inserção,
+        o foco é ajustado para o display.
+
+        Parâmetros:
+            - self: Instância da classe ButtonsGrid
+            - text: Texto a ser inserido no display
+
+        Returns:
+            Nenhum
+        """
         new_display_text = self.display.text() + text
 
         if not self.is_valid_number(new_display_text):
@@ -223,30 +236,54 @@ class ButtonsGrid(QGridLayout):
         self.display.setFocus()
 
     def _config_special_button(self, _button):
+        """
+        Configura ação para botões especiais.
+
+        Este método configura as ações específicas associadas aos botões
+        especiais da calculadora, como '=' para realizar a operação,
+        '←' para apagar o ultimo valor inserido, 'C' para limpar a calculadora,
+        'CE' para limpar o display, '±' para inverter o sinal,
+        '½' para calcular a metade e '√' para calcular a raiz quadrada.
+
+        Parâmetros:
+            - self: Instância da classe ButtonsGrid
+            - _button: Botão a ser configurado
+
+        Returns:
+            Nenhum
+        """
         text = _button.text()
 
+        # Configurar ação para o botão de igual
         if text == '=':
             self._connect_button_clicked(
                 _button, self._eq)
 
+        # Configurar ação para o botão de retroceder um caracter
         if text == '←':
             self._connect_button_clicked(_button, self.remove_last_character)
 
+        # Configurar ação para o botão de limpar a calculadora
         if text == 'C':
             _button.clicked.connect(self.clear_display_and_info)
 
+        # Configurar ação para o botão de limpar o display
         if text == 'CE':
             _button.clicked.connect(self.display.clear)
 
+        # Configurar ação para o botão de inverter o sinal
         if text == '±':
             _button.clicked.connect(self.reverse_number)
 
+        # Configurar ação para o botão de calcular a metade
         if text == '½':
             _button.clicked.connect(self.calculate_half)
 
+        # Configurar ação para o botão de calcular a raiz quadrada
         if text == '√':
             _button.clicked.connect(self.root_square)
 
+        # Configurar ação para os operadores (+, -, *, /, %, ^)
         if text in '+-*/%^':
             self._connect_button_clicked(
                 _button, self._make_slot(
@@ -256,6 +293,18 @@ class ButtonsGrid(QGridLayout):
 
     @Slot()
     def clear_display_and_info(self):
+        """
+        Limpa o display e a informação.
+
+        Este método é chamado quando o botão 'C' é pressionado. Ele limpa o
+        conteúdo do display, a informação e redefine as variáveis de operação.
+
+        Parâmetros:
+            - self: Instância da classe ButtonsGrid
+
+        Returns:
+            Nenhum
+        """
         self.display.clear()
         self.info.clear()
         self._op = None
@@ -265,10 +314,37 @@ class ButtonsGrid(QGridLayout):
 
     @Slot()
     def is_num(self, string: str):
+        """
+        Verifica se uma string é numérica.
+
+        Este método verifica se a string contém apenas dígitos numéricos.
+
+        Parâmetros:
+            - self: Instância da classe ButtonsGrid
+            - string: String a ser verificada
+
+        Returns:
+            bool: True se a string contiver apenas dígitos numéricos,
+            False caso contrário
+        """
         return bool(NUM_REGEX.search(string))
 
     @Slot()
     def is_valid_number(self, string: str):
+        """
+        Verifica se uma string é um número válido.
+
+        Este método verifica se a string pode ser convertida para um número
+        float.
+
+        Parâmetros:
+            - self: Instância da classe ButtonsGrid
+            - string: String a ser verificada
+
+        Returns:
+            bool: True se a string pode ser convertida para float, False caso
+            contrário
+        """
         valid = False
         try:
             float(string)
@@ -279,6 +355,18 @@ class ButtonsGrid(QGridLayout):
 
     @Slot()
     def remove_last_character(self):
+        """
+        Remove o último caractere do display.
+
+        Este método é chamado quando o botão '←' é pressionado. Remove o último
+        caractere do display.
+
+        Parâmetros:
+            - self: Instância da classe ButtonsGrid
+
+        Returns:
+            Nenhum
+        """
         if self._get_display_text_stripped():
             new_display = self.display.text()
             self.display.setText(new_display[:-1])
@@ -286,9 +374,35 @@ class ButtonsGrid(QGridLayout):
 
     @Slot()
     def _get_display_text_stripped(self):
+        """
+        Obtém o texto do display removendo espaços em branco à esquerda e à
+        direita.
+
+        Este método é usado internamente para obter o texto do display sem
+        espaços em branco.
+
+        Parâmetros:
+            - self: Instância da classe ButtonsGrid
+
+        Returns:
+            str: Texto do display sem espaços em branco à esquerda e à direita
+        """
         return self.display.text().strip()
 
     def handle_error(self, error_message):
+        """
+        Exibe uma caixa de diálogo de erro.
+
+        Este método é chamado para exibir uma caixa de diálogo com uma mensagem
+        de erro.
+
+        Parâmetros:
+            - self: Instância da classe ButtonsGrid
+            - error_message: Mensagem de erro a ser exibida
+
+        Returns:
+            Nenhum
+        """
         msg_box = self.window.make_msg_box()
         msg_box.setText(error_message)
         msg_box.setIcon(msg_box.Icon.Critical)
