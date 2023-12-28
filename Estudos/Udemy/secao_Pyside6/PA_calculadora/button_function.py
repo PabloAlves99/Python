@@ -142,6 +142,7 @@ class ButtonsGrid(QGridLayout):
             - input_pressed: Conectado ao método insert_text_display
             - operator_pressed: Conectado ao método _operator_clicked
         """
+        # Conectar sinais aos métodos correspondentes
         self.display.eq_pressed.connect(self._eq)
         self.display.del_pressed.connect(self.display.backspace)
         self.display.clear_pressed.connect(self.clear_display_and_info)
@@ -157,11 +158,13 @@ class ButtonsGrid(QGridLayout):
                 if not self.is_num(text_grid):
                     self._config_special_button(_button)
 
+                    # Configurar a aparência dos botões especiais
                     if _button.text() == '=':
                         _button.setProperty("cssClass", "specialButtonSpace")
                     else:
                         _button.setProperty("cssClass", "specialButton")
 
+                # Adicionar botão à grade
                 self.addWidget(_button, row_number, column)
 
                 # Conectar o botão ao método apropriado
