@@ -1,4 +1,35 @@
-#  pylint: disable=missing-docstring
+
+"""
+Este módulo define variáveis de configuração para a aplicação.
+
+Módulo: variables.py
+Autor: Pablo Alves
+
+Variáveis:
+    - ROOT_DIR: Caminho para o diretório raiz do projeto.
+    - FILES_DIR: Caminho para o diretório 'files' dentro do diretório raiz.
+    - WINDOW_ICON_PATH: Caminho para o arquivo 'big_icon.ico' dentro do
+    diretório 'files'.
+
+Constantes:
+    - BIG_FONT_SIZE: Tamanho da fonte grande.
+    - MEDIUM_FONT_SIZE: Tamanho da fonte média.
+    - SMALL_FONT_SIZE: Tamanho da fonte pequena.
+    - TEXT_MARGIN: Margem do texto.
+    - MINIMUM_WIDTH: Largura mínima da janela.
+
+Paleta de Cores:
+    - PRIMARY_COLOR: Cor primária padrão.
+    - DARKER_PRIMARY_COLOR: Tom mais escuro da cor primária.
+    - DARKEST_PRIMARY_COLOR: Tom mais escuro ainda da cor primária.
+
+Cores Especiais:
+    - ESPECIAL_PRIMARY_COLOR: Cor primária especial.
+    - ESPECIAL_DARKER_PRIMARY_COLOR: Tom mais escuro da cor primária especial.
+    - ESPECIAL_DARKEST_PRIMARY_COLOR: Tom mais escuro ainda da cor primária
+    especial.
+
+"""
 from pathlib import Path
 
 ROOT_DIR = Path(__file__).parent
