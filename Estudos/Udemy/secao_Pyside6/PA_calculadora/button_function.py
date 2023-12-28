@@ -136,14 +136,14 @@ class ButtonsGrid(QGridLayout):
         aparência dos botões especiais.
 
         Conexões de Sinal:
-            - eq_pressed: Conectado ao método _eq
+            - eq_pressed: Conectado ao método handle_equal_button_click
             - del_pressed: Conectado ao método display.backspace
             - clear_pressed: Conectado ao método clear_display_and_info
             - input_pressed: Conectado ao método insert_text_display
             - operator_pressed: Conectado ao método _operator_clicked
         """
         # Conectar sinais aos métodos correspondentes
-        self.display.eq_pressed.connect(self._eq)
+        self.display.eq_pressed.connect(self.handle_equal_button_click)
         self.display.del_pressed.connect(self.display.backspace)
         self.display.clear_pressed.connect(self.clear_display_and_info)
         self.display.input_pressed.connect(self.insert_text_display)
@@ -260,7 +260,7 @@ class ButtonsGrid(QGridLayout):
         # Configurar ação para o botão de igual
         if text == '=':
             self._connect_button_clicked(
-                _button, self._eq)
+                _button, self.handle_equal_button_click)
 
         # Configurar ação para o botão de retroceder um caracter
         if text == '←':
@@ -415,26 +415,34 @@ class ButtonsGrid(QGridLayout):
 
     @Slot()
     def _operator_clicked(self, text):
+        """
+        Lida com o clique em um operador.
 
+        Este método é chamado quando um operador é pressionado. Ele gerencia a
+        lógica de cálculo quando os operadores são inseridos.
+
+        Parâmetros:
+            - self: Instância da classe ButtonsGrid
+            - text: O texto do operador pressionado
+
+        Returns:
+            Nenhum
+        """
         if self._get_display_text_stripped():
 
             if self._left is None:
 
                 if self._op is None:
-                    self._left = round(float(self.display.text()), 3)
-
-                elif self._op == '-':
-                    self._left = round(
-                        float(f'{self._op}{self.display.text()}'), 3)
-
-                else:
+                    # executa se não existir operador e número a esquerda
                     self._left = round(float(self.display.text()), 3)
 
             else:
+                # Se já existe um número à esquerda, executa a operação
                 self._right = round(float(self.display.text()), 3)
                 self.perform_operations()
 
         if self._left is not None:
+            # Atualiza a equação exibida com o novo operador
             self.equation = f'{self._left} {text} '
 
         self._op = text
@@ -442,16 +450,43 @@ class ButtonsGrid(QGridLayout):
         self.display.setFocus()
 
     @Slot()
-    def _eq(self):
+    def handle_equal_button_click(self):
+        """
+        Manipula o evento de clique no botão de igual (=).
+
+        Este método é chamado quando o botão de igual é pressionado.
+        Ele verifica o estado atual da calculadora e executa as operações
+        pendentes, se houver, ou atualiza o número à esquerda.
+
+        Se o número à esquerda não estiver definido, o método define o
+        número à esquerda como o valor atual no display e limpa o display.
+        Caso contrário, define o número à direita como o valor atual no
+        display e executa as operações pendentes.
+
+        Conexões de Sinal:
+        - eq_pressed: Conectado a este método
+
+        Raises:
+            ValueError: Se houver uma entrada inválida, como um texto não
+                        numérico no display.
+
+        Parâmetros:
+            - self: Instância da classe ButtonsGrid
+
+        Returns:
+            Nenhum
+        """
         text = self.display.text()
 
+        # Verifica se o texto no display é um número válido
         if self.is_valid_number(text):
-
+            # Manipula resultados grandes
             if self.handle_large_result(text):
                 return
 
             if self._left is not None:
                 self._right = round(float(text), 3)
+
             else:
                 self._left = round(float(text), 3)
                 self.display.clear()
@@ -471,9 +506,30 @@ class ButtonsGrid(QGridLayout):
 
     @Slot()
     def perform_operations(self):
+        """
+        Executa as operações com base nos operadores e operandos atuais.
 
+        Atualiza a equação exibida, chama a função correspondente ao operador
+        selecionado e atualiza o número à esquerda com o resultado calculado.
+
+        Conexões de Sinal:
+            - Este método é conectado ao clique do botão de igual (=).
+
+        Raises:
+            - ZeroDivisionError: Se ocorrer uma divisão por zero durante a
+            execução.
+            - OverflowError: Se a conta resultar em um valor muito grande para
+            ser representado.
+            - (TypeError, ValueError): Se ocorrerem erros de tipo ou valor
+            durante a execução.
+
+        Returns:
+            Nenhum
+        """
+        # Atualiza a equação exibida
         self.equation = f'{self._left} {self._op} {self._right}'
 
+        # Mapeia operadores para funções correspondentes
         button_functions = {
             '+': self.perform_addition,
             '-': self.perform_subtraction,
@@ -484,7 +540,9 @@ class ButtonsGrid(QGridLayout):
         }
         if self._op in button_functions:
             try:
+                # Chama a função correspondente ao operador
                 number = round(float(button_functions[self._op]()), 3)
+                # Manipula resultados grandes
                 if not self.handle_large_result(number):
                     self._left = number
                 else:
@@ -506,38 +564,68 @@ class ButtonsGrid(QGridLayout):
 
     @Slot()
     def calculate_percentage(self):
+        """
+        Calcula e retorna a porcentagem do número à esquerda pelo número
+        à direita.
+        """
         return round((self._left / 100) * self._right, 3)
 
     @Slot()
     def perform_addition(self):
+        """
+        Executa e retorna a adição entre os números à esquerda e à direita.
+        """
         return round(self._left + self._right, 3)
 
     @Slot()
     def perform_subtraction(self):
+        """
+        Executa e retorna a subtração entre os números à esquerda e à direita.
+        """
         return round(self._left - self._right, 3)
 
     @Slot()
     def perform_multiplication(self):
+        """
+        Executa e retorna a multiplicação entre os números à esquerda e à
+        direita.
+        """
         return round(self._left * self._right, 3)
 
     @Slot()
     def perform_division(self):
+        """
+        Executa e retorna a divisão entre os números à esquerda e à direita.
+
+        Raises:
+            ZeroDivisionError: Se a divisão por zero for detectada.
+        """
         return round(self._left / self._right, 3)
 
     @Slot()
     def root_square(self):
-        try:
-            number = float(self.display.text())
+        """
+        Calcula a raiz quadrada do número exibido no display e atualiza a
+        equação.
 
+        Raises:
+            ValueError: Se a entrada não for um número válido.
+        """
+        try:
+            # Obtém o número do display
+            number = float(self.display.text())
+            #  Verifica se esse número é um número válido
             if self.is_valid_number(number):
 
                 if number < 0:
                     self.handle_error(
                         "A raiz quadrada de número negativo não é definida.")
 
+                # Calcula a raiz quadrada e arredonda para 3 casas decimais
                 result = round(math.sqrt(number), 3)
                 equation_text = f'√({self.display.text()})'
 
+                # Atualiza a equação com a raiz quadrada
                 if self._left is not None:
 
                     if self._right is None:
