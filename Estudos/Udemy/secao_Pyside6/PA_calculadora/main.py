@@ -83,11 +83,11 @@ class Display(QLineEdit):
     - keyPressEvent: Manipula eventos de tecla.
 
     Atributos:
-    - eq_pressed: Sinal para tecla = ou Enter.
-    - del_pressed: Sinal para tecla delete ou backspace.
-    - clear_pressed: Sinal para tecla C ou ESC.
-    - input_pressed: Sinal para dígitos numéricos ou ponto.
-    - operator_pressed: Sinal para operadores.
+    - eq_pressed (Signal): Sinal para tecla = ou Enter.
+    - del_pressed (Signal): Sinal para tecla delete ou backspace.
+    - clear_pressed (Signal): Sinal para tecla C ou ESC.
+    - input_pressed (Signal): Sinal para dígitos numéricos ou ponto.
+    - operator_pressed (Signal): Sinal para operadores.
     """
     # Define sinais personalizados para eventos específicos
     eq_pressed = Signal()
