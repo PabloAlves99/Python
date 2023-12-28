@@ -192,7 +192,6 @@ class ButtonsGrid(QGridLayout):
             self.equation = f'{self._left} {text} '
 
         self._op = text
-        print(f'Operação = {self._op}')
         self.display.clear()
         self.display.setFocus()
 
@@ -255,8 +254,6 @@ class ButtonsGrid(QGridLayout):
                 self.handle_error(
                     'Erro de tipo. Verifique os valores inseridos.')
                 self._left = None
-
-        print(f'Resultado = {self._left}')
 
         self.info.setText(f'{self.info.text()} = {self._left}')
         self.display.setFocus()
