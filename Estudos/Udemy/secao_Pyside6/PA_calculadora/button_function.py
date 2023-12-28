@@ -30,7 +30,6 @@ class ButtonsGrid(QGridLayout):
         self._left = None
         self._right = None
         self._op = None
-        self._especial_op = None
         self.setSpacing(3)
         self._equation = ''
         self.create_buttons()

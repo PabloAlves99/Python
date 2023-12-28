@@ -136,7 +136,7 @@ class Display(QLineEdit):
         is_esc = key in [keys.Key_Escape, keys.Key_C]
         is_operator = key in [
             keys.Key_Plus, keys.Key_Minus, keys.Key_Slash, keys.Key_Asterisk,
-            keys.Key_P,
+            keys.Key_P, keys.Key_Percent
         ]
 
         # Emite o sinal correspondente ao evento
