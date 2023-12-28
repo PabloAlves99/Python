@@ -1,4 +1,4 @@
-#  pylint: disable=missing-docstring
+
 #  pylint: disable=no-name-in-module
 #  type: ignore
 
@@ -62,6 +62,72 @@ NUM_REGEX = re.compile(r'^[0-9]$')
 
 
 class ButtonsGrid(QGridLayout):
+    """
+    Classe responsável pela gestão da disposição e funcionalidade dos botões
+    em uma calculadora.
+
+    Esta classe herda de QGridLayout e define a organização dos botões em
+    linhas e colunas. Ela gerencia as interações do usuário com os botões
+    e coordena as operações da calculadora.
+
+    Atributos:
+        - _grid_mask (list): Máscara que define a disposição dos botões na
+          calculadora.
+        - display (Display): Instância da classe Display, responsável por
+          exibir os números e resultados.
+        - info (Info): Instância da classe Info, usada para exibir a
+          equação atual e o resultado.
+        - window (MainWindow): Instância da classe MainWindow, que contém
+          a janela principal da aplicação.
+        - _left (float): Número à esquerda na expressão atual.
+        - _right (float): Número à direita na expressão atual.
+        - _op (str): Operador atual.
+        - _equation (str): String que representa a equação atual.
+
+    Métodos Públicos:
+        - __init__: Inicializa a classe ButtonsGrid.
+        - create_buttons: Cria os botões para a calculadora e conecta-os
+          aos métodos correspondentes.
+
+    Métodos Privados:
+        - _connect_button_clicked: Conecta um botão a um slot e define o
+          foco no display após a conexão.
+        - _make_slot: Cria um slot a partir de uma função com argumentos
+          opcionais.
+
+    Métodos de Slots:
+        - insert_text_display: Insere texto no display e ajusta o foco.
+        - clear_display_and_info: Limpa o display e a informação.
+        - is_num: Verifica se uma string é numérica.
+        - is_valid_number: Verifica se uma string é um número válido.
+        - remove_last_character: Remove o último caractere do display.
+        - _get_display_text_stripped: Obtém o texto do display removendo
+          espaços em branco à esquerda e à direita.
+        - handle_error: Exibe uma caixa de diálogo de erro.
+        - _operator_clicked: Lida com o clique em um operador.
+        - handle_equal_button_click: Manipula o evento de clique no botão
+          de igual (=).
+        - perform_operations: Executa as operações com base nos operadores
+          e operandos atuais.
+        - calculate_percentage: Calcula a porcentagem do número à esquerda
+          pelo número à direita.
+        - perform_addition: Executa e retorna a adição entre os números à
+          esquerda e à direita.
+        - perform_subtraction: Executa e retorna a subtração entre os
+          números à esquerda e à direita.
+        - perform_multiplication: Executa e retorna a multiplicação entre os
+          números à esquerda e à direita.
+        - perform_division: Executa e retorna a divisão entre os números à
+          esquerda e à direita.
+        - root_square: Calcula a raiz quadrada do número exibido no display
+          e atualiza a equação.
+        - reverse_number: Inverte o sinal do número exibido no display.
+        - calculate_half: Calcula a metade do número exibido no display.
+        - calculate_power: Calcula a potência do número à esquerda elevado ao
+          número à direita.
+        - handle_large_result: Exibe um erro se o resultado for maior que um
+          limite específico.
+    """
     def __init__(
             self, _display: Display, _info: Info, window: MainWindow,
             *args, **kwargs) -> None:
@@ -645,11 +711,18 @@ class ButtonsGrid(QGridLayout):
 
     @Slot()
     def reverse_number(self):
+        """
+        Inverte o sinal do número exibido no display.
 
+        Raises:
+            ValueError: Se a entrada não for um número válido.
+        """
         try:
+            # Obtém o número do display e verifica se é um número válido
             number = float(self.display.text())
 
             if self.is_valid_number(number):
+                # Inverte o sinal do número e atualiza o display
                 self.display.setText(str(round(number * -1, 3)))
 
         except (TypeError, ValueError):
@@ -658,11 +731,18 @@ class ButtonsGrid(QGridLayout):
 
     @Slot()
     def calculate_half(self):
+        """
+        Calcula a metade do número exibido no display.
 
+        Raises:
+            ValueError: Se a entrada não for um número válido.
+        """
         try:
+            # Obtém o número do display e verifica se é um número válido
             number = float(self.display.text())
 
             if self.is_valid_number(number):
+                # Calcula a metade do número e atualiza o display
                 self.display.setText(str(round(0.5 * number, 3)))
 
         except (TypeError, ValueError):
@@ -671,15 +751,30 @@ class ButtonsGrid(QGridLayout):
 
     @Slot()
     def calculate_power(self):
+        """
+        Calcula a potência do número à esquerda elevado ao número à direita.
+
+        Raises:
+            ValueError: Se a entrada não for um número válido.
+        """
+        # Calcula a potência e retorna o resultado arredondado
         return round(self._left ** self._right, 3)
 
     def handle_large_result(self, result):
         """
         Exibe um erro se o resultado for maior que um limite específico.
+
+        Parâmetros:
+            result (float): O resultado a ser verificado.
+
+        Returns:
+            bool: True se o resultado for maior que o limite, False caso
+            contrário.
         """
         limit = 1e15  # Defina o limite conforme necessário
 
         if float(result) > limit:
+            # Exibe uma mensagem de erro se o resultado for muito grande
             error_message = (
                 f"O resultado é muito grande para ser exibido.\n"
                 f"O resultado é {result:.15f}...")
