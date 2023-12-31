@@ -11,13 +11,13 @@ Bem-vindo ao meu diário de estudos em Python! Este é o lugar onde registro min
 
 - **[Udemy com Luiz Otávio](https://github.com/PabloAlves99/Python/tree/main/Estudos/Udemy)** 🎓 <br><br>
      No curso da Udemy com Luiz Otávio, estou vivenciando uma jornada de aprendizado abrangente em Python, explorando desde os fundamentos até tópicos avançados. Aqui estão alguns dos destaques do curso:
-    - Python 3 básico (com lógica de programação)
-    - Python 3 intermediário (com programação procedural e funcional)
-    - Python 3 avançado (com programação orientada a objetos)
-    - Módulos úteis: inclui aulas de módulos específicos do Python e de terceiros, como PySide6 para Interface Gráfica com Qt 6, Selenium, Django e muito mais
+    - [Python 3 básico (com lógica de programação)](https://github.com/PabloAlves99/Python/tree/main/Estudos/logica_basica)
+    - [Python 3 intermediário (com programação procedural e funcional)](https://github.com/PabloAlves99/Python/tree/main/Estudos/Udemy)
+    - [Python 3 avançado (com programação orientada a objetos)](https://github.com/PabloAlves99/Python/tree/main/Estudos/Udemy/POO)
+    - [Módulos úteis: inclui aulas de módulos específicos do Python e de terceiros, como PySide6 para Interface Gráfica com Qt 6, Selenium, Django e muito mais](https://github.com/PabloAlves99/Python/tree/main/Estudos/Udemy/modulos)
     - Django para criação de sites e APIs
     - Bases de dados relacionais: SQLite3, MySQL e MariaDB
-    - Interface Gráfica com PySide6 (Qt 6) com Python
+    - [Interface Gráfica com PySide6 (Qt 6) com Python](https://github.com/PabloAlves99/Python/tree/main/Estudos/Udemy/secao_Pyside6)
     - Testes automatizados no Python (com TDD básico)
     - Design Patterns (Padrões de projeto - GoF)
     - Programação Orientada a Objetos Avançada
