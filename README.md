@@ -4,6 +4,7 @@ Bem-vindo ao meu diário de estudos em Python! Este é o lugar onde registro min
 
 
 📂 Pastas com Projetos: Loading...
+- **[Calculadora](https://github.com/PabloAlves99/Python/tree/main/Estudos/Udemy/secao_Pyside6/PA_calculadora)**
 
 
 ## Minha Jornada Pessoal 🗺️📚
