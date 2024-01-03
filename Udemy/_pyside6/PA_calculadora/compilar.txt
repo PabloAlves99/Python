@@ -2,12 +2,19 @@ pyinstaller
 --name="PA Calculator" 
 --noconfirm 
 --onefile 
---add-data='..\..\Udemy\secao_Pyside6\PA_calculadora\files\;files\' 
---icon='..\..\Udemy\secao_Pyside6\PA_calculadora\files\big_icon.ico' 
+--add-data='..\..\Udemy\_pyside6\pA_calculadora\files\;files\' 
+--icon='..\..\Udemy\_pyside6\PA_calculadora\files\big_icon.ico' 
 --noconsole 
 --clean 
 --log-level=WARN 
---distpath="Estudos\Projetos\calculadora\dist" 
---workpath="Estudos\Projetos\calculadora\build" 
---specpath="Estudos\Projetos\calculadora" 
-Estudos\Udemy\secao_Pyside6\PA_calculadora\main.py
+--distpath="Projetos\calculadora\dist" 
+--workpath="Projetos\calculadora\build" 
+--specpath="Projetos\calculadora" 
+Udemy\_pyside6\PA_calculadora\main.py
+
+
+Executar o texto assim   |
+                        \|/
+                         v
+                         
+pyinstaller --name="PA Calculator" --noconfirm --onefile --add-data='..\..\Udemy\_pyside6\pA_calculadora\files\;files\' --icon='..\..\Udemy\_pyside6\PA_calculadora\files\big_icon.ico' --noconsole --clean --log-level=WARN --distpath="Projetos\calculadora\dist" --workpath="Projetos\calculadora\build" --specpath="Projetos\calculadora" Udemy\_pyside6\PA_calculadora\main.py
