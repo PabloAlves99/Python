@@ -4,20 +4,20 @@ Bem-vindo ao meu diário de estudos em Python! Este é o lugar onde registro min
 
 
 📂 Pastas com Projetos: Loading...
-- **[Calculadora](https://github.com/PabloAlves99/Python/tree/main/Estudos/Udemy/secao_Pyside6/PA_calculadora)**
+- **[Calculadora](https://github.com/PabloAlves99/Python/tree/main/Udemy/secao_Pyside6/PA_calculadora)**
 
 
 ## Minha Jornada Pessoal 🗺️📚
 
-- **[Udemy com Luiz Otávio](https://github.com/PabloAlves99/Python/tree/main/Estudos/Udemy)** 🎓 <br><br>
+- **[Udemy com Luiz Otávio](https://github.com/PabloAlves99/Python/tree/main/Udemy)** 🎓 <br><br>
      No curso da Udemy com Luiz Otávio, estou vivenciando uma jornada de aprendizado abrangente em Python, explorando desde os fundamentos até tópicos avançados. Aqui estão alguns dos destaques do curso:
-    - [Python 3 básico (com lógica de programação)](https://github.com/PabloAlves99/Python/tree/main/Estudos/logica_basica)
-    - [Python 3 intermediário (com programação procedural e funcional)](https://github.com/PabloAlves99/Python/tree/main/Estudos/Udemy)
-    - [Python 3 avançado (com programação orientada a objetos)](https://github.com/PabloAlves99/Python/tree/main/Estudos/Udemy/POO)
-    - [Módulos úteis: inclui aulas de módulos específicos do Python e de terceiros, como PySide6 para Interface Gráfica com Qt 6, Selenium, Django e muito mais](https://github.com/PabloAlves99/Python/tree/main/Estudos/Udemy/modulos)
+    - [Python 3 básico (com lógica de programação)](https://github.com/PabloAlves99/Python/tree/main/logica_basica)
+    - [Python 3 intermediário (com programação procedural e funcional)](https://github.com/PabloAlves99/Python/tree/main/Udemy)
+    - [Python 3 avançado (com programação orientada a objetos)](https://github.com/PabloAlves99/Python/tree/main/Udemy/POO)
+    - [Módulos úteis: inclui aulas de módulos específicos do Python e de terceiros, como PySide6 para Interface Gráfica com Qt 6, Selenium, Django e muito mais](https://github.com/PabloAlves99/Python/tree/main/Udemy/modulos)
     - Django para criação de sites e APIs
     - Bases de dados relacionais: SQLite3, MySQL e MariaDB
-    - [Interface Gráfica com PySide6 (Qt 6) com Python](https://github.com/PabloAlves99/Python/tree/main/Estudos/Udemy/secao_Pyside6)
+    - [Interface Gráfica com PySide6 (Qt 6) com Python](https://github.com/PabloAlves99/Python/tree/main/Udemy/secao_Pyside6)
     - Testes automatizados no Python (com TDD básico)
     - Design Patterns (Padrões de projeto - GoF)
     - Programação Orientada a Objetos Avançada
@@ -26,17 +26,17 @@ Bem-vindo ao meu diário de estudos em Python! Este é o lugar onde registro min
     - Extra: SQL com MySQL
     - Extra: Comandos Unix (Linux, Mac e Windows WSL2)
   
-- **[USP Introdução à Ciência da Computação com Python (com Fabio Kon)](https://github.com/PabloAlves99/Python/tree/main/Estudos/Universidade%20de%20S%C3%A3o%20Paulo)** 🎓 <br><br>
+- **[USP Introdução à Ciência da Computação com Python (com Fabio Kon)](https://github.com/PabloAlves99/Python/tree/main/Universidade%20de%20S%C3%A3o%20Paulo)** 🎓 <br><br>
     No curso da USP, "Introdução à Ciência da Computação com Python", guiado pelo professor Fabio Kon, concentrei-me no desenvolvimento essencial de lógica de programação utilizando Python. Os principais destaques dessa parte da minha jornada incluem:
     - Lógica de Programação com Python: Explorei os princípios fundamentais da lógica de programação, utilizando Python como ferramenta principal. Aprofundei-me em conceitos-chave, desenvolvendo a habilidade de criar algoritmos eficientes e compreender a estrutura lógica por trás da programação.
     - Participação Ativa em Projetos: O curso proporcionou oportunidades práticas para aplicar a lógica em projetos significativos. Trabalhar em problemas reais fortaleceu minha capacidade de traduzir conceitos teóricos em soluções práticas.
 
-- [Lógica básica](https://github.com/PabloAlves99/Python/tree/main/Estudos/logica_basica) 🧠<br><br>
+- [Lógica básica](https://github.com/PabloAlves99/Python/tree/main/logica_basica) 🧠<br><br>
   Destaco o conjunto de aprendizado focado na lógica básica, extraído dos cursos da Udemy com Luiz Otávio e da USP ministrado pelo professor Fabio Kon.
   Essa base sólida proporcionou a confiança necessária para enfrentar desafios mais avançados.
 
 
-- [Livros](https://github.com/PabloAlves99/Python/tree/main/Estudos/livros) 📚<br><br>
+- [Livros](https://github.com/PabloAlves99/Python/tree/main/livros) 📚<br><br>
 
   **Entendendo algoritmos. Um guia ilustrado para programadores e outros curiosos - Aditya Y. Bhargava** 📖<br>
    O objetivo principal do livro é proporcionar uma compreensão clara e acessível dos conceitos fundamentais de algoritmos e estruturas de dados. Ele é projetado visando tornar esses tópicos complexos mais compreensíveis por meio de explicações claras e exemplos práticos.<!-- O livro é amplamente utilizado como uma introdução sólida à ciência da computação e algoritmos para estudantes e entusiastas da programação. -->
@@ -50,5 +50,5 @@ Bem-vindo ao meu diário de estudos em Python! Este é o lugar onde registro min
     - Grafos e Algoritmo de Busca em Largura (BFS): Exploração de estruturas de grafos e um algoritmo de busca em largura.
     - Programação Linear: Uma técnica para otimização de problemas lineares.-->
 
-- [Codewar](https://github.com/PabloAlves99/Python/tree/main/Estudos/codewar) 🏆<br><br>
+- [Codewar](https://github.com/PabloAlves99/Python/tree/main/codewar) 🏆<br><br>
   Alguns desafios simples que se revelaram fundamentais para o meu aprendizado. Esses pequenos desafios proporcionam uma experiência prática e divertida.
