@@ -1,0 +1,30 @@
+# Environment
+.env
+.venv
+env/
+venv/
+ENV/
+
+.gitattributes
+
+# Arquivos compilados
+*.pyc
+*.pyo
+
+# Jupyter Notebook
+.ipynb_checkpoints
+
+# Dependências e arquivos gerados pelos gerenciadores de pacotes
+node_modules/
+build/
+dist/
+*.egg-info/
+*.egg/
+*.pyc
+*.pyo
+*.pyd
+__pycache__/
+
+# Arquivos de configuração específicos do sistema
+.DS_Store
+Thumbs.db
