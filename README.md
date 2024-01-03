@@ -4,7 +4,7 @@ Bem-vindo ao meu diário de estudos em Python! Este é o lugar onde registro min
 
 
 📂 Pastas com Projetos: Loading...
-- **[Calculadora](https://github.com/PabloAlves99/Python/tree/main/Udemy/secao_Pyside6/PA_calculadora)**
+- **[Calculadora](https://github.com/PabloAlves99/Python/tree/main/Udemy/_pyside6/PA_calculadora)**
 
 
 ## Minha Jornada Pessoal 🗺️📚
@@ -17,7 +17,7 @@ Bem-vindo ao meu diário de estudos em Python! Este é o lugar onde registro min
     - [Módulos úteis: inclui aulas de módulos específicos do Python e de terceiros, como PySide6 para Interface Gráfica com Qt 6, Selenium, Django e muito mais](https://github.com/PabloAlves99/Python/tree/main/Udemy/modulos)
     - Django para criação de sites e APIs
     - Bases de dados relacionais: SQLite3, MySQL e MariaDB
-    - [Interface Gráfica com PySide6 (Qt 6) com Python](https://github.com/PabloAlves99/Python/tree/main/Udemy/secao_Pyside6)
+    - [Interface Gráfica com PySide6 (Qt 6) com Python](https://github.com/PabloAlves99/Python/tree/main/Udemy/_pyside6)
     - Testes automatizados no Python (com TDD básico)
     - Design Patterns (Padrões de projeto - GoF)
     - Programação Orientada a Objetos Avançada
@@ -26,7 +26,7 @@ Bem-vindo ao meu diário de estudos em Python! Este é o lugar onde registro min
     - Extra: SQL com MySQL
     - Extra: Comandos Unix (Linux, Mac e Windows WSL2)
   
-- **[USP Introdução à Ciência da Computação com Python (com Fabio Kon)](https://github.com/PabloAlves99/Python/tree/main/Universidade%20de%20S%C3%A3o%20Paulo)** 🎓 <br><br>
+- **[USP Introdução à Ciência da Computação com Python (com Fabio Kon)](https://github.com/PabloAlves99/Python/tree/main/universidade_de_Sao_Paulo)** 🎓 <br><br>
     No curso da USP, "Introdução à Ciência da Computação com Python", guiado pelo professor Fabio Kon, concentrei-me no desenvolvimento essencial de lógica de programação utilizando Python. Os principais destaques dessa parte da minha jornada incluem:
     - Lógica de Programação com Python: Explorei os princípios fundamentais da lógica de programação, utilizando Python como ferramenta principal. Aprofundei-me em conceitos-chave, desenvolvendo a habilidade de criar algoritmos eficientes e compreender a estrutura lógica por trás da programação.
     - Participação Ativa em Projetos: O curso proporcionou oportunidades práticas para aplicar a lógica em projetos significativos. Trabalhar em problemas reais fortaleceu minha capacidade de traduzir conceitos teóricos em soluções práticas.
