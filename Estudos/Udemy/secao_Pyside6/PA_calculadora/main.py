@@ -1,5 +1,4 @@
-#  pylint: disable=no-name-in-module
-# pylint: disable=invalid-name
+# pylint: disable=all
 #  type: ignore
 """
 Módulo principal da aplicação da calculadora.
