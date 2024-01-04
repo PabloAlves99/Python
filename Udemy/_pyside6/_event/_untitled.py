@@ -1,14 +1,13 @@
 # pylint: disable=all
-
 # -*- coding: utf-8 -*-
 
-###############################################################################
-# Form generated from reading UI file 'untitled.ui'
+################################################################################
+# Form generated from reading UI file 'window.ui'
 ##
-# Created by: Qt User Interface Compiler version 6.6.1
+# Created by: Qt User Interface Compiler version 6.4.2
 ##
 # WARNING! All changes made in this file will be lost when recompiling UI file!
-###############################################################################
+################################################################################
 
 from PySide6.QtCore import (QCoreApplication, QDate, QDateTime, QLocale,
                             QMetaObject, QObject, QPoint, QRect,
@@ -26,56 +25,43 @@ class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
         if not MainWindow.objectName():
             MainWindow.setObjectName(u"MainWindow")
-        MainWindow.resize(660, 440)
+        MainWindow.resize(800, 600)
         self.centralwidget = QWidget(MainWindow)
         self.centralwidget.setObjectName(u"centralwidget")
         self.horizontalLayout = QHBoxLayout(self.centralwidget)
         self.horizontalLayout.setObjectName(u"horizontalLayout")
         self.gridLayout = QGridLayout()
         self.gridLayout.setObjectName(u"gridLayout")
-        self.label_result = QLabel(self.centralwidget)
-        self.label_result.setObjectName(u"label_result")
+        self.labelResult = QLabel(self.centralwidget)
+        self.labelResult.setObjectName(u"labelResult")
         font = QFont()
-        font.setPointSize(23)
-        font.setBold(True)
-        font.setItalic(True)
-        font.setUnderline(False)
-        font.setStrikeOut(False)
-        font.setKerning(False)
-        self.label_result.setFont(font)
-        self.label_result.setAlignment(Qt.AlignCenter)
+        font.setPointSize(40)
+        self.labelResult.setFont(font)
+        self.labelResult.setAlignment(Qt.AlignCenter)
 
-        self.gridLayout.addWidget(self.label_result, 0, 0, 1, 1)
+        self.gridLayout.addWidget(self.labelResult, 0, 0, 1, 1)
 
         self.gridLayout_2 = QGridLayout()
         self.gridLayout_2.setObjectName(u"gridLayout_2")
-        self.label_name = QLabel(self.centralwidget)
-        self.label_name.setObjectName(u"label_name")
+        self.labelName = QLabel(self.centralwidget)
+        self.labelName.setObjectName(u"labelName")
         font1 = QFont()
         font1.setPointSize(30)
-        font1.setBold(True)
-        font1.setItalic(True)
-        self.label_name.setFont(font1)
+        self.labelName.setFont(font1)
 
-        self.gridLayout_2.addWidget(self.label_name, 1, 0, 1, 1)
+        self.gridLayout_2.addWidget(self.labelName, 0, 0, 1, 1)
 
-        self.lineEdit = QLineEdit(self.centralwidget)
-        self.lineEdit.setObjectName(u"lineEdit")
-        font2 = QFont()
-        font2.setPointSize(30)
-        font2.setBold(False)
-        font2.setItalic(False)
-        self.lineEdit.setFont(font2)
+        self.lineName = QLineEdit(self.centralwidget)
+        self.lineName.setObjectName(u"lineName")
+        self.lineName.setFont(font1)
 
-        self.gridLayout_2.addWidget(self.lineEdit, 1, 1, 1, 1)
+        self.gridLayout_2.addWidget(self.lineName, 0, 1, 1, 1)
 
-        self.enviar = QPushButton(self.centralwidget)
-        self.enviar.setObjectName(u"enviar")
-        font3 = QFont()
-        font3.setPointSize(20)
-        self.enviar.setFont(font3)
+        self.buttonSend = QPushButton(self.centralwidget)
+        self.buttonSend.setObjectName(u"buttonSend")
+        self.buttonSend.setFont(font1)
 
-        self.gridLayout_2.addWidget(self.enviar, 1, 2, 1, 1)
+        self.gridLayout_2.addWidget(self.buttonSend, 0, 2, 1, 1)
 
         self.gridLayout.addLayout(self.gridLayout_2, 1, 0, 1, 1)
 
@@ -84,7 +70,7 @@ class Ui_MainWindow(object):
         MainWindow.setCentralWidget(self.centralwidget)
         self.menubar = QMenuBar(MainWindow)
         self.menubar.setObjectName(u"menubar")
-        self.menubar.setGeometry(QRect(0, 0, 660, 22))
+        self.menubar.setGeometry(QRect(0, 0, 800, 22))
         MainWindow.setMenuBar(self.menubar)
         self.statusbar = QStatusBar(MainWindow)
         self.statusbar.setObjectName(u"statusbar")
@@ -98,12 +84,12 @@ class Ui_MainWindow(object):
     def retranslateUi(self, MainWindow):
         MainWindow.setWindowTitle(QCoreApplication.translate(
             "MainWindow", u"MainWindow", None))
-        self.label_result.setText(QCoreApplication.translate(
-            "MainWindow", u"N\u00e3o tem nada aqui", None))
-        self.label_name.setText(QCoreApplication.translate(
+        self.labelResult.setText(QCoreApplication.translate(
+            "MainWindow", u"Voltei!", None))
+        self.labelName.setText(QCoreApplication.translate(
             "MainWindow", u"Seu nome:", None))
-        self.lineEdit.setPlaceholderText(QCoreApplication.translate(
+        self.lineName.setPlaceholderText(QCoreApplication.translate(
             "MainWindow", u"Digite seu nome", None))
-        self.enviar.setText(QCoreApplication.translate(
+        self.buttonSend.setText(QCoreApplication.translate(
             "MainWindow", u"Enviar", None))
     # retranslateUi
