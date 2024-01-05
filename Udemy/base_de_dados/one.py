@@ -10,5 +10,14 @@ TABLE_NAME = 'customers'
 connection = sqlite3.connect(DB_FILE)
 cursor = connection.cursor()
 
+cursor.execute(
+    f'CREATE TABLE IF NOT EXISTS {TABLE_NAME}'
+    '('
+    'id INTERGER PRIMARY KEY AUTOINCREMENT,'
+    'name TEXT,'
+    'weight REAL'
+    ')'
+)
+
 cursor.close()
 connection.close()
