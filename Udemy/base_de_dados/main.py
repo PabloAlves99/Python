@@ -10,6 +10,20 @@ TABLE_NAME = 'customers'
 connection = sqlite3.connect(DB_FILE)
 cursor = connection.cursor()
 
+# CRUD - Creat   Read    Update  Delete
+# SQL  - INSERT  SELECT  UPDATE  DELETE
+
+# CUIDADO: Fazendo delete sem where
+cursor.execute(
+    f'DELETE FROM {TABLE_NAME}'
+)
+
+# Delete mais cuidadoso
+cursor.execute(
+    f'DELETE FROM sqlite_sequence WHERE name="{TABLE_NAME}"'
+)
+
+# Criar a tabela
 cursor.execute(
     f'CREATE TABLE IF NOT EXISTS {TABLE_NAME}'
     '('
@@ -19,18 +33,9 @@ cursor.execute(
     ')'
 )
 
-cursor.execute(
-    f'DELETE FROM {TABLE_NAME}'
-)
-
-cursor.execute(
-    f'DELETE FROM sqlite_sequence WHERE name="{TABLE_NAME}"'
-)
-
 connection.commit()
 
 # Registra valores nas colunas da tabela
-# CUIDADO: sql injection
 sql = (
     f'INSERT INTO {TABLE_NAME} '
     '(name, weight) '
@@ -38,8 +43,10 @@ sql = (
     # '(?, ?)'
     '(:name, :weight)'
 )
+
 # cursor.execute(sql, ['Pablo', 8])
 # cursor.executemany(sql, [['Pablo', 8], ['Henrique', 7], ['Junior', 10]])
+
 cursor.executemany(sql, (
     {'name': 'Pablo', 'weight': 7},
     {'name': 'Pablo Silva', 'weight': 8},
@@ -49,8 +56,9 @@ cursor.executemany(sql, (
 ))
 connection.commit()
 
-cursor.close()
-connection.close()
 
 if __name__ == '__main__':
     print(sql)
+
+    cursor.close()
+    connection.close()
