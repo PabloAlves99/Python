@@ -60,5 +60,13 @@ connection.commit()
 if __name__ == '__main__':
     print(sql)
 
+    cursor.execute(
+        f'SELECT * FROM {TABLE_NAME}'
+    )
+
+    for row in cursor.fetchall():
+        _id, name, weight = row
+        print(_id, name, weight)
+
     cursor.close()
     connection.close()
