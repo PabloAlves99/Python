@@ -1,11 +1,31 @@
-#  pylint: disable= all
+"""
+Script de Demonstração: Manipulação Básica de Arquivos PDF
 
-# # PyPDF2 para manipular arquivos PDF (Instalação)
-# PyPDF2 para manipular arquivos PDF (PdfReader)
-# PyPDF2 é uma biblioteca de manipulação de arquivos PDF feita em Python puro,
-# gratuita e de código aberto. Ela é capaz de ler, manipular, escrever e unir
-# dados de arquivos PDF, assim como adicionar anotações, transformar páginas,
-# Link: https://pypdf2.readthedocs.io/en/3.0.0/
+Este script serve como uma demonstração simples de como realizar algumas
+operações básicas de manipulação de arquivos PDF usando a biblioteca PyPDF2.
+
+Funcionalidades Demonstradas:
+    - Extração de uma imagem da primeira página do PDF original.
+    - Criação de arquivos PDF individuais para cada página.
+    - Mesclagem dos arquivos individuais em um único arquivo PDF.
+
+Instruções:
+    1. Coloque os arquivos PDF originais na pasta 'pdf_original'.
+    2. Execute este script para visualizar diferentes abordagens de manipulação
+
+Observação:
+    Este script serve apenas como uma introdução básica. Pode ser expandido
+    e personalizado para atender a requisitos específicos.
+
+Autor: Pablo Alves
+Data: 06/01
+
+Dependências:
+    - PyPDF2 (instalável com 'pip install PyPDF2')
+
+"""
+
+#  pylint: disable= all
 
 from pathlib import Path
 from PyPDF2 import PdfMerger, PdfReader, PdfWriter
