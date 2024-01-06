@@ -28,3 +28,7 @@ __pycache__/
 # Arquivos de configuração específicos do sistema
 .DS_Store
 Thumbs.db
+
+# Pasta para não subir
+
+Udemy/base_de_dados/aula_docker/mysql_206
