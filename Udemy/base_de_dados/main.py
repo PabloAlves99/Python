@@ -20,7 +20,8 @@ cursor.execute(
 )
 
 cursor.execute(
-    f'DELETE FROM {TABLE_NAME}'
+    # f'DELETE FROM {TABLE_NAME}'
+    f'DELETE FROM sqlite_sequence WHERE name="{TABLE_NAME}"'
 )
 
 connection.commit()
