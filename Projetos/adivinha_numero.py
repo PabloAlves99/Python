@@ -1,3 +1,4 @@
+#  pylint: disable= all
 from random import randint
 import os
 
