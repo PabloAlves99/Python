@@ -19,6 +19,10 @@ cursor.execute(
     ')'
 )
 
+cursor.execute(
+    f'DELETE FROM {TABLE_NAME}'
+)
+
 connection.commit()
 
 # Registra valores nas colunas da tabela
