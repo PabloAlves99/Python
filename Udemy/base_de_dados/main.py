@@ -61,6 +61,19 @@ if __name__ == '__main__':
     print(sql)
 
     cursor.execute(
+        f'DELETE FROM {TABLE_NAME} '
+        'WHERE id = "3"'
+    )
+    connection.commit()
+
+    cursor.execute(
+        f'UPDATE {TABLE_NAME} '
+        'SET name="QUALQUER" '
+        'WHERE id = "2"'
+    )
+    connection.commit()
+
+    cursor.execute(
         f'SELECT * FROM {TABLE_NAME}'
     )
 
