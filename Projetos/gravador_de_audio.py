@@ -1,3 +1,32 @@
+"""
+Script de Gravação de Áudio
+
+Este script utiliza a biblioteca PyAudio para gravar áudio de entrada contínua
+e salvar a gravação em um arquivo WAV chamado 'gravacao.wav' na mesma pasta do
+script.
+
+Dependências:
+    - PyAudio (instalável com 'pip install pyaudio')
+
+Instruções de Uso:
+    1. Execute este script para iniciar a gravação.
+    2. Pressione Ctrl+C para interromper a gravação.
+    3. O arquivo 'gravacao.wav' será salvo na mesma pasta do script.
+
+Notas:
+    - Certifique-se de ter as dependências instaladas antes de executar o
+    script.
+    - Este script é uma demonstração básica e pode ser expandido conforme
+    necessário.
+
+Autor: Pablo Alves
+Data: 07/01
+
+Exemplo de Uso:
+    ```bash
+    python gravador_de_audio.py
+    ```
+"""
 #  pylint: disable= all
 import pyaudio
 import wave
