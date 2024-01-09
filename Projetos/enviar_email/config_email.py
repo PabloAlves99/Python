@@ -1,3 +1,31 @@
+"""
+Script de envio de e-mail de confirmação de compra.
+
+Este script utiliza a biblioteca smtplib para enviar um e-mail de confirmação
+de compra usando um servidor SMTP, e carrega as configurações necessárias a
+partir de variáveis de ambiente definidas em um arquivo .env.
+
+Requisitos:
+- Bibliotecas: smtplib, email, string, pathlib, datetime, pytz, dotenv
+
+O script realiza as seguintes etapas:
+1. Carrega as variáveis de ambiente a partir do arquivo .env.
+2. Define o caminho do arquivo de mensagem HTML.
+3. Obtém a data e hora atual no fuso horário 'America/Sao_paulo'.
+4. Configura a localidade para o formato de moeda brasileiro.
+5. Define o remetente e destinatário do e-mail.
+6. Configurações SMTP são definidas, incluindo servidor, porta, usuário e senha
+7. Cria um dicionário com detalhes da compra.
+8. Lê o conteúdo do arquivo HTML de mensagem.
+9. Substitui os marcadores no HTML pelos valores da compra.
+10. Transforma a mensagem em um objeto MIMEMultipart.
+11. Anexa o corpo do e-mail ao objeto MIMEMultipart.
+12. Conecta-se ao servidor SMTP, autentica e envia a mensagem.
+13. Exibe uma mensagem de sucesso após o envio do e-mail.
+
+Nota: Certifique-se de configurar corretamente as variáveis de ambiente
+no arquivo .env.
+"""
 import os
 import locale
 import smtplib
