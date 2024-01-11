@@ -33,8 +33,12 @@ with connection:
     connection.commit()
 
     with connection.cursor() as cursor:
-        cursor.execute(
-            f'INSERT INTO {TABLE_NAME} '
-            '(name, age) VALUES ("Pablo", 24)'
-        )
+        sql = (f'INSERT INTO {TABLE_NAME} '
+               '(name, age) '
+               'VALUES '
+               '(%s, %s)')
+
+        cursor.execute(sql, ("Pablo", 24))
+        cursor.execute(sql, ("Henrique", 23))
+        cursor.execute(sql, ("Jr", 22))
     connection.commit()
