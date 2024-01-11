@@ -1,6 +1,6 @@
 # pylint: disable=all
 import sqlite3
-from main_sqlite import DB_FILE, TABLE_NAME
+from main import DB_FILE, TABLE_NAME
 
 connection = sqlite3.connect(DB_FILE)
 cursor = connection.cursor()
