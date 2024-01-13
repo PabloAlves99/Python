@@ -55,7 +55,7 @@ with connection:
             "name": "Alves",
             "age": 20
         }
-        result = cursor.execute(sql, data)
+        cursor.execute(sql, data)
     connection.commit()
 
     with connection.cursor() as cursor:
@@ -65,11 +65,6 @@ with connection:
                '(%(name)s, %(age)s)')
 
         data2 = [
-            {"name": "João", "age": 25},
-            {"name": "Maria", "age": 30},
-            {"name": "Carlos", "age": 22},
-            {"name": "Ana", "age": 28},
-            {"name": "Pedro", "age": 32},
             {"name": "Julia", "age": 27},
             {"name": "Lucas", "age": 24},
             {"name": "Beatriz", "age": 29},
@@ -85,4 +80,23 @@ with connection:
         print(sql)
         print(*data2, sep='\n')
         print(result2)
+    connection.commit()
+
+    with connection.cursor() as cursor:
+        sql = (f'INSERT INTO {TABLE_NAME} '
+               '(name, age) '
+               'VALUES '
+               '(%s, %s)')
+
+        data4 = (
+            ("João", 25),
+            ("Maria", 30),
+            ("Carlos", 22),
+            ("Ana", 28),
+            ("Pedro", 32),
+            )
+        result4 = cursor.executemany(sql, data4)
+        print(sql)
+        print(*data4, sep='\n')
+        print(result4)
     connection.commit()
