@@ -15,7 +15,8 @@ connection = pymysql.connect(
     host=os.environ['MYSQL_HOST'],
     user=os.environ['MYSQL_USER'],
     password=os.environ['MYSQL_PASSWORD'],
-    database=os.environ['MYSQL_DATABASE']
+    database=os.environ['MYSQL_DATABASE'],
+    charset='utf8mb4'
 )
 
 with connection:
@@ -32,6 +33,7 @@ with connection:
         cursor.execute(f'TRUNCATE TABLE {TABLE_NAME}')
     connection.commit()
 
+    # Começa a manipular dados a partir daqui
     with connection.cursor() as cursor:
         sql = (f'INSERT INTO {TABLE_NAME} '
                '(name, age) '
@@ -41,4 +43,20 @@ with connection:
         cursor.execute(sql, ("Pablo", 24))
         cursor.execute(sql, ("Henrique", 23))
         cursor.execute(sql, ("Jr", 22))
+    connection.commit()
+
+    with connection.cursor() as cursor:
+        sql = (f'INSERT INTO {TABLE_NAME} '
+               '(name, age) '
+               'VALUES '
+               '(%(name)s, %(age)s)')
+
+        data = {
+            "name": "Alves",
+            "age": 20
+        }
+        result = cursor.execute(sql, data)
+        print(sql)
+        print(data)
+        print(result)
     connection.commit()
