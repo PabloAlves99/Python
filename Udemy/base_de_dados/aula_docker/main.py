@@ -37,10 +37,12 @@ with connection:
 
     # Inserindo um valor usando placeholder
     with connection.cursor() as cursor:
-        sql = (f'INSERT INTO {TABLE_NAME} '
-               '(name, age) '
-               'VALUES '
-               '(%s, %s)')
+        sql = (
+            f'INSERT INTO {TABLE_NAME} '
+            '(name, age) '
+            'VALUES '
+            '(%s, %s)'
+        )
 
         cursor.execute(sql, ("Pablo", 24))
         cursor.execute(sql, ("Henrique", 23))
@@ -49,10 +51,12 @@ with connection:
 
     # Inserindo um valor usando placeholder e um dicionário
     with connection.cursor() as cursor:
-        sql = (f'INSERT INTO {TABLE_NAME} '
-               '(name, age) '
-               'VALUES '
-               '(%(name)s, %(age)s)')
+        sql = (
+            f'INSERT INTO {TABLE_NAME} '
+            '(name, age) '
+            'VALUES '
+            '(%(name)s, %(age)s)'
+        )
 
         data = {
             "name": "Alves",
@@ -63,10 +67,12 @@ with connection:
 
     # Inserindo vários valores usando placeholder e um tupla de dicionários
     with connection.cursor() as cursor:
-        sql = (f'INSERT INTO {TABLE_NAME} '
-               '(name, age) '
-               'VALUES '
-               '(%(name)s, %(age)s)')
+        sql = (
+            f'INSERT INTO {TABLE_NAME} '
+            '(name, age) '
+            'VALUES '
+            '(%(name)s, %(age)s)'
+        )
 
         data2 = (
             {"name": "Julia", "age": 27},
@@ -80,18 +86,17 @@ with connection:
             {"name": "Larissa", "age": 35},
             {"name": "Anderson", "age": 34},
         )
-        result2: int | None = cursor.executemany(sql, data2)
-        print(sql)
-        print(*data2, sep='\n')
-        print(result2)
+        cursor.executemany(sql, data2)
     connection.commit()
 
     # Inserindo vários valores usando placeholder e um tupla de tuplas
     with connection.cursor() as cursor:
-        sql = (f'INSERT INTO {TABLE_NAME} '
-               '(name, age) '
-               'VALUES '
-               '(%s, %s)')
+        sql = (
+            f'INSERT INTO {TABLE_NAME} '
+            '(name, age) '
+            'VALUES '
+            '(%s, %s)'
+        )
 
         data4 = (
             ("João", 25),
@@ -100,8 +105,15 @@ with connection:
             ("Ana", 28),
             ("Pedro", 32),
         )
-        result4 = cursor.executemany(sql, data4)
-        print(sql)
-        print(*data4, sep='\n')
-        print(result4)
+        cursor.executemany(sql, data4)
     connection.commit()
+
+    # Lendo os valores com SELECT
+    with connection.cursor() as cursor:
+        sql = (
+            f'SELECT * FROM {TABLE_NAME} '
+        )
+        cursor.execute(sql)
+
+        data5 = cursor.fetchall()
+        print(*data5, sep='\n')
