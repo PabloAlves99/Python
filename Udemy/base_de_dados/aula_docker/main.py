@@ -148,8 +148,9 @@ with connection:
             'WHERE id = %s'
         )
         cursor.execute(sql, ('UPDATE', 99, 3))
-        connection.commit()
 
         cursor.execute(f'SELECT * FROM {TABLE_NAME} ')
 
         print(*cursor.fetchall(), sep='\n')
+
+    connection.commit()
