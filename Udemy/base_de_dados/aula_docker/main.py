@@ -126,7 +126,7 @@ with connection:
         data5 = cursor.fetchall()
         # print(*data5, sep='\n')
 
-    # Apagando com DELETE e WHERE
+    # Apagando com DELETE e WHERE no PyMySQL
     with connection.cursor() as cursor:
 
         sql = (
@@ -137,16 +137,17 @@ with connection:
         connection.commit()
 
         cursor.execute(f'SELECT * FROM {TABLE_NAME} ')
+        # print(*cursor.fetchall(), sep='\n')
 
-        print(*cursor.fetchall(), sep='\n')
-
+    # Editando com UPDATE, WHERE e placeholders no PyMySQL
     with connection.cursor() as cursor:
 
         sql = (
-            f'DELETE FROM {TABLE_NAME} '
-            'WHERE id = 5'
+            f'UPDATE {TABLE_NAME} '
+            'SET name = %s, age = %s '
+            'WHERE id = %s'
         )
-        cursor.execute(sql)
+        cursor.execute(sql, ('UPDATE', 99, 3))
         connection.commit()
 
         cursor.execute(f'SELECT * FROM {TABLE_NAME} ')
