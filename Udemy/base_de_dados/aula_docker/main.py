@@ -110,10 +110,45 @@ with connection:
 
     # Lendo os valores com SELECT
     with connection.cursor() as cursor:
+        # smaller = int(input('Digite o menor id: '))
+        # bigger = int(input('Digite o maior id: '))
+        smaller = 5
+        bigger = 10
+
         sql = (
             f'SELECT * FROM {TABLE_NAME} '
+            'WHERE id BETWEEN %s AND %s '
         )
-        cursor.execute(sql)
+
+        cursor.execute(sql, (smaller, bigger))
+        # print(cursor.mogrify(sql, (smaller, bigger)))
 
         data5 = cursor.fetchall()
-        print(*data5, sep='\n')
+        # print(*data5, sep='\n')
+
+    # Apagando com DELETE e WHERE
+    with connection.cursor() as cursor:
+
+        sql = (
+            f'DELETE FROM {TABLE_NAME} '
+            'WHERE id = 5'
+        )
+        cursor.execute(sql)
+        connection.commit()
+
+        cursor.execute(f'SELECT * FROM {TABLE_NAME} ')
+
+        print(*cursor.fetchall(), sep='\n')
+
+    with connection.cursor() as cursor:
+
+        sql = (
+            f'DELETE FROM {TABLE_NAME} '
+            'WHERE id = 5'
+        )
+        cursor.execute(sql)
+        connection.commit()
+
+        cursor.execute(f'SELECT * FROM {TABLE_NAME} ')
+
+        print(*cursor.fetchall(), sep='\n')
