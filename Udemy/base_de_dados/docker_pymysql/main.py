@@ -112,18 +112,18 @@ with connection:
 
     # Lendo os valores com SELECT
     with connection.cursor() as cursor:
-        # smaller = int(input('Digite o menor id: '))
-        # bigger = int(input('Digite o maior id: '))
-        smaller = 5
-        bigger = 10
+        # SMALLER = int(input('Digite o menor id: '))
+        # BIGGER = int(input('Digite o maior id: '))
+        SMALLER = 5
+        BIGGER = 10
 
         sql = (
             f'SELECT * FROM {TABLE_NAME} '
             'WHERE id BETWEEN %s AND %s '
         )
 
-        cursor.execute(sql, (smaller, bigger))
-        # print(cursor.mogrify(sql, (smaller, bigger)))
+        cursor.execute(sql, (SMALLER, BIGGER))
+        # print(cursor.mogrify(sql, (SMALLER, BIGGER)))
 
         data5 = cursor.fetchall()
         # print(*data5, sep='\n')
