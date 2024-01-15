@@ -3,8 +3,8 @@
 Bem-vindo ao meu diário de estudos em Python! Este é o lugar onde registro minhas aventuras, aprendizados e desafios enquanto mergulho mais fundo na linguagem de programação Python.
 
 
-📂 Pastas com Projetos: Loading...
-- **[Calculadora](https://github.com/PabloAlves99/Python/tree/main/Udemy/_pyside6/PA_calculadora)**
+<!--📂 Pastas com Projetos: Loading...
+- **[Calculadora](https://github.com/PabloAlves99/Python/tree/main/Udemy/_pyside6/PA_calculadora)** -->
 
 
 ## Minha Jornada Pessoal 🗺️📚
