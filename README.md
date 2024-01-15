@@ -16,7 +16,7 @@ Bem-vindo ao meu diário de estudos em Python! Este é o lugar onde registro min
     - [Python 3 avançado (com programação orientada a objetos)](https://github.com/PabloAlves99/Python/tree/main/Udemy/POO)
     - [Módulos úteis: inclui aulas de módulos específicos do Python e de terceiros, como PySide6 para Interface Gráfica com Qt 6, Selenium, Django e muito mais](https://github.com/PabloAlves99/Python/tree/main/Udemy/modulos)
     - Django para criação de sites e APIs
-    - Bases de dados relacionais: SQLite3, MySQL e MariaDB
+    - [Bases de dados relacionais: SQLite3, MySQL e MariaDB](https://github.com/PabloAlves99/Python/tree/main/Udemy/base_de_dados)
     - [Interface Gráfica com PySide6 (Qt 6) com Python](https://github.com/PabloAlves99/Python/tree/main/Udemy/_pyside6)
     - Testes automatizados no Python (com TDD básico)
     - Design Patterns (Padrões de projeto - GoF)
