@@ -6,6 +6,7 @@
 import pymysql
 import dotenv
 import os
+import pymysql.cursors
 
 TABLE_NAME = 'customers'
 
@@ -16,7 +17,8 @@ connection = pymysql.connect(
     user=os.environ['MYSQL_USER'],
     password=os.environ['MYSQL_PASSWORD'],
     database=os.environ['MYSQL_DATABASE'],
-    charset='utf8mb4'
+    charset='utf8mb4',
+    cursorclass=pymysql.cursors.DictCursor
 )
 
 with connection:
