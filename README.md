@@ -22,8 +22,8 @@ Bem-vindo ao meu diário de estudos em Python! Este é o lugar onde registro min
     - Design Patterns (Padrões de projeto - GoF)
     - Programação Orientada a Objetos Avançada
     - Extra: Expressões Regulares
-    - Extra: HTML5 e CSS3
-    - Extra: SQL com MySQL
+    - [Extra: HTML5 e CSS3](https://github.com/PabloAlves99/HTML-CSS/tree/main/LuisOtavio)
+    - [Extra: SQL com MySQL](https://github.com/PabloAlves99/Python/tree/main/Udemy/base_de_dados/extra_mysql)
     - Extra: Comandos Unix (Linux, Mac e Windows WSL2)
   
 - **[USP Introdução à Ciência da Computação com Python (com Fabio Kon)](https://github.com/PabloAlves99/Python/tree/main/universidade_de_Sao_Paulo)** 🎓 <br><br>
