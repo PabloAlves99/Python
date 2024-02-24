@@ -1,7 +1,7 @@
 -- Update - Atualiza registros
 update users set 
-first_name = 'Luiz',
-last_name = 'Miranda'
-where id between 119 and 121;
+first_name = 'Pablo',
+last_name = 'Alves'
+where id between 10 and 12;
 
-select * from users where id between 119 and 121;
+select * from users where id between 10 and 12;
