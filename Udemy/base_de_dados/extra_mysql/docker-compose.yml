@@ -1,3 +1,5 @@
+#cd Udemy\base_de_dados\extra_mysql
+
 version: "3"
 services: 
   mysql_knex:
