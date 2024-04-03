@@ -38,7 +38,7 @@ extensoes = {
 for arquivo in lista_arquivos:
     nome, extensao = os.path.splitext(f"{caminho}/{arquivo}")
 
-    for pasta in extensoes:
+    for pasta in extensoes:  # pylint: disable=C0206
 
         if extensao in extensoes[pasta]:
 
