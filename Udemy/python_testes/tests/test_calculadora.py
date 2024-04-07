@@ -14,7 +14,7 @@ except:
     raise
 
 import unittest
-from Udemy.python_testes.src.calculadora import soma
+from calculadora import soma
 
 
 class TestCalculadora(unittest.TestCase):
