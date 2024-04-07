@@ -1,9 +1,23 @@
+try:
+    import sys
+    import os
+
+    sys.path.append(
+        os.path.abspath(
+            os.path.join(
+                os.path.dirname(__file__),
+                '../src'
+            )
+        )
+    )
+except:
+    raise
+
 import unittest
-from calculadora import soma
+from Udemy.python_testes.src.calculadora import soma
 
 
 class TestCalculadora(unittest.TestCase):
-
     def test_soma_5_e_5_deve_retornar_10(self):
         self.assertEqual(soma(5, 5), 10)
 
