@@ -32,3 +32,6 @@ Thumbs.db
 # Pasta para não subir
 Projetos/loading/
 mysql_206/
+
+*refatoration_button_function.py
+*test
