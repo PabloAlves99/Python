@@ -27,7 +27,7 @@ Não canso de ouvir a Maria:
 # print(re.findall(r'[a-zA-Z]+', texto))
 # print(re.findall(r'[a-zA-Z0-9]+', texto))
 # print(re.findall(r'[a-zA-Z0-9À-ú]+', texto))
-# print(re.findall(r'\w+', texto, flags=re.I))
+print(re.findall(r'\w+', texto, flags=re.I))
 # print(re.findall(r'\W+', texto, flags=re.I))
 # print(re.findall(r'\d+', texto, flags=re.I))
 # print(re.findall(r'\D+', texto, flags=re.I))
