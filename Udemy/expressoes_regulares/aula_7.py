@@ -18,7 +18,7 @@ Maria era o nome dela.
 Foi um ano excelente na vida de joão. Teve_ALGO 5 filhos, todos adultos atualmente.
 maria, hoje sua esposa, ainda faz aquele café com pão de queijo nas tardes de
 domingo. Também né! Sendo a boa mineira que é, nunca esquece seu famoso
-pão de queijo. 
+pão de queijo.
 Não canso de ouvir a Maria:
 "Joooooooooãooooooo, o café tá prontinho aqui. Veeemm"!
 2122
