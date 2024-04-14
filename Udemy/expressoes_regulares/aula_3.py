@@ -28,8 +28,9 @@ Jã
 
 print(re.findall(r'j[o]+ão+', texto, flags=re.I))
 print(re.findall(r'jo{1,}ão{1,}', texto, flags=re.I))
+print(re.findall(r'jo{,1}ão{,1}', texto, flags=re.I))
 print(re.findall(r've{3}m{1,2}', texto, flags=re.I))
 # print(re.sub(r'jo{1,}ão{1,}', 'Felipe', texto, flags=re.I))
 
 texto2 = 'João ama ser amado'
-print(re.findall(r'ama[od]{0,2}', texto2, flags=re.I))
+print(re.findall(r'ama[do]{0,2}', texto2, flags=re.I))
