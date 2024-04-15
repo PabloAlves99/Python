@@ -5,12 +5,6 @@ import os
 
 def limpar_tela():
     """
-    Limpa o terminal/console, detectando o sistema operacional atual.
-
-    Utiliza o módulo os para identificar o sistema operacional e executa
-    o comando apropriado para limpar a tela. Suporta Windows ('nt') e sistemas
-    Unix/Linux/Mac.
-
     Exemplo:
     >>>limpar_tela()
 
