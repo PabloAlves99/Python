@@ -1,0 +1,77 @@
+{
+  "team_1": {
+    "team": "Cruzeiro",
+    "mascot": "Raposa",
+    "state": "Minas Gerais"
+  },
+  "team_2": {
+    "team": "Flamengo",
+    "mascot": "Urubu",
+    "state": "Rio de Janeiro"
+  },
+  "team_3": {
+    "team": "Corinthians",
+    "mascot": "Corinthiano",
+    "state": "São Paulo"
+  },
+  "team_4": {
+    "team": "Palmeiras",
+    "mascot": "Porco",
+    "state": "São Paulo"
+  },
+  "team_5": {
+    "team": "São Paulo",
+    "mascot": "Tricolor",
+    "state": "São Paulo"
+  },
+  "team_6": {
+    "team": "Grêmio",
+    "mascot": "Gremista",
+    "state": "Rio Grande do Sul"
+  },
+  "team_7": {
+    "team": "Internacional",
+    "mascot": "Colorado",
+    "state": "Rio Grande do Sul"
+  },
+  "team_8": {
+    "team": "Atlético Mineiro",
+    "mascot": "Galo",
+    "state": "Minas Gerais"
+  },
+  "team_9": {
+    "team": "Botafogo",
+    "mascot": "Alvinegro",
+    "state": "Rio de Janeiro"
+  },
+  "team_10": {
+    "team": "Santos",
+    "mascot": "Peixe",
+    "state": "São Paulo"
+  },
+  "team_11": {
+    "team": "Vasco da Gama",
+    "mascot": "Cruz",
+    "state": "Rio de Janeiro"
+  },
+  "team_12": {
+    "team": "Bahia",
+    "mascot": "Tricolor",
+    "state": "Bahia"
+  },
+  "team_13": {
+    "team": "Sport",
+    "mascot": "Leão",
+    "state": "Pernambuco"
+  },
+  "team_14": {
+    "team": "Fortaleza",
+    "mascot": "Leão",
+    "state": "Ceará"
+  },
+  "team_15": {
+    "team": "Ceará",
+    "mascot": "Vovô",
+    "state": "Ceará"
+  }
+}
