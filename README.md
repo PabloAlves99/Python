@@ -18,10 +18,10 @@ Bem-vindo ao meu diário de estudos em Python! Este é o lugar onde registro min
     - [Django para criação de sites e APIs](https://github.com/PabloAlves99/DjangoUdemyContinuation)
     - [Bases de dados relacionais: SQLite3, MySQL e MariaDB](https://github.com/PabloAlves99/Python/tree/main/Udemy/base_de_dados)
     - [Interface Gráfica com PySide6 (Qt 6) com Python](https://github.com/PabloAlves99/Python/tree/main/Udemy/_pyside6)
-    - Testes automatizados no Python (com TDD básico)
-    - Design Patterns (Padrões de projeto - GoF)
+    - [Testes automatizados no Python (com TDD básico)](https://github.com/PabloAlves99/Python/tree/main/Udemy/python_testes)
+    - [Design Patterns (Padrões de projeto - GoF)](https://github.com/PabloAlves99/Python/tree/main/Udemy/design_patterns)
     - Programação Orientada a Objetos Avançada
-    - Extra: Expressões Regulares
+    - [Extra: Expressões Regulares](https://github.com/PabloAlves99/Python/tree/main/Udemy/expressoes_regulares)
     - [Extra: HTML5 e CSS3](https://github.com/PabloAlves99/HTML-CSS/tree/main/LuisOtavio)
     - [Extra: SQL com MySQL](https://github.com/PabloAlves99/Python/tree/main/Udemy/base_de_dados/extra_mysql)
     - Extra: Comandos Unix (Linux, Mac e Windows WSL2)
