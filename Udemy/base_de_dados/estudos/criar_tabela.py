@@ -65,12 +65,14 @@ class FactoryTable():
 
     def create_all_tables(self):
         cursor = self.connect_to_database()
+        try:
+            cursor.execute(self.table_address)
+            cursor.execute(self.table_job)
+            cursor.execute(self.table_customers)
 
-        cursor.execute(self.table_address)
-        cursor.execute(self.table_job)
-        cursor.execute(self.table_customers)
-
-        self._database_connection.commit()
+            self._database_connection.commit()
+        finally:
+            cursor.close()
 
     # def create_customers(self):
     #     cursor = self.connect_to_database()
