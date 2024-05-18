@@ -1,6 +1,8 @@
 # pylint: disable=missing-docstring,empty-docstring
 
 import pymysql
+from faker import Faker
+import random
 
 
 class FactoryTable():
@@ -74,20 +76,51 @@ class FactoryTable():
         finally:
             cursor.close()
 
-    # def create_customers(self):
-    #     cursor = self.connect_to_database()
 
-    #     cursor.execute(self.table_customers)
-    #     self._database_connection.commit()
+class InsertData(FactoryTable):
 
-    # def create_address(self):
-    #     cursor = self.connect_to_database()
+    def __init__(  # pylint: disable=useless-parent-delegation
+            self, host_name: str, user_name: str,
+            user_password: str, database_user: str) -> None:
 
-    #     cursor.execute(self.table_address)
-    #     self._database_connection.commit()
+        super().__init__(host_name, user_name, user_password, database_user)
 
-    # def create_job(self):
-    #     cursor = self.connect_to_database()
+    def insert_data_in_job_table(self, data_number):
+        cursor = self.connect_to_database()
+        try:
+            for _ in range(data_number):
+                data = self._insert_custom_data_quantity()
+                cursor.execute(
+                    "INSERT INTO Job (JobTitle, Salary, "
+                    "ExperienceYears, ContractType) "
+                    f"VALUES ('{data[0]}', '{data[1]}', "
+                    f"{data[2]}, '{data[3]}')"
+                )
+            self._database_connection.commit()
+        finally:
+            cursor.close()
 
-    #     cursor.execute(self.table_job)
-    #     self._database_connection.commit()
+    @ staticmethod
+    def _insert_custom_data_quantity():
+        fake = Faker('pt_BR')
+
+        title_job = fake.job()
+
+        salary = random.randint(1000, 20000)
+
+        regimes_contrato_trabalho = [
+            "Tempo Integral",
+            "Meio Período",
+            "Contrato por Hora",
+            "Contrato por Projeto",
+            "Trabalho Remoto",
+            "Trabalho Temporário",
+            "Estágio",
+            "Freelance",
+            "Trabalho Autônomo",
+        ]
+
+        return (
+            title_job, salary, random.randint(1, 35),
+            random.choice(regimes_contrato_trabalho)
+        )
