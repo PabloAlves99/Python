@@ -1,0 +1,23 @@
+import os
+import dotenv
+from criar_tabela import FactoryTable
+
+dotenv.load_dotenv()
+
+estudos = FactoryTable(host_name=os.environ['bd_host_name'],
+                       user_name=os.environ['bd_user_name'],
+                       user_password=os.environ['bd_user_password'],
+                       database_user=os.environ['bd_database_user'])
+estudos.create_all_tables()
+
+
+cursor = estudos.connect_to_database()
+try:
+    cursor.execute(
+        "SELECT * FROM Job"
+    )
+    rows = cursor.fetchall()
+finally:
+    cursor.close()
+
+print(rows)
