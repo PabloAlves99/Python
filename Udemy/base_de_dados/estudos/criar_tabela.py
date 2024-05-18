@@ -89,11 +89,3 @@ class FactoryTable():
 
     #     cursor.execute(self.table_job)
     #     self._database_connection.commit()
-
-
-if __name__ == "__main__":
-    estudos = FactoryTable(host_name='localhost',
-                           user_name='root',
-                           user_password='Rs5kD85DQk6',
-                           database_user='base_de_estudos')
-    estudos.create_all_tables()
