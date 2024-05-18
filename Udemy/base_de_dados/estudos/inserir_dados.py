@@ -1,1 +1,5 @@
-# Criar dados fakes para compor as tabelas
+from faker import Faker
+
+fake = Faker('pt_BR')
+
+

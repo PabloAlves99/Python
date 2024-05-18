@@ -1,6 +1,6 @@
 import os
 import dotenv
-from criar_tabela import FactoryTable
+from factory_table import FactoryTable
 
 dotenv.load_dotenv()
 
