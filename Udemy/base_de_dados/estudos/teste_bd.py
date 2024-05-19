@@ -1,6 +1,6 @@
 import os
 import dotenv
-from factory_table import FactoryTable, InsertData
+from factory_table import InsertData
 
 dotenv.load_dotenv()
 
