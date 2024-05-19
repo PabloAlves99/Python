@@ -1,8 +1,9 @@
+import random
+from faker import Faker
+import pymysql
 # pylint: disable=missing-docstring,empty-docstring
 
-import pymysql
-from faker import Faker
-import random
+fake = Faker('pt_BR')
 
 
 class FactoryTable():
@@ -75,6 +76,7 @@ class FactoryTable():
             self._database_connection.commit()
         finally:
             cursor.close()
+            self._database_connection.close()
 
 
 class InsertData(FactoryTable):
@@ -85,11 +87,11 @@ class InsertData(FactoryTable):
 
         super().__init__(host_name, user_name, user_password, database_user)
 
-    def insert_data_in_job_table(self, data_number):
+    def insert_data_in_job_table(self, data_number: int) -> None:
         cursor = self.connect_to_database()
         try:
             for _ in range(data_number):
-                data = self._insert_custom_data_quantity()
+                data = self._fake_data_for_job_table()
                 cursor.execute(
                     "INSERT INTO Job (JobTitle, Salary, "
                     "ExperienceYears, ContractType) "
@@ -99,10 +101,10 @@ class InsertData(FactoryTable):
             self._database_connection.commit()
         finally:
             cursor.close()
+            self._database_connection.close()
 
-    @ staticmethod
-    def _insert_custom_data_quantity():
-        fake = Faker('pt_BR')
+    @staticmethod
+    def _fake_data_for_job_table() -> tuple[str, int, int, str]:
 
         title_job = fake.job()
 
@@ -124,3 +126,35 @@ class InsertData(FactoryTable):
             title_job, salary, random.randint(1, 35),
             random.choice(regimes_contrato_trabalho)
         )
+
+    def insert_data_in_address_table(self, data_number):
+        cursor = self.connect_to_database()
+        try:
+            for _ in range(data_number):
+                data = self._fake_data_for_anddress_table()
+                cursor.execute(
+                    "INSERT INTO Address (Street, Number, Complement, "
+                    "Neighbordhood, city, state, country, zipcode) "
+                    "VALUES (%s, %s, %s, %s, %s, %s, %s, %s)",
+                    (data[0], data[1], data[2], data[3],
+                     data[4], data[5], data[6], data[7])
+                )
+            self._database_connection.commit()
+        finally:
+            cursor.close()
+            self._database_connection.close()
+
+    @staticmethod
+    def _fake_data_for_anddress_table() -> tuple[str, int, str,
+                                                 str, str, str, str, str]:
+        street = fake.street_name()
+        number = fake.building_number()
+        complement = ('Casa', 'Apartamento', 'Condominio', 'Hotel')
+        neighbordhood = fake.city_suffix()
+        city = fake.city()
+        state = fake.state()
+        country = fake.country()
+        zipcode = random.randint(1234567, 9999999)
+
+        return (street, int(number), random.choice(complement), neighbordhood,
+                city, state, country, str(zipcode))
