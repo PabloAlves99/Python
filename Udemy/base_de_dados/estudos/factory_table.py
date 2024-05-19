@@ -1,7 +1,7 @@
+# pylint: disable=missing-docstring,empty-docstring
 import random
 from faker import Faker
 import pymysql
-# pylint: disable=missing-docstring,empty-docstring
 
 fake = Faker('pt_BR')
 
