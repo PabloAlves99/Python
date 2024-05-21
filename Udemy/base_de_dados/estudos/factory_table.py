@@ -7,7 +7,7 @@ fake = Faker('pt_BR')
 
 
 class FactoryTable():
-    table_customers = "CREATE TABLE IF NOT EXISTS customers( "\
+    table_customers = "CREATE TABLE IF NOT EXISTS Customers( "\
         "ID INT AUTO_INCREMENT PRIMARY KEY, "\
         "FirstName VARCHAR(50)NOT NULL, "\
         "LastName VARCHAR(50) NOT NULL, "\
@@ -26,10 +26,10 @@ class FactoryTable():
         "Number INT NOT NULL, "\
         "Complement VARCHAR(100), "\
         "Neighbordhood VARCHAR(100), "\
-        "city VARCHAR(50) NOT NULL, "\
-        "state VARCHAR(50) NOT NULL, "\
-        "country VARCHAR(50) NOT NULL, "\
-        "zipcode VARCHAR(20) NOT NULL"\
+        "City VARCHAR(50) NOT NULL, "\
+        "State VARCHAR(50) NOT NULL, "\
+        "Country VARCHAR(50) NOT NULL, "\
+        "Zipcode VARCHAR(20) NOT NULL"\
         ")"
 
     table_job = "CREATE TABLE IF NOT EXISTS Job ("\
@@ -80,6 +80,17 @@ class FactoryTable():
 
 
 class InsertData(FactoryTable):
+    _insert_address = "INSERT INTO Address (Street, Number, Complement, "\
+        "Neighbordhood, city, state, country, zipcode) "\
+        "VALUES (%s, %s, %s, %s, %s, %s, %s, %s)"
+
+    _insert_job = "INSERT INTO Job (JobTitle, Salary, "\
+        "ExperienceYears, ContractType) "\
+        "VALUES (%s, %s, %s, %s)"
+
+    _insert_customers = "INSERT INTO customers(FirstName, LastName, Age, "\
+        "Email, Phone, Address_ID, Job_ID) "\
+        "VALUES ( %s, %s, %s, %s, %s, %s, %s)"
 
     def __init__(  # pylint: disable=useless-parent-delegation
             self, host_name: str, user_name: str,
@@ -91,17 +102,18 @@ class InsertData(FactoryTable):
         cursor = self.connect_to_database()
         try:
             for _ in range(data_number):
-                data = self._fake_data_for_job_table()
-                cursor.execute(
-                    "INSERT INTO Job (JobTitle, Salary, "
-                    "ExperienceYears, ContractType) "
-                    f"VALUES ('{data[0]}', '{data[1]}', "
-                    f"{data[2]}, '{data[3]}')"
-                )
+                self.__job_method(cursor)
             self._database_connection.commit()
         finally:
             cursor.close()
             self._database_connection.close()
+
+    def __job_method(self, cursor):
+        data = self._fake_data_for_job_table()
+        cursor.execute(
+            self._insert_job,
+            (data[0], data[1], data[2], data[3])
+        )
 
     @staticmethod
     def _fake_data_for_job_table() -> tuple[str, int, int, str]:
@@ -131,18 +143,19 @@ class InsertData(FactoryTable):
         cursor = self.connect_to_database()
         try:
             for _ in range(data_number):
-                data = self._fake_data_for_anddress_table()
-                cursor.execute(
-                    "INSERT INTO Address (Street, Number, Complement, "
-                    "Neighbordhood, city, state, country, zipcode) "
-                    "VALUES (%s, %s, %s, %s, %s, %s, %s, %s)",
-                    (data[0], data[1], data[2], data[3],
-                     data[4], data[5], data[6], data[7])
-                )
+                self.__address_method(cursor)
             self._database_connection.commit()
         finally:
             cursor.close()
             self._database_connection.close()
+
+    def __address_method(self, cursor):
+        data = self._fake_data_for_anddress_table()
+        cursor.execute(
+            f"{self._insert_address}",
+            (data[0], data[1], data[2], data[3],
+             data[4], data[5], data[6], data[7])
+        )
 
     @staticmethod
     def _fake_data_for_anddress_table() -> tuple[str, int, str,
@@ -158,3 +171,47 @@ class InsertData(FactoryTable):
 
         return (street, int(number), random.choice(complement), neighbordhood,
                 city, state, country, str(zipcode))
+
+    def insert_data_in_customers_table(self, data_number):
+        cursor = self.connect_to_database()
+        try:
+            for _ in range(data_number):
+                self.__customers_method(cursor)
+            self._database_connection.commit()
+        finally:
+            cursor.close()
+            self._database_connection.close()
+
+    def __customers_method(self, cursor):
+        data = self._fake_data_for_customers_table()
+        cursor.execute(
+            f"{self._insert_customers}",
+            (data[0], data[1], data[2], data[3],
+             data[4], data[5], data[6])
+        )
+
+    @staticmethod
+    def _fake_data_for_customers_table() -> tuple[str, str, int, str,
+                                                  str, int, int]:
+
+        first_name = fake.first_name()
+        last_name = fake.last_name()
+        age = fake.random_int(min=18, max=60)
+        email = fake.unique.email()
+        phone = fake.unique.phone_number()
+        address_id = fake.random_int(min=1, max=10)
+        job_id = fake.random_int(min=1, max=10)
+
+        return (first_name, last_name, age, email, phone, address_id, job_id)
+
+    def insert_data_into_all_table(self, data_number: int) -> None:
+        cursor = self.connect_to_database()
+        try:
+            for _ in range(data_number):
+                self.__address_method(cursor)
+                self.__job_method(cursor)
+                self.__customers_method(cursor)
+            self._database_connection.commit()
+        finally:
+            cursor.close()
+            self._database_connection.close()
