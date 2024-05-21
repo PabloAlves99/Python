@@ -196,13 +196,13 @@ class TableCustomers(FactoryTable):
         age = fake.random_int(min=18, max=60)
         email = fake.unique.email()
         phone = fake.unique.phone_number()
-        address_id = fake.random_int(min=1, max=20)
-        job_id = fake.random_int(min=1, max=20)
+        address_id = fake.random_int(min=1, max=30)
+        job_id = fake.random_int(min=1, max=30)
 
         return (first_name, last_name, age, email, phone, address_id, job_id)
 
 
-class InsertAllData(TableJob, TableAddress, TableCustomers):
+class InsertData(TableJob, TableAddress, TableCustomers):
 
     def __init__(  # pylint: disable=useless-parent-delegation
             self, host_name: str, user_name: str,
