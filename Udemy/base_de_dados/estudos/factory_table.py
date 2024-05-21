@@ -17,7 +17,7 @@ class FactoryTable():
         "Address_ID INT, "\
         "Job_ID INT, "\
         "FOREIGN KEY(Address_ID) REFERENCES Address(ID_address), "\
-        "FOREIGN KEY(job_ID) REFERENCES Job(ID_job)" \
+        "FOREIGN KEY(Job_ID) REFERENCES Job(ID_job)" \
         ")"
 
     table_address = "CREATE TABLE IF NOT EXISTS Address("\
@@ -45,12 +45,8 @@ class FactoryTable():
             user_password: str, database_user: str
     ):
 
-        self._database_connection = pymysql.connect(
-            host=host_name,
-            user=user_name,
-            password=user_password,
-            database=database_user
-        )
+        self.new_database_connection(
+            host_name, user_name, user_password, database_user)
 
     def new_database_connection(
             self, host_name: str, user_name: str,
@@ -79,24 +75,11 @@ class FactoryTable():
             self._database_connection.close()
 
 
-class InsertData(FactoryTable):
-    _insert_address = "INSERT INTO Address (Street, Number, Complement, "\
-        "Neighbordhood, city, state, country, zipcode) "\
-        "VALUES (%s, %s, %s, %s, %s, %s, %s, %s)"
+class TableJob(FactoryTable):
 
     _insert_job = "INSERT INTO Job (JobTitle, Salary, "\
         "ExperienceYears, ContractType) "\
         "VALUES (%s, %s, %s, %s)"
-
-    _insert_customers = "INSERT INTO customers(FirstName, LastName, Age, "\
-        "Email, Phone, Address_ID, Job_ID) "\
-        "VALUES ( %s, %s, %s, %s, %s, %s, %s)"
-
-    def __init__(  # pylint: disable=useless-parent-delegation
-            self, host_name: str, user_name: str,
-            user_password: str, database_user: str) -> None:
-
-        super().__init__(host_name, user_name, user_password, database_user)
 
     def insert_data_in_job_table(self, data_number: int) -> None:
         cursor = self.connect_to_database()
@@ -139,7 +122,14 @@ class InsertData(FactoryTable):
             random.choice(regimes_contrato_trabalho)
         )
 
-    def insert_data_in_address_table(self, data_number):
+
+class TableAddress(FactoryTable):
+
+    _insert_address = "INSERT INTO Address (Street, Number, Complement, "\
+        "Neighbordhood, city, state, country, zipcode) "\
+        "VALUES (%s, %s, %s, %s, %s, %s, %s, %s)"
+
+    def insert_data_in_address_table(self, data_number: int):
         cursor = self.connect_to_database()
         try:
             for _ in range(data_number):
@@ -172,7 +162,14 @@ class InsertData(FactoryTable):
         return (street, int(number), random.choice(complement), neighbordhood,
                 city, state, country, str(zipcode))
 
-    def insert_data_in_customers_table(self, data_number):
+
+class TableCustomers(FactoryTable):
+
+    _insert_customers = "INSERT INTO Customers(FirstName, LastName, Age, "\
+        "Email, Phone, Address_ID, Job_ID) "\
+        "VALUES ( %s, %s, %s, %s, %s, %s, %s)"
+
+    def insert_data_in_customers_table(self, data_number: int) -> None:
         cursor = self.connect_to_database()
         try:
             for _ in range(data_number):
@@ -199,18 +196,29 @@ class InsertData(FactoryTable):
         age = fake.random_int(min=18, max=60)
         email = fake.unique.email()
         phone = fake.unique.phone_number()
-        address_id = fake.random_int(min=1, max=10)
-        job_id = fake.random_int(min=1, max=10)
+        address_id = fake.random_int(min=1, max=20)
+        job_id = fake.random_int(min=1, max=20)
 
         return (first_name, last_name, age, email, phone, address_id, job_id)
+
+
+class InsertAllData(TableJob, TableAddress, TableCustomers):
+
+    def __init__(  # pylint: disable=useless-parent-delegation
+            self, host_name: str, user_name: str,
+            user_password: str, database_user: str) -> None:
+
+        super().__init__(host_name, user_name, user_password, database_user)
 
     def insert_data_into_all_table(self, data_number: int) -> None:
         cursor = self.connect_to_database()
         try:
+            cursor.execute("SET FOREIGN_KEY_CHECKS = 0")
             for _ in range(data_number):
                 self.__address_method(cursor)
                 self.__job_method(cursor)
                 self.__customers_method(cursor)
+            cursor.execute("SET FOREIGN_KEY_CHECKS = 1")
             self._database_connection.commit()
         finally:
             cursor.close()
