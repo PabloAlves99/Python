@@ -91,7 +91,7 @@ class TableJob(FactoryTable):
             cursor.close()
             self._database_connection.close()
 
-    def __job_method(self, cursor):
+    def _job_method(self, cursor):
         data = self._fake_data_for_job_table()
         cursor.execute(
             self._insert_job,
@@ -139,7 +139,7 @@ class TableAddress(FactoryTable):
             cursor.close()
             self._database_connection.close()
 
-    def __address_method(self, cursor):
+    def _address_method(self, cursor):
         data = self._fake_data_for_anddress_table()
         cursor.execute(
             f"{self._insert_address}",
@@ -179,7 +179,7 @@ class TableCustomers(FactoryTable):
             cursor.close()
             self._database_connection.close()
 
-    def __customers_method(self, cursor):
+    def _customers_method(self, cursor):
         data = self._fake_data_for_customers_table()
         cursor.execute(
             f"{self._insert_customers}",
@@ -215,9 +215,9 @@ class InsertData(TableJob, TableAddress, TableCustomers):
         try:
             cursor.execute("SET FOREIGN_KEY_CHECKS = 0")
             for _ in range(data_number):
-                self.__address_method(cursor)
-                self.__job_method(cursor)
-                self.__customers_method(cursor)
+                self._address_method(cursor)
+                self._job_method(cursor)
+                self._customers_method(cursor)
             cursor.execute("SET FOREIGN_KEY_CHECKS = 1")
             self._database_connection.commit()
         finally:
