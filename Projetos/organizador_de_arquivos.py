@@ -1,7 +1,11 @@
 import os
 from tkinter.filedialog import askdirectory
+from datetime import datetime
+from pytz import timezone
+
 
 caminho = askdirectory(title="Selecione uma pasta")
+DATA = datetime.now(timezone('America/Sao_paulo')).strftime('%d%m%Y')
 
 lista_arquivos = os.listdir(caminho)
 
@@ -14,7 +18,7 @@ extensoes = {
     "oa_apresentacoes": [".pptx", ".ppt", ".md"],
     "oa_audio": [".mp3", ".wav", ".ogg", ".flac"],
     "oa_video": [".mp4", ".avi", ".mov", ".wmv"],
-    "oa_executaveis": [".exe", ".bat", ".sh", ".msi"],
+    "oa_executaveis": [".exe", ".bat", ".sh", ".msi", ".jar"],
     "oa_compactados": [".zip", ".rar", ".tar.gz"],
     "oa_Python": [".py"],
     "oa_C": [".c", ".h"],
@@ -45,4 +49,5 @@ for arquivo in lista_arquivos:
             if not os.path.exists(f"{caminho}/{pasta}"):
                 os.mkdir(f"{caminho}/{pasta}")
 
-            os.rename(f"{caminho}/{arquivo}", f"{caminho}/{pasta}/{arquivo}")
+            os.rename(f"{caminho}/{arquivo}",
+                      f"{caminho}/{pasta}/{DATA},{arquivo}")
