@@ -26,6 +26,7 @@ O script realiza as seguintes etapas:
 Nota: Certifique-se de configurar corretamente as variáveis de ambiente
 no arquivo .env.
 """
+from ast import main
 import os
 import locale
 import smtplib
@@ -38,59 +39,59 @@ from datetime import datetime
 from pytz import timezone
 from dotenv import load_dotenv
 
-# Carrega as variáveis de ambiente a partir do arquivo .env
-load_dotenv()
 
-# Define o caminho do arquivo de mensagem HTML
-CAMINHO_MSG = Path(__file__).parent / 'msg_confirmacao.html'
+def send_email():
 
-# Obtém a data e hora atual no fuso horário 'America/Sao_paulo' e formata
-DATA = datetime.now(timezone('America/Sao_paulo')).strftime('%d/%m/%Y\n'
-                                                            '%H:%M:%S')
-# Configura a localidade para o formato de moeda brasileiro
-locale.setlocale(locale.LC_ALL, 'pt_BR.UTF-8')
+    load_dotenv()
+    caminho_msg = Path(__file__).parent / 'msg_confirmacao.html'
+    data = datetime.now(timezone('America/Sao_paulo')).strftime('%d/%m/%Y\n'
+                                                                '%H:%M:%S')
+    locale.setlocale(locale.LC_ALL, 'pt_BR.UTF-8')
 
-# Obtém o endereço de e-mail do remetente a partir das variáveis de ambiente
-remetente = os.getenv('FROM_EMAIL', '')
+    remetente = os.getenv('FROM_EMAIL')
+    destinatario = os.getenv('TO_EMAIL')
 
-# Define o destinatário como o próprio remetente (Apenas para testar)
-destinatario = remetente
+    # Configurações SMTP
+    smtp_server = 'smtp.gmail.com'
+    smtp_port = 587
+    smtp_username = remetente
+    smtp_password = os.getenv('FROM_PASSWORD')
 
-# Configurações SMTP
-SMTP_SERVER = 'smtp.gmail.com'
-SMTP_PORT = 587
-smtp_username = os.getenv('FROM_EMAIL', '')
-smtp_password = os.getenv('FROM_PASSWORD', '')
+    # Define os detalhes da compra em um dicionário
+    compra = {
+        'nome': 'Pablo Jr',
+        'valor': locale.currency(935.99, grouping=True),
+        'data': data,
+        'servico': 'Automação',
+        'numero': '+55 (31) 99423-4449'
+    }
 
-# Define os detalhes da compra em um dicionário
-compra = {
-    'nome': 'Pablo Jr',
-    'valor': locale.currency(935.99, grouping=True),
-    'data': DATA,
-    'servico': 'Automação',
-    'numero': '+55 (31) 99423-4449'
-}
+    # Lê o conteúdo do arquivo HTML de mensagem
+    with open(caminho_msg, 'r', encoding='utf-8') as email:
+        txt = email.read()
+        template = Template(txt)
+        text_email = template.substitute(compra)
 
-# Lê o conteúdo do arquivo HTML de mensagem
-with open(CAMINHO_MSG, 'r', encoding='utf-8') as email:
-    txt = email.read()
-    template = Template(txt)
-    text_email = template.substitute(compra)
+    # Tranformar a mensagem em MIMEMultipart
+    mime_multipart = MIMEMultipart()
+    mime_multipart["From"] = remetente
+    mime_multipart["To"] = ", ".join(destinatario)
+    mime_multipart["Subject"] = 'Confirmação de compra'
 
-# Tranformar a mensagem em MIMEMultipart
-mime_multipart = MIMEMultipart()
-mime_multipart['from'] = remetente
-mime_multipart['to'] = destinatario
-mime_multipart['subject'] = 'Confirmação de compra'
+    mime_multipart.attach(MIMEText(text_email, 'html', 'utf-8'))
 
-# Adiciona o corpo do e-mail como texto HTML ao objeto MIMEMultipart
-corpo_email = MIMEText(text_email, 'html', 'utf-8')
-mime_multipart.attach(corpo_email)
+    try:
+        # Envia o e-mail usando as configurações SMTP
+        with smtplib.SMTP(smtp_server, smtp_port) as server:
+            server.ehlo()
+            server.starttls()
+            server.login(smtp_username, smtp_password)
+            server.sendmail(remetente, destinatario,
+                            mime_multipart.as_string())
+            print('Email enviado com sucesso')
+    except Exception as e:
+        print(f"Erro ao enviar email: {e}")
 
-# Envia o e-mail usando as configurações SMTP
-with smtplib.SMTP(SMTP_SERVER, SMTP_PORT) as server:
-    server.ehlo()
-    server.starttls()
-    server.login(smtp_username, smtp_password)
-    server.send_message(mime_multipart)
-    print('Email enviado com sucesso')
+
+if __name__ == '__main__':
+    send_email()
