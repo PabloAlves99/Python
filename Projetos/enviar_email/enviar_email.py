@@ -1,3 +1,4 @@
+# pylint: disable=missing-docstring,empty-docstring
 import os
 import smtplib
 
@@ -24,7 +25,7 @@ class SendEmail:
         self.display_email_result()
 
     def fill_email_data(
-            self, _remetente, _password, _destinatarios, *args):
+            self, _remetente, _password, _destinatarios, *args) -> None:
 
         load_dotenv()
         if args:
@@ -42,17 +43,17 @@ class SendEmail:
         self.destinatarios = _destinatarios if _destinatarios is not None else os.getenv(
             'TO_EMAIL').split(',')
 
-    def initialize_smtp_config(self):
+    def initialize_smtp_config(self) -> None:
         self.smtp_server = 'smtp.gmail.com'
         self.smtp_port = 587
         self.smtp_username = self.remetente
         self.smtp_password = self.password
 
-    def get_text_email(self):
+    def get_text_email(self) -> None:
         email_body = EmailBody()
         self.text_email = email_body.text_email
 
-    def send_emails(self):
+    def send_emails(self) -> None:
         for destinatario in self.destinatarios:
             destinatario = destinatario.strip()  # Remover espaços em branco
             # Transformar a mensagem em MIMEMultipart
@@ -100,7 +101,7 @@ class SendEmail:
             except Exception as e:
                 print(f"Erro não identificado ao enviar email: {e}")
 
-    def display_email_result(self):
+    def display_email_result(self) -> None:
         if self.emails_enviados:
             print(f'\nEmail enviado com sucesso para:\n\n'
                   f'{"\n".join(
