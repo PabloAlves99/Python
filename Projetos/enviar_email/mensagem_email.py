@@ -11,7 +11,7 @@ class EmailBody:
         self.prepare_email_content()
 
     def get_email_path(self):
-        self.caminho_msg = Path(__file__).parent / 'msg_confirmacao.html'
+        self.caminho_msg = Path(__file__).parent / 'mensagem_email.html'
 
     def prepare_email_content(self):
         data = datetime.now(timezone('America/Sao_paulo')).strftime('%d/%m/%Y')
