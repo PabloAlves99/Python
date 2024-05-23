@@ -1,97 +1,113 @@
-"""
-Script de envio de e-mail de confirmação de compra.
-
-Este script utiliza a biblioteca smtplib para enviar um e-mail de confirmação
-de compra usando um servidor SMTP, e carrega as configurações necessárias a
-partir de variáveis de ambiente definidas em um arquivo .env.
-
-Requisitos:
-- Bibliotecas: smtplib, email, string, pathlib, datetime, pytz, dotenv
-
-O script realiza as seguintes etapas:
-1. Carrega as variáveis de ambiente a partir do arquivo .env.
-2. Define o caminho do arquivo de mensagem HTML.
-3. Obtém a data e hora atual no fuso horário 'America/Sao_paulo'.
-4. Configura a localidade para o formato de moeda brasileiro.
-5. Define o remetente e destinatário do e-mail.
-6. Configurações SMTP são definidas, incluindo servidor, porta, usuário e senha
-7. Cria um dicionário com detalhes da compra.
-8. Lê o conteúdo do arquivo HTML de mensagem.
-9. Substitui os marcadores no HTML pelos valores da compra.
-10. Transforma a mensagem em um objeto MIMEMultipart.
-11. Anexa o corpo do e-mail ao objeto MIMEMultipart.
-12. Conecta-se ao servidor SMTP, autentica e envia a mensagem.
-13. Exibe uma mensagem de sucesso após o envio do e-mail.
-
-Nota: Certifique-se de configurar corretamente as variáveis de ambiente
-no arquivo .env.
-"""
-from ast import main
 import os
-import locale
 import smtplib
 
+from typing import List, Union
 from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
-from string import Template
-from pathlib import Path
-from datetime import datetime
-from pytz import timezone
 from dotenv import load_dotenv
+from mensagem_email import EmailBody
 
 
-def send_email():
+class SendEmail:
 
-    load_dotenv()
-    caminho_msg = Path(__file__).parent / 'msg_confirmacao.html'
-    data = datetime.now(timezone('America/Sao_paulo')).strftime('%d/%m/%Y\n'
-                                                                '%H:%M:%S')
-    locale.setlocale(locale.LC_ALL, 'pt_BR.UTF-8')
+    def __init__(
+            self, _remetente: Union[str, None] = None,
+            _password: Union[str, None] = None,
+            _destinatarios: Union[str, None] = None, *args: List[str]) -> None:
 
-    remetente = os.getenv('FROM_EMAIL')
-    destinatario = os.getenv('TO_EMAIL')
+        self.contador_emails: int = 0
+        self.emails_enviados: List[str] = []
+        self.fill_email_data(_remetente, _password, _destinatarios, *args)
+        self.initialize_smtp_config()
+        self.get_text_email()
+        self.send_emails()
+        self.display_email_result()
 
-    # Configurações SMTP
-    smtp_server = 'smtp.gmail.com'
-    smtp_port = 587
-    smtp_username = remetente
-    smtp_password = os.getenv('FROM_PASSWORD')
+    def fill_email_data(
+            self, _remetente, _password, _destinatarios, *args):
 
-    # Define os detalhes da compra em um dicionário
-    compra = {
-        'nome': 'Pablo Jr',
-        'valor': locale.currency(935.99, grouping=True),
-        'data': data,
-        'servico': 'Automação',
-        'numero': '+55 (31) 99423-4449'
-    }
+        load_dotenv()
+        if args:
+            if len(args) == 3:
+                _remetente, _password, _destinatarios = args
+            else:
+                raise ValueError(
+                    "Número incorreto de argumentos não nomeados."
+                    "Esperava-se 3.")
 
-    # Lê o conteúdo do arquivo HTML de mensagem
-    with open(caminho_msg, 'r', encoding='utf-8') as email:
-        txt = email.read()
-        template = Template(txt)
-        text_email = template.substitute(compra)
+        self.remetente = _remetente if _remetente is not None else os.getenv(
+            'FROM_EMAIL')
+        self.password = _password if _password is not None else os.getenv(
+            'FROM_PASSWORD')
+        self.destinatarios = _destinatarios if _destinatarios is not None else os.getenv(
+            'TO_EMAIL').split(',')
 
-    # Tranformar a mensagem em MIMEMultipart
-    mime_multipart = MIMEMultipart()
-    mime_multipart["From"] = remetente
-    mime_multipart["To"] = ", ".join(destinatario)
-    mime_multipart["Subject"] = 'Confirmação de compra'
+    def initialize_smtp_config(self):
+        self.smtp_server = 'smtp.gmail.com'
+        self.smtp_port = 587
+        self.smtp_username = self.remetente
+        self.smtp_password = self.password
 
-    mime_multipart.attach(MIMEText(text_email, 'html', 'utf-8'))
+    def get_text_email(self):
+        email_body = EmailBody()
+        self.text_email = email_body.text_email
 
-    try:
-        # Envia o e-mail usando as configurações SMTP
-        with smtplib.SMTP(smtp_server, smtp_port) as server:
-            server.ehlo()
-            server.starttls()
-            server.login(smtp_username, smtp_password)
-            server.sendmail(remetente, destinatario,
-                            mime_multipart.as_string())
-            print('Email enviado com sucesso')
-    except Exception as e:
-        print(f"Erro ao enviar email: {e}")
+    def send_emails(self):
+        for destinatario in self.destinatarios:
+            destinatario = destinatario.strip()  # Remover espaços em branco
+            # Transformar a mensagem em MIMEMultipart
+            mime_multipart = MIMEMultipart()
+            mime_multipart["From"] = self.remetente
+            mime_multipart["To"] = destinatario
+            mime_multipart["Subject"] = 'Confirmação de compra'
+
+            mime_multipart.attach(MIMEText(self.text_email, 'html', 'utf-8'))
+
+            try:
+                # Envia o e-mail usando as configurações SMTP
+                with smtplib.SMTP(self.smtp_server, self.smtp_port) as server:
+                    self.contador_emails += 1
+                    print(f'\nDestinatário {
+                        self.contador_emails}: {destinatario}')
+                    server.ehlo()
+                    server.starttls()
+                    server.login(self.smtp_username, self.smtp_password)
+                    server.sendmail(self.remetente, destinatario,
+                                    mime_multipart.as_string())
+                    print("Verificações concluídas")
+                self.emails_enviados.append(destinatario)
+            except smtplib.SMTPAuthenticationError:
+                print(
+                    "Erro de autenticação: verifique o email e a senha do "
+                    "remetente."
+                )
+            except smtplib.SMTPConnectError:
+                print(
+                    "Erro de conexão: não foi possível conectar ao servidor "
+                    "SMTP."
+                )
+            except smtplib.SMTPRecipientsRefused:
+                print(
+                    f"Erro: {destinatario} foi recusado pelo servidor SMTP."
+                )
+            except smtplib.SMTPSenderRefused:
+                print("Erro: O remetente foi recusado pelo servidor SMTP.")
+            except smtplib.SMTPDataError:
+                print("Erro: O servidor SMTP retornou um erro ao enviar os "
+                      "dados.")
+            except smtplib.SMTPException as e:
+                print(f"Erro SMTP: {e}")
+            except Exception as e:
+                print(f"Erro não identificado ao enviar email: {e}")
+
+    def display_email_result(self):
+        if self.emails_enviados:
+            print(f'\nEmail enviado com sucesso para:\n\n'
+                  f'{"\n".join(
+                      [email.strip() for email in self.emails_enviados])}')
+        else:
+            print('\nNenhum email enviado')
 
 
 if __name__ == '__main__':
-    send_email()
+    SendEmail()
