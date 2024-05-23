@@ -1,3 +1,4 @@
+# pylint: disable=missing-docstring,empty-docstring
 import locale
 from string import Template
 from pathlib import Path
