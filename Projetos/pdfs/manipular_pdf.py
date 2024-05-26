@@ -146,21 +146,24 @@ class PDFProcessor:
 
         print("Todas as páginas individuais foram salvas em PDF.")
 
-    def save_specific_pdf_page(self, page_number: int):
+    def save_specifics_pdf_pages(self, *args):
         if self.reader is None:
             print("Nenhum arquivo PDF carregado.")
             return
 
         try:
+            pages_number = args
             writer = PdfWriter()
-            writer.add_page(self.reader.pages[page_number - 1])
-            specific_pdf_path = self.new_folder / f'page_{page_number}.pdf'
-            with open(specific_pdf_path, 'wb') as sf:
-                writer.write(sf)
+            for page_number in pages_number:
+                writer.add_page(self.reader.pages[page_number - 1])
+                specific_pdf_path = self.new_folder / f'page_{page_number}.pdf'
+                with open(specific_pdf_path, 'wb') as sf:
+                    writer.write(sf)
+                print(f"A página {page_number} foi salva em {
+                      specific_pdf_path}.")
 
-            print(f"A página {page_number} foi salva em {specific_pdf_path}.")
         except IndexError:
-            print(f"Erro: Página {page_number} está fora do intervalo.")
+            print(f"Erro: O PDF possui {len(pages_number)}")
         except Exception as e:
             print(f"Erro ao salvar a página {page_number}: {e}")
 
@@ -196,4 +199,4 @@ class PDFProcessor:
 
 if __name__ == "__main__":
     x = PDFProcessor(execute=True)
-    x.save_specific_pdf_page(2)
+    x.save_specifics_pdf_pages(1, 2)
