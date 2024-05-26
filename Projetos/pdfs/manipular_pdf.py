@@ -146,6 +146,24 @@ class PDFProcessor:
 
         print("Todas as páginas individuais foram salvas em PDF.")
 
+    def save_specific_pdf_page(self, page_number: int):
+        if self.reader is None:
+            print("Nenhum arquivo PDF carregado.")
+            return
+
+        try:
+            writer = PdfWriter()
+            writer.add_page(self.reader.pages[page_number - 1])
+            specific_pdf_path = self.new_folder / f'page_{page_number}.pdf'
+            with open(specific_pdf_path, 'wb') as sf:
+                writer.write(sf)
+
+            print(f"A página {page_number} foi salva em {specific_pdf_path}.")
+        except IndexError:
+            print(f"Erro: Página {page_number} está fora do intervalo.")
+        except Exception as e:
+            print(f"Erro ao salvar a página {page_number}: {e}")
+
     def merge_selected_pdfs(self):
         # Abrindo uma nova janela para selecionar os PDFs a serem mesclados
         root = Tk()
@@ -178,4 +196,4 @@ class PDFProcessor:
 
 if __name__ == "__main__":
     x = PDFProcessor(execute=True)
-    x.extract_images()
+    x.save_specific_pdf_page(2)
