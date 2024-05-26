@@ -176,5 +176,6 @@ class PDFProcessor:
         print(f"Os PDFs selecionados foram mesclados em {merged_pdf_path}.")
 
 
-x = PDFProcessor(execute=True)
-x.extract_images()
+if __name__ == "__main__":
+    x = PDFProcessor(execute=True)
+    x.extract_images()
