@@ -165,7 +165,7 @@ class PDFProcessor:
         except IndexError:
             print(f"Erro: O PDF possui {len(pages_number)}")
         except Exception as e:
-            print(f"Erro ao salvar a página {page_number}: {e}")
+            print(f"Erro ao salvar as páginas: {e}")
 
     def merge_selected_pdfs(self):
         # Abrindo uma nova janela para selecionar os PDFs a serem mesclados
