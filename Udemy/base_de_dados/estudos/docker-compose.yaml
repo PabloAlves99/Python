@@ -15,7 +15,6 @@ services:
         limits:
           cpus: "0.95"
           memory: 4G
-    restart: always
     environment:
       - MYSQL_ROOT_PASSWORD=Rs5kD85DQk6
       - MYSQL_USER=user2
