@@ -11,6 +11,9 @@ class PDFProcessorApp:
         self.root = root
         self.configs_app()
         self.display_frames()
+        self._select_file_pdf()
+        self._select_output_folder()
+        self.display_buttons()
 
     def configs_app(self):
         self.root.title("Manipulador de PDF")
@@ -23,118 +26,65 @@ class PDFProcessorApp:
                                highlightbackground='#A9CDDA',
                                highlightthickness=3)
         self.top_frame.place(relx=0.02, rely=0.02,
-                             relwidth=0.96, relheight=0.46)
+                             relwidth=0.96, relheight=0.32)
 
         self.bottom_frame = Frame(self.root, bd=4, bg='#A3C9D9',
                                   highlightbackground='#A9CDDA',
                                   highlightthickness=3)
-        self.bottom_frame.place(relx=0.02, rely=0.50,
-                                relwidth=0.96, relheight=0.46)
-    # # Definindo o tamanho mínimo da janela
+        self.bottom_frame.place(relx=0.02, rely=0.35,
+                                relwidth=0.96, relheight=0.62)
 
-    # Frames para organizar a disposição dos widgets
-    # self.top_frame = Frame(root)
-    # self.top_frame.pack(side="top", fill="both",
-    #                     expand=True, padx=10, pady=10)
-
-    # self.bottom_frame = Frame(root)
-    # self.bottom_frame.pack(side="bottom", fill="x", padx=10, pady=10)
-
-    # # Widgets no frame superior
-    # self.file_label = Label(
-    #     self.top_frame, text="Nenhum arquivo selecionado")
-    # self.file_label.pack(pady=5)
-
-    # self.folder_label = Label(
-    #     self.top_frame, text="Nenhuma pasta selecionada")
-    # self.folder_label.pack(pady=5)
-
-    # self.page_entry_label = Label(
-    #     self.top_frame, text="Páginas específicas (separadas por vírgula)")
-    # self.page_entry_label.pack(pady=5)
-
-    # self.page_entry = Entry(self.top_frame)
-    # self.page_entry.pack(pady=5)
-
-    # self.select_file_button = Button(
-    #     self.top_frame, text="Selecionar Arquivo PDF", command=self.select_file)
-    # self.select_file_button.pack(pady=5)
-
-    # self.select_folder_button = Button(
-    #     self.top_frame, text="Selecionar Pasta de Saída", command=self.select_folder)
-    # self.select_folder_button.pack(pady=5)
-
-    # # Widgets no frame inferior
-    # self.extract_text_button = Button(
-    #     self.bottom_frame, text="Extrair Texto", command=self.extract_text)
-    # self.extract_text_button.pack(side="left", padx=5)
-
-    # self.extract_images_button = Button(
-    #     self.bottom_frame, text="Extrair Imagens", command=self.extract_images)
-    # self.extract_images_button.pack(side="left", padx=5)
-
-    # self.save_individual_pdfs_button = Button(
-    #     self.bottom_frame, text="Salvar Páginas Individualmente", command=self.save_individual_pdfs)
-    # self.save_individual_pdfs_button.pack(side="left", padx=5)
-
-    # self.save_specific_pages_button = Button(
-    #     self.bottom_frame, text="Salvar Páginas Específicas", command=self.save_specific_pages)
-    # self.save_specific_pages_button.pack(side="left", padx=5)
-
-    # self.merge_pdfs_button = Button(
-    #     self.bottom_frame, text="Mesclar PDFs Selecionados", command=self.merge_pdfs)
-    # self.merge_pdfs_button.pack(side="left", padx=5)
-
-    # self.toggle_theme_button = Button(
-    #     self.bottom_frame, text="Alternar Tema", command=self.toggle_theme)
-    # self.toggle_theme_button.pack(side="left", padx=5)
-
-    # # Estado do tema
-    # self.dark_mode = False
+    def _select_file_pdf(self):
+        self.button_select_file = Button(self.top_frame,
+                                         text='Selecionar PDF', bd=2,
+                                         bg="#FFF",
+                                         command=self.select_file)
+        self._file_name = Label(
+            self.top_frame, text="Nenhum arquivo selecionado")
 
     def select_file(self):
         self.processor.select_file_pdf()
+        self.update_file_name()
+
+    def update_file_name(self):
         if self.processor.file_path:
             file_name = Path(self.processor.file_path).name
-            self.file_label.config(text=f"Arquivo selecionado: {file_name}")
+            self._file_name.config(text=f"Arquivo selecionado: {file_name}")
+
+    def _select_output_folder(self):
+        self.output_folder = Button(self.top_frame,
+                                    text='Selecionar pasta de saída',
+                                    bd=2,
+                                    bg="#FFF",
+                                    command=self.select_folder)
+        self._output_name = Label(
+            self.top_frame, text="Nenhuma pasta selecionada")
 
     def select_folder(self):
         self.processor.select_output_folder()
-        if self.processor.root_folder:
-            self.folder_label.config(text=f"Pasta selecionada: {
-                                     self.processor.root_folder}")
+        self.update_output_folder_name()
 
-    def extract_text(self):
-        self.processor.execute()
-        self.processor.extract_text_files()
-        messagebox.showinfo("Sucesso", "Texto extraído e salvo com sucesso.")
+    def update_output_folder_name(self):
+        output_name = self.processor.root_folder
+        self._output_name.config(
+            text=f"Pasta de saída selecionada: {output_name}")
 
-    def extract_images(self):
-        self.processor.execute()
-        self.processor.extract_images()
-        messagebox.showinfo(
-            "Sucesso", "Imagens extraídas e salvas com sucesso.")
+    def display_buttons(self):
+        self.button_select_file.place(
+            relx=0.02, rely=0.02, relwidth=0.25, relheight=0.20)
+        self._file_name.place(
+            relx=0.02, rely=0.25, relwidth=0.95, relheight=0.20
+        )
 
-    def save_individual_pdfs(self):
-        self.processor.execute()
-        self.processor.save_individual_pages_as_pdfs()
-        messagebox.showinfo(
-            "Sucesso", "Páginas salvas individualmente com sucesso.")
-
-    def save_specific_pages(self):
-        pages = self.page_entry.get().split(',')
-        pages = [int(page.strip()) for page in pages]
-        self.processor.execute()
-        self.processor.save_specifics_pdf_pages(*pages)
-        messagebox.showinfo(
-            "Sucesso", "Páginas específicas salvas com sucesso.")
-
-    def merge_pdfs(self):
-        self.processor.merge_selected_pdfs()
-        messagebox.showinfo("Sucesso", "PDFs mesclados com sucesso.")
+        self.output_folder.place(
+            relx=0.02, rely=0.52, relwidth=0.35, relheight=0.20
+        )
+        self._output_name.place(
+            relx=0.02, rely=0.75, relwidth=0.95, relheight=0.20
+        )
 
 
 if __name__ == "__main__":
-    root = Tk()
-    app = PDFProcessorApp(root)
-    root.mainloop()
+    _root = Tk()
+    app = PDFProcessorApp(_root)
+    _root.mainloop()
