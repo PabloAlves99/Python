@@ -17,7 +17,7 @@ class PDFProcessorApp:
 
     def configs_app(self):
         self.root.title("Manipulador de PDF")
-        self.root.minsize(500, 400)
+        self.root.minsize(450, 400)
         self.root.configure(background='#D0E4F2')
         self.root.resizable(True, True)
 
