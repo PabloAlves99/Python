@@ -154,5 +154,27 @@
             "source.fixAll.unusedImports": "explicit",
             "source.organizeImports": "explicit"
         }
-    }
+    },
+    // Configurações do Prettier
+    "prettier.singleQuote": true,
+    "prettier.semi": false,
+    "prettier.trailingComma": "es5",
+    "prettier.tabWidth": 2,
+
+    // Configurações do ESLint
+    "eslint.alwaysShowStatus": true,
+    "eslint.format.enable": true,
+    "eslint.packageManager": "npm",
+    "eslint.autoFixOnSave": true,
+
+    // Configurações do GitLens
+    "gitlens.currentLine.enabled": true,
+    "gitlens.hovers.enabled": true,
+
+    // Configurações do Live Share
+    "liveshare.featureSet": "insiders",
+    "liveshare.presence": true,
+
+    // Configurações do Path Intellisense
+    "path-intellisense.autoSlashAfterDirectory": true,
 }
