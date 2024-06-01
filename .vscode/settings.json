@@ -41,11 +41,7 @@
     ],
     "workbench.editor.enablePreview": false,
     "workbench.startupEditor": "none",
-
-    // Configuração do zoom
     "window.zoomLevel": -0.5,
-
-    // Configurações de segurança
     "security.workspace.trust.untrustedFiles": "open",
 
     // Configurações do Live Server
@@ -150,9 +146,9 @@
         "editor.formatOnSave": true,
         "editor.fontLigatures": true,
         "editor.codeActionsOnSave": {
-            "source.fixAll": true,
-            "source.fixAll.unusedImports": true,
-            "source.organizeImports": true
+            "source.fixAll": "explicit",
+            "source.fixAll.unusedImports": "explicit",
+            "source.organizeImports": "explicit"
         }
     }
 }
