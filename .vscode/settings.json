@@ -110,12 +110,12 @@
     "python.linting.enabled": true,
     "python.linting.pylintEnabled": true,
     "python.linting.flake8Enabled": true,
-    "python.linting.pylintArgs": [
+    "pylint.args": [
         "--disable=C0114",
         "--disable=C0115",
         "--disable=C0116"
     ],
-    "python.linting.flake8Args": [
+    "flake8.args": [
         "--ignore=D100,D101,D102,D103"
     ],
     "python.languageServer": "Pylance",
