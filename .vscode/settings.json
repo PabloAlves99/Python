@@ -31,7 +31,7 @@
 
     // Configurações do terminal
     "terminal.integrated.fontSize": 14,
-    "terminal.integrated.fontFamily": "",
+    "terminal.integrated.fontFamily": "Consolas",
 
     // Configurações do Workbench
     "workbench.iconTheme": "vscode-icons",
