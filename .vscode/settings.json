@@ -14,6 +14,8 @@
     "editor.wordWrap": "on",
     "editor.fontFamily": "Fira Code",
     "editor.fontSize": 14,
+    "editor.lineHeight": 22,
+    "editor.letterSpacing": -0.4,
     "editor.formatOnSave": true,
     "editor.formatOnPaste": true,
     "editor.formatOnType": true,
@@ -31,7 +33,7 @@
 
     // Configurações do terminal
     "terminal.integrated.fontSize": 14,
-    "terminal.integrated.fontFamily": "Consolas",
+    "terminal.integrated.fontFamily": "Fira Code",
 
     // Configurações do Workbench
     "workbench.iconTheme": "vscode-icons",
