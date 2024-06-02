@@ -1,20 +1,5 @@
 def make_readable(seconds):
-    return f'{seconds//3600:02}:{seconds//60%60:02}:{seconds%60:02}'
-
-# def make_readable(seconds):
-#     seconds_per_hour = 3600
-#     seconds_per_minute = 60
-
-#     hours = seconds // seconds_per_hour
-
-#     rest_hours = seconds % seconds_per_hour
-#     minutes = rest_hours // seconds_per_minute
-
-#     end_seconds = seconds % seconds_per_minute
-
-#     return '{:02}:{:02}:{:02}'.format(hours, minutes, end_seconds)
-
-# make_readable = lambda seconds:f'{seconds//3600:02}:{seconds//60%60:02}:{seconds%60:02}' # noqa
+    return f'{seconds // 3600:02}:{seconds // 60 % 60:02}:{seconds % 60:02}'
 
 
 if __name__ == '__main__':
