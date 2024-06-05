@@ -4,7 +4,7 @@ from pathlib import Path
 from manipular_pdf import PDFProcessor
 
 
-class PDFProcessorApp:
+class IPDFProcessorApp:
     def __init__(self, root):
         self.processor = PDFProcessor()
         self.root = root
@@ -85,5 +85,5 @@ class PDFProcessorApp:
 
 if __name__ == "__main__":
     _root = Tk()
-    app = PDFProcessorApp(_root)
+    app = IPDFProcessorApp(_root)
     _root.mainloop()
