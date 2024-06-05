@@ -85,7 +85,7 @@ class TableJob(FactoryTable):
         cursor = self.connect_to_database()
         try:
             for _ in range(data_number):
-                self.__job_method(cursor)
+                self._job_method(cursor)
             self._database_connection.commit()
         finally:
             cursor.close()
@@ -133,7 +133,7 @@ class TableAddress(FactoryTable):
         cursor = self.connect_to_database()
         try:
             for _ in range(data_number):
-                self.__address_method(cursor)
+                self._address_method(cursor)
             self._database_connection.commit()
         finally:
             cursor.close()
@@ -173,7 +173,7 @@ class TableCustomers(FactoryTable):
         cursor = self.connect_to_database()
         try:
             for _ in range(data_number):
-                self.__customers_method(cursor)
+                self._customers_method(cursor)
             self._database_connection.commit()
         finally:
             cursor.close()
