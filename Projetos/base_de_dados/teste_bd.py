@@ -1,7 +1,7 @@
 import os
-import dotenv
-from factory_table import InsertData
 from pprint import pprint
+from factory_table import InsertData
+import dotenv
 
 
 if __name__ == "__main__":
