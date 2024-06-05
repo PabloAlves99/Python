@@ -1,8 +1,7 @@
-from tkinter import Tk, Button, Label, Entry, messagebox, StringVar, Frame
-from tkinter import filedialog, ttk
-# Supondo que a classe esteja em um arquivo chamado PDFProcessor.py
-from manipular_pdf import PDFProcessor
+""" CÓDIGO INCOMPLETO, IREI FINALIZAR """
+from tkinter import Tk, Button, Label, Frame
 from pathlib import Path
+from manipular_pdf import PDFProcessor
 
 
 class PDFProcessorApp:
