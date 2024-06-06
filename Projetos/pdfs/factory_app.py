@@ -13,3 +13,21 @@ class IAppFactory(ABC):
     @abstractmethod
     def create_interface(self):
         pass
+
+
+class IConfigurations(ABC):
+    @abstractmethod
+    def app_settings(self):
+        pass
+
+
+class IButtons(ABC):
+    @abstractmethod
+    def display_buttons(self):
+        pass
+
+
+class IInterface(ABC):
+    @abstractmethod
+    def setup_ui(self):
+        pass
