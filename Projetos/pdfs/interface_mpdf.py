@@ -1,7 +1,7 @@
 """ CÓDIGO INCOMPLETO, IREI FINALIZAR """
 from tkinter import Tk, Button, Label, Frame
 from pathlib import Path
-from manipular_pdf import PDFProcessor
+from pdf_processor import PDFProcessor
 
 
 class IPDFProcessorApp:
