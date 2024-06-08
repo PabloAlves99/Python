@@ -15,7 +15,7 @@ class PDFProcessor:
         self.root_folder: Optional[Path] = None
         self.new_folder: Optional[Path] = None
         self.reader: Optional[PdfReader] = None
-        self.pdf_list: Optional[List[str]] = None
+        self.pdf_list = PdfMerger()
 
         if execute:
             self.execute()
@@ -173,19 +173,19 @@ class PDFProcessor:
 
     def merge_pdfs(self):
 
-        if self.new_folder is not None:
-            merged_pdf_path = self.new_folder / 'merged_pdfs.pdf'
-
-            merger = PdfMerger()
+        if not self.pdf_list.pages:
             for pdf_file in self.select_pdf_to_list():
-                merger.append(pdf_file)
+                self.pdf_list.append(pdf_file)
 
-            if not merger:
+            if not self.pdf_list:
                 print("Nenhum PDF selecionado.")
                 return
 
+        if self.new_folder is not None:
+            merged_pdf_path = self.new_folder / 'merged_pdfs.pdf'
+
             with open(merged_pdf_path, 'wb') as merged_file:
-                merger.write(merged_file)
+                self.pdf_list.write(merged_file)
 
             print(f"Os PDFs selecionados foram juntados e salvos em "
                   f"{merged_pdf_path}.")
