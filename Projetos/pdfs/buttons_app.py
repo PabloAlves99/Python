@@ -147,16 +147,16 @@ class DefaultButtons(IButtons):
             messagebox.showwarning(
                 "Aviso", "Por favor, selecione um arquivo PDF primeiro.")
 
-    def save_specific_pages(self):
-        if self.processor.file_path:
-            pages = self.page_entry.get().split(',')
-            pages = [int(page.strip()) for page in pages]
-            self.processor.save_specifics_pdf_pages(*pages)
-            messagebox.showinfo(
-                "Sucesso", "Páginas específicas salvas com sucesso.")
-        else:
-            messagebox.showwarning(
-                "Aviso", "Por favor, selecione um arquivo PDF primeiro.")
+    # def save_specific_pages(self):
+    #     if self.processor.file_path:
+    #         pages = self.page_entry.get().split(',')
+    #         pages = [int(page.strip()) for page in pages]
+    #         self.processor.save_specifics_pdf_pages(*pages)
+    #         messagebox.showinfo(
+    #             "Sucesso", "Páginas específicas salvas com sucesso.")
+    #     else:
+    #         messagebox.showwarning(
+    #             "Aviso", "Por favor, selecione um arquivo PDF primeiro.")
 
     def add_pdf_to_pdf_list(self):
         for pdf in self.processor.select_pdf_to_list():
@@ -207,13 +207,15 @@ class TooltipManager:
         x = event.widget.winfo_rootx() + 20
         y = event.widget.winfo_rooty() + 20
         self.tooltip = Toplevel(event.widget)
-        self.tooltip.wm_overrideredirect(1)
+        self.tooltip.wm_overrideredirect(1)  # type: ignore
         self.tooltip.wm_geometry(f"+{x}+{y}")
         label = Label(self.tooltip, text=self.text,
                       background="#ffffe0", relief="solid", borderwidth=1)
         label.pack()
 
     def hide_tooltip(self, event):
+        events = []
+        events.append(event)
         if self.tooltip:
             self.tooltip.destroy()
             self.tooltip = None
