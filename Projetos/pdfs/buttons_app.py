@@ -1,6 +1,6 @@
-from tkinter import Toplevel, Label
-from tkinter import Tk, Button, Label, messagebox, Toplevel
+from tkinter import Tk, Button, Label, messagebox, Toplevel, Listbox
 from pathlib import Path
+from typing import List
 from factory_app import IButtons
 from pdf_processor import PDFProcessor
 
@@ -9,6 +9,7 @@ class DefaultButtons(IButtons):
     def __init__(self, root: Tk, top_frame, bottom_frame) -> None:
         self.processor = PDFProcessor()
         self.tooltip_manager = None
+        self.selected_pdfs: List[str] = []
         self.top_frame = top_frame
         self.bottom_frame = bottom_frame
         self.root = root
@@ -30,41 +31,64 @@ class DefaultButtons(IButtons):
         self._output_name = Label(
             self.top_frame, text="Nenhuma pasta selecionada", bg="#DBDBDB")
 
-        self.button_extract_text = Button(
-            self.bottom_frame, text="Extrair Texto", command=self.extract_text)
+        self.button_listbox = Button(self.top_frame,
+                                     text='Adicionar pdf na lista',
+                                     bg='#DBDBDB',
+                                     command=self.add_pdf_to_pdf_list)
+        self.select_pdf_from_listbox = Button(self.top_frame,
+                                              text="Apagar PDF selecionado",
+                                              bg='#DBDBDB',
+                                              command=self.get_selected_pdf)
+        self.remove_list_items = Button(self.top_frame,
+                                        text="Apagar itens da lista",
+                                        bg='#DBDBDB',
+                                        command=self.remove_all_list)
+        self.pdf_listbox = Listbox(self.top_frame, selectmode='multiple')
 
-        self.button_extract_images = Button(
-            self.bottom_frame, text="Extrair Imagens",
-            command=self.extract_images)
+        self.button_extract_text = Button(self.bottom_frame,
+                                          text="Extrair Texto",
+                                          command=self.extract_text)
 
-        self.button_separate_pdf = Button(
-            self.bottom_frame, text="Separar PDF",
-            command=self.save_separate_pdfs)
+        self.button_extract_images = Button(self.bottom_frame,
+                                            text="Extrair Imagens",
+                                            command=self.extract_images)
+
+        self.button_separate_pdf = Button(self.bottom_frame,
+                                          text="Separar PDF",
+                                          command=self.save_separate_pdfs)
 
     def show_buttons(self):
         self.button_select_file.place(
-            relx=0.02, rely=0.02, relwidth=0.36, relheight=0.20)
+            relx=0.02, rely=0.02, relwidth=0.36, relheight=0.12)
         self._file_name.place(
-            relx=0.40, rely=0.02, relwidth=0.55, relheight=0.20
+            relx=0.40, rely=0.02, relwidth=0.55, relheight=0.12
         )
 
         self.output_folder.place(
-            relx=0.02, rely=0.24, relwidth=0.36, relheight=0.20
-        )
+            relx=0.02, rely=0.16, relwidth=0.36, relheight=0.12)
         self._output_name.place(
-            relx=0.40, rely=0.24, relwidth=0.55, relheight=0.20
+            relx=0.40, rely=0.16, relwidth=0.55, relheight=0.12
         )
 
+        self.button_listbox.place(
+            relx=0.02, rely=0.30, relwidth=0.36, relheight=0.12)
+        self.select_pdf_from_listbox.place(
+            relx=0.02, rely=0.45, relwidth=0.36, relheight=0.12)
+        self.remove_list_items.place(
+            relx=0.02, rely=0.60, relwidth=0.36, relheight=0.12)
+        self.pdf_listbox.place(
+            relx=0.40, rely=0.30, relwidth=0.55, relheight=0.67)
+
         self.button_extract_text.place(
-            relx=0.02, rely=0.02, relwidth=0.25, relheight=0.15
+            relx=0.02, rely=0.02, relwidth=0.25, relheight=0.20
         )
 
         self.button_extract_images.place(
-            relx=0.38, rely=0.02, relwidth=0.25, relheight=0.15
+            relx=0.38, rely=0.02, relwidth=0.25, relheight=0.20
         )
 
         self.button_separate_pdf.place(
-            relx=0.73, rely=0.02, relwidth=0.25, relheight=0.15
+            relx=0.73, rely=0.02, relwidth=0.25, relheight=0.20
         )
 
     def select_file(self):
@@ -74,7 +98,7 @@ class DefaultButtons(IButtons):
     def update_file_name(self):
         if self.processor.file_path:
             file_name = Path(self.processor.file_path).name
-            self._file_name.config(text=f"PDF: {file_name}")
+            self._file_name.config(text=f"PDF selecionado: {file_name}")
 
             self.tooltip_manager = TooltipManager(
                 self._file_name, str(self.processor.file_path))
@@ -134,8 +158,38 @@ class DefaultButtons(IButtons):
             messagebox.showwarning(
                 "Aviso", "Por favor, selecione um arquivo PDF primeiro.")
 
-    def merge_pdfs(self):
-        self.processor.merge_selected_pdfs()
+    def add_pdf_to_pdf_list(self):
+        for pdf in self.processor.select_pdf_to_list():
+            self.selected_pdfs.append(pdf)
+            file_name = Path(pdf).name
+            self.pdf_listbox.insert('end', file_name)
+
+    def remove_pdf_to_pdf_list(self, pdf_name):
+        for index, _ in enumerate(self.selected_pdfs):
+            if pdf_name in self.selected_pdfs[index]:
+                self.selected_pdfs.pop(index)
+                self.update_listbox()
+                break
+
+    def update_listbox(self):
+        self.pdf_listbox.delete(0, "end")
+        for pdf in self.selected_pdfs:
+            file_name = Path(pdf).name
+            self.pdf_listbox.insert('end', file_name)
+
+    def get_selected_pdf(self):
+        # Obter o índice do item selecionado
+        for index in self.pdf_listbox.curselection():
+            if index:
+                # Obter o nome do arquivo selecionado
+                selected_pdf = self.pdf_listbox.get(index)
+                self.remove_pdf_to_pdf_list(selected_pdf)
+            else:
+                print("Nenhum arquivo selecionado.")
+
+    def remove_all_list(self):
+        self.pdf_listbox.delete(0, "end")
+        self.selected_pdfs.clear()
 
 
 class TooltipManager:
