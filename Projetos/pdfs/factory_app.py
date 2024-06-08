@@ -23,7 +23,11 @@ class IConfigurations(ABC):
 
 class IButtons(ABC):
     @abstractmethod
-    def display_buttons(self):
+    def show_buttons(self):
+        pass
+
+    @abstractmethod
+    def create_buttons(self):
         pass
 
 

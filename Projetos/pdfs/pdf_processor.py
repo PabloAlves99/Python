@@ -1,5 +1,4 @@
 # pylint: disable=missing-docstring,empty-docstring
-import sys
 from pathlib import Path
 from tkinter import Tk
 from tkinter.filedialog import askopenfilename, askopenfilenames
@@ -21,6 +20,12 @@ class PDFProcessor:
         if execute:
             self.execute()
 
+    def execute(self):
+        self.select_file_pdf()
+        self.select_output_folder()
+        self.read_file_path()
+        self.create_output_folder()
+
     def select_file_pdf(self):
         root = Tk()
         root.withdraw()
@@ -40,7 +45,6 @@ class PDFProcessor:
             else:
                 print("Nenhum arquivo selecionado.")
                 self.reader = None
-                sys.exit()
         except FileNotFoundError as e:
             print(f"Erro: Arquivo não encontrado - {e}")
         except PdfReadError as e:
@@ -48,7 +52,6 @@ class PDFProcessor:
         except Exception as e:
             print(f"Erro ao ler o arquivo PDF: {e}")
             self.reader = None
-            sys.exit()
 
     def create_output_folder(self):
         if self.root_folder and self.root_folder != Path('.'):
@@ -57,12 +60,6 @@ class PDFProcessor:
             print(f"Nova pasta criada: {self.new_folder}")
         else:
             print("Nenhuma pasta selecionada.")
-
-    def execute(self):
-        self.select_file_pdf()
-        self.select_output_folder()
-        self.read_file_path()
-        self.create_output_folder()
 
     def get_num_pages(self) -> Optional[int]:
         return len(self.reader.pages) if self.reader is not None else None
@@ -127,7 +124,7 @@ class PDFProcessor:
         for page_number, page in enumerate(self.reader.pages):
             # Extraindo e salvando todas as imagens de cada página
             for image_index, image in enumerate(page.images):
-                with open(self.new_folder / f'page_{page_number+1}'
+                with open(self.new_folder / f'page_{page_number + 1}'
                           f'_image_{image_index}.png', 'wb') as img_file:
                     img_file.write(image.data)
 

@@ -12,11 +12,11 @@ class DefaultInterface(IInterface):
                                highlightbackground='#A9CDDA',
                                highlightthickness=3)
         self.top_frame.place(relx=0.02, rely=0.02,
-                             relwidth=0.96, relheight=0.32)
+                             relwidth=0.96, relheight=0.40)
 
         self.bottom_frame = Frame(
             self.root, bd=4, bg='#A3C9D9',
             highlightbackground='#A9CDDA',
             highlightthickness=3)
-        self.bottom_frame.place(relx=0.02, rely=0.35,
-                                relwidth=0.96, relheight=0.62)
+        self.bottom_frame.place(relx=0.02, rely=0.44,
+                                relwidth=0.96, relheight=0.52)

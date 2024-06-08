@@ -16,7 +16,8 @@ class DefaultAppFactory(IAppFactory):
         return DefaultConfigurations(self.root)
 
     def create_buttons(self):
-        return DefaultButtons(self.root, self.interface.top_frame)
+        return DefaultButtons(
+            self.root, self.interface.top_frame, self.interface.bottom_frame)
 
     def create_interface(self):
         return DefaultInterface(self.root)
