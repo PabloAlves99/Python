@@ -1,8 +1,7 @@
 # pylint: disable=missing-docstring,empty-docstring
 from pathlib import Path
 from tkinter import Tk
-from tkinter.filedialog import askopenfilename, askopenfilenames
-from tkinter.filedialog import askdirectory
+from tkinter.filedialog import askopenfilename, askopenfilenames, askdirectory
 from typing import List, Optional, Union
 from PyPDF2 import PdfMerger, PdfReader, PdfWriter
 from PyPDF2.errors import PdfReadError
@@ -16,6 +15,7 @@ class PDFProcessor:
         self.root_folder: Optional[Path] = None
         self.new_folder: Optional[Path] = None
         self.reader: Optional[PdfReader] = None
+        self.pdf_list: Optional[List[str]] = None
 
         if execute:
             self.execute()
@@ -164,36 +164,33 @@ class PDFProcessor:
         except Exception as e:
             print(f"Erro ao salvar as páginas: {e}")
 
-    def merge_selected_pdfs(self):
-        # Abrindo uma nova janela para selecionar os PDFs a serem mesclados
-        root = Tk()
-        root.withdraw()
-        pdf_files = askopenfilenames(
+    def select_pdf_to_list(self):
+        files = askopenfilenames(
             title="Selecione os PDFs que deseja juntar",
             filetypes=[("PDF files", "*.pdf")]
         )
-        root.destroy()  # Fechando a janela após a seleção
+        return files
 
-        # Verificando se algum arquivo foi selecionado
-        if not pdf_files:
-            print("Nenhum arquivo selecionado.")
-            return
+    def merge_pdfs(self):
 
-        # Criando um objeto PdfMerger para mesclar os PDFs selecionados
-        merger = PdfMerger()
-        for pdf_file in pdf_files:
-            merger.append(pdf_file)
+        if self.new_folder is not None:
+            merged_pdf_path = self.new_folder / 'merged_pdfs.pdf'
 
-        # Salvando o PDF mesclado
-        self.select_output_folder()
-        self.create_output_folder()
-        merged_pdf_path = self.new_folder / 'merged_selected_pdfs.pdf'
-        with open(merged_pdf_path, 'wb') as merged_file:
-            merger.write(merged_file)
+            merger = PdfMerger()
+            for pdf_file in self.select_pdf_to_list():
+                merger.append(pdf_file)
 
-        print(f"Os PDFs selecionados foram mesclados em {merged_pdf_path}.")
+            if not merger:
+                print("Nenhum PDF selecionado.")
+                return
+
+            with open(merged_pdf_path, 'wb') as merged_file:
+                merger.write(merged_file)
+
+            print(f"Os PDFs selecionados foram juntados e salvos em "
+                  f"{merged_pdf_path}.")
 
 
 if __name__ == "__main__":
     x = PDFProcessor(execute=True)
-    x.save_specifics_pdf_pages(1, 2)
+    x.merge_pdfs()

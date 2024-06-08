@@ -8,15 +8,15 @@ class DefaultInterface(IInterface):
         self.setup_ui()
 
     def setup_ui(self):
-        self.top_frame = Frame(self.root, bd=4, bg='#A3C9D9',
-                               highlightbackground='#A9CDDA',
-                               highlightthickness=3)
+        self.top_frame = Frame(self.root, bd=4, bg='#F2F2F2',
+                               highlightbackground='#DDDDDC',
+                               highlightthickness=2)
         self.top_frame.place(relx=0.02, rely=0.02,
                              relwidth=0.96, relheight=0.40)
 
         self.bottom_frame = Frame(
-            self.root, bd=4, bg='#A3C9D9',
-            highlightbackground='#A9CDDA',
-            highlightthickness=3)
+            self.root, bd=4, bg='#F2F2F2',
+            highlightbackground='#DDDDDC',
+            highlightthickness=2)
         self.bottom_frame.place(relx=0.02, rely=0.44,
                                 relwidth=0.96, relheight=0.52)

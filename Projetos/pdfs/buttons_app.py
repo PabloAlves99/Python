@@ -17,19 +17,18 @@ class DefaultButtons(IButtons):
 
     def create_buttons(self):
         self.button_select_file = Button(self.top_frame,
-                                         text='Selecionar PDF', bd=2,
-                                         bg="#FFF",
+                                         text='Selecionar PDF',
+                                         bg="#DBDBDB",
                                          command=self.select_file)
         self._file_name = Label(
-            self.top_frame, text="Nenhum arquivo selecionado")
+            self.top_frame, text="Nenhum arquivo selecionado", bg="#DBDBDB",)
 
         self.output_folder = Button(self.top_frame,
                                     text='Selecionar pasta de saída',
-                                    bd=2,
-                                    bg="#FFF",
+                                    bg="#DBDBDB",
                                     command=self.select_folder)
         self._output_name = Label(
-            self.top_frame, text="Nenhuma pasta selecionada")
+            self.top_frame, text="Nenhuma pasta selecionada", bg="#DBDBDB")
 
         self.button_extract_text = Button(
             self.bottom_frame, text="Extrair Texto", command=self.extract_text)
@@ -44,16 +43,16 @@ class DefaultButtons(IButtons):
 
     def show_buttons(self):
         self.button_select_file.place(
-            relx=0.31, rely=0.02, relwidth=0.36, relheight=0.20)
+            relx=0.02, rely=0.02, relwidth=0.36, relheight=0.20)
         self._file_name.place(
-            relx=0.08, rely=0.28, relwidth=0.85, relheight=0.20
+            relx=0.40, rely=0.02, relwidth=0.55, relheight=0.20
         )
 
         self.output_folder.place(
-            relx=0.31, rely=0.55, relwidth=0.36, relheight=0.20
+            relx=0.02, rely=0.24, relwidth=0.36, relheight=0.20
         )
         self._output_name.place(
-            relx=0.08, rely=0.80, relwidth=0.85, relheight=0.20
+            relx=0.40, rely=0.24, relwidth=0.55, relheight=0.20
         )
 
         self.button_extract_text.place(
@@ -75,7 +74,7 @@ class DefaultButtons(IButtons):
     def update_file_name(self):
         if self.processor.file_path:
             file_name = Path(self.processor.file_path).name
-            self._file_name.config(text=f"Arquivo selecionado: {file_name}")
+            self._file_name.config(text=f"PDF: {file_name}")
 
             self.tooltip_manager = TooltipManager(
                 self._file_name, str(self.processor.file_path))
@@ -88,7 +87,7 @@ class DefaultButtons(IButtons):
         if self.processor.root_folder:
             output_name = Path(self.processor.root_folder).name
             self._output_name.config(
-                text=f"Pasta de saída selecionada: {output_name}")
+                text=f"Pasta de destino: {output_name}")
 
             self.tooltip_manager = TooltipManager(
                 self._output_name, str(self.processor.root_folder))
