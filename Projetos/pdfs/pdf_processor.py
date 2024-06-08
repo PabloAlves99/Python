@@ -156,8 +156,8 @@ class PDFProcessor:
                 specific_pdf_path = self.new_folder / f'page_{page_number}.pdf'
                 with open(specific_pdf_path, 'wb') as sf:
                     writer.write(sf)
-                print(f"A página {page_number} foi salva em {
-                      specific_pdf_path}.")
+                print(f"A página {page_number} foi salva em "
+                      f"{specific_pdf_path}.")
 
         except IndexError:
             print(f"Erro: O PDF possui {len(pages_number)}")
