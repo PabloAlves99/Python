@@ -37,10 +37,12 @@ class ICommand(ABC):
     """ Interface de comando """
 
     @abstractmethod
-    def execute(self) -> None: pass
+    def execute(self) -> None:
+        pass
 
     @abstractmethod
-    def undo(self) -> None: pass
+    def undo(self) -> None:
+        pass
 
 
 class LightOnCommand(ICommand):
