@@ -1,4 +1,5 @@
 # pylint: disable=missing-docstring,empty-docstring
+# type: ignore
 from pathlib import Path
 from tkinter import Tk
 from tkinter.filedialog import askopenfilename, askopenfilenames, askdirectory
@@ -83,8 +84,8 @@ class PDFProcessor:
                 is not None else ['page precisa ser int'])
 
     def __save_texts(
-            self, text_list: Union[
-                str, List[str]], page: Optional[int] = None):
+            self, text_list: Union[List[str], str],
+            page: Optional[int] = None):
         if self.new_folder:
             if page is None:
                 for page_number, text in enumerate(text_list):
@@ -94,7 +95,7 @@ class PDFProcessor:
             else:
                 with open(self.new_folder / f'page_{page}.txt', 'w',
                           encoding='utf-8') as texto_arquivo:
-                    texto_arquivo.write(text_list)
+                    texto_arquivo.write(text_list)  # type: ignore
 
     def extract_text_files(self, page: Optional[int] = None):
 
@@ -104,7 +105,7 @@ class PDFProcessor:
 
         elif isinstance(page, int):
             num_pages = self.get_num_pages()
-            is_page_valid = 1 <= page <= num_pages
+            is_page_valid = 1 <= page <= num_pages  # type: ignore
 
             if num_pages is not None and is_page_valid:
                 text = self.__extract_text_from_page(page)

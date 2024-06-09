@@ -60,14 +60,17 @@ class DefaultButtons(IButtons):
         # bottom frame buttons
         self.button_extract_text = Button(self.bottom_frame,
                                           text="Extrair Texto",
+                                          bg='#DBDBDB',
                                           command=self.extract_text)
 
         self.button_extract_images = Button(self.bottom_frame,
                                             text="Extrair Imagens",
+                                            bg='#DBDBDB',
                                             command=self.extract_images)
 
         self.button_separate_pdf = Button(self.bottom_frame,
                                           text="Separar PDF",
+                                          bg='#DBDBDB',
                                           command=self.save_separate_pdfs)
 
     def show_buttons(self):
@@ -83,16 +86,16 @@ class DefaultButtons(IButtons):
             relx=0.40, rely=0.16, relwidth=0.55, relheight=0.12
         )
 
-        self.button_listbox.place(
-            relx=0.02, rely=0.30, relwidth=0.36, relheight=0.12)
-        self.select_pdf_from_listbox.place(
-            relx=0.02, rely=0.45, relwidth=0.36, relheight=0.12)
-        self.remove_list_items.place(
-            relx=0.02, rely=0.60, relwidth=0.36, relheight=0.12)
-        self.button_merge_pdfs.place(
-            relx=0.02, rely=0.75, relwidth=0.36, relheight=0.12)
         self.pdf_listbox.place(
             relx=0.40, rely=0.30, relwidth=0.55, relheight=0.67)
+        self.button_listbox.place(
+            relx=0.02, rely=0.35, relwidth=0.36, relheight=0.12)
+        self.select_pdf_from_listbox.place(
+            relx=0.02, rely=0.50, relwidth=0.36, relheight=0.12)
+        self.remove_list_items.place(
+            relx=0.02, rely=0.65, relwidth=0.36, relheight=0.12)
+        self.button_merge_pdfs.place(
+            relx=0.02, rely=0.80, relwidth=0.36, relheight=0.12)
 
         self.button_extract_text.place(
             relx=0.02, rely=0.02, relwidth=0.25, relheight=0.20
@@ -162,17 +165,6 @@ class DefaultButtons(IButtons):
             messagebox.showwarning(
                 "Aviso", "Por favor, selecione um arquivo PDF primeiro.")
 
-    # def save_specific_pages(self):
-    #     if self.processor.file_path:
-    #         pages = self.page_entry.get().split(',')
-    #         pages = [int(page.strip()) for page in pages]
-    #         self.processor.save_specifics_pdf_pages(*pages)
-    #         messagebox.showinfo(
-    #             "Sucesso", "Páginas específicas salvas com sucesso.")
-    #     else:
-    #         messagebox.showwarning(
-    #             "Aviso", "Por favor, selecione um arquivo PDF primeiro.")
-
     def add_pdf_to_pdf_list(self):
         for pdf in self.processor.select_pdf_to_list():
             self.selected_pdfs.append(pdf)
@@ -219,6 +211,17 @@ class DefaultButtons(IButtons):
         else:
             messagebox.showerror("Erro",
                                  "Nenhuma pagina de destino foi selecionada.")
+
+    # def save_specific_pages(self):
+    #     if self.processor.file_path:
+    #         pages = self.page_entry.get().split(',')
+    #         pages = [int(page.strip()) for page in pages]
+    #         self.processor.save_specifics_pdf_pages(*pages)
+    #         messagebox.showinfo(
+    #             "Sucesso", "Páginas específicas salvas com sucesso.")
+    #     else:
+    #         messagebox.showwarning(
+    #             "Aviso", "Por favor, selecione um arquivo PDF primeiro.")
 
 
 class TooltipManager:
