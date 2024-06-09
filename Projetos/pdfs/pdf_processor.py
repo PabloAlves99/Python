@@ -43,7 +43,6 @@ class PDFProcessor:
                 self.reader = PdfReader(self.file_path)
                 print("Caminho do arquivo selecionado:", self.file_path)
             else:
-                print("Nenhum arquivo selecionado.")
                 self.reader = None
         except FileNotFoundError as e:
             print(f"Erro: Arquivo não encontrado - {e}")

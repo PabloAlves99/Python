@@ -3,6 +3,7 @@ from pathlib import Path
 from typing import List
 from factory_app import IButtons
 from pdf_processor import PDFProcessor
+from PyPDF2 import PdfMerger
 
 
 class DefaultButtons(IButtons):
@@ -17,10 +18,12 @@ class DefaultButtons(IButtons):
         self.show_buttons()
 
     def create_buttons(self):
+        # Top frame buttons
         self.button_select_file = Button(self.top_frame,
                                          text='Selecionar PDF',
                                          bg="#DBDBDB",
                                          command=self.select_file)
+
         self._file_name = Label(
             self.top_frame, text="Nenhum arquivo selecionado", bg="#DBDBDB",)
 
@@ -28,6 +31,7 @@ class DefaultButtons(IButtons):
                                     text='Selecionar pasta de saída',
                                     bg="#DBDBDB",
                                     command=self.select_folder)
+
         self._output_name = Label(
             self.top_frame, text="Nenhuma pasta selecionada", bg="#DBDBDB")
 
@@ -35,16 +39,25 @@ class DefaultButtons(IButtons):
                                      text='Adicionar pdf na lista',
                                      bg='#DBDBDB',
                                      command=self.add_pdf_to_pdf_list)
+
         self.select_pdf_from_listbox = Button(self.top_frame,
                                               text="Apagar PDF selecionado",
                                               bg='#DBDBDB',
                                               command=self.get_selected_pdf)
+
         self.remove_list_items = Button(self.top_frame,
                                         text="Apagar itens da lista",
                                         bg='#DBDBDB',
                                         command=self.remove_all_list)
+
+        self.button_merge_pdfs = Button(self.top_frame,
+                                        text="Juntar PDFs da lista",
+                                        bg='#DBDBDB',
+                                        command=self.join_pdf_list)
+
         self.pdf_listbox = Listbox(self.top_frame, selectmode='multiple')
 
+        # bottom frame buttons
         self.button_extract_text = Button(self.bottom_frame,
                                           text="Extrair Texto",
                                           command=self.extract_text)
@@ -76,6 +89,8 @@ class DefaultButtons(IButtons):
             relx=0.02, rely=0.45, relwidth=0.36, relheight=0.12)
         self.remove_list_items.place(
             relx=0.02, rely=0.60, relwidth=0.36, relheight=0.12)
+        self.button_merge_pdfs.place(
+            relx=0.02, rely=0.75, relwidth=0.36, relheight=0.12)
         self.pdf_listbox.place(
             relx=0.40, rely=0.30, relwidth=0.55, relheight=0.67)
 
@@ -190,6 +205,20 @@ class DefaultButtons(IButtons):
     def remove_all_list(self):
         self.pdf_listbox.delete(0, "end")
         self.selected_pdfs.clear()
+
+    def join_pdf_list(self):
+        if self.processor.root_folder:
+            self.processor.read_file_path()
+            self.processor.create_output_folder()
+            if self.selected_pdfs:
+                self.processor.pdf_list = PdfMerger()
+                for pdf in self.selected_pdfs:
+                    self.processor.pdf_list.append(pdf)
+                self.processor.merge_pdfs()
+                self.remove_all_list()
+        else:
+            messagebox.showerror("Erro",
+                                 "Nenhuma pagina de destino foi selecionada.")
 
 
 class TooltipManager:
