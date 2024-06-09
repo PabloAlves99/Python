@@ -191,6 +191,6 @@ class PDFProcessor:
                   f"{merged_pdf_path}.")
 
 
-if __name__ == "__main__":
-    x = PDFProcessor(execute=True)
-    x.merge_pdfs()
+# if __name__ == "__main__":
+#     x = PDFProcessor(execute=True)
+#     x.merge_pdfs()
