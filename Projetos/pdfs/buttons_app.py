@@ -120,6 +120,7 @@ class DefaultButtons(IButtons):
 
             self.tooltip_manager = TooltipManager(
                 self._file_name, str(self.processor.file_path))
+            self.processor.read_file_path()
 
     def select_folder(self):
         self.processor.select_output_folder()
@@ -133,10 +134,9 @@ class DefaultButtons(IButtons):
 
             self.tooltip_manager = TooltipManager(
                 self._output_name, str(self.processor.root_folder))
+            self.processor.create_output_folder()
 
     def extract_text(self):
-        self.processor.read_file_path()
-        self.processor.create_output_folder()
         if self.processor.reader:
             self.processor.extract_text_files()
             messagebox.showinfo("Sucesso", "Texto extraído com sucesso!")
@@ -144,8 +144,6 @@ class DefaultButtons(IButtons):
             messagebox.showerror("Erro", "Nenhum arquivo PDF foi carregado.")
 
     def extract_images(self):
-        self.processor.read_file_path()
-        self.processor.create_output_folder()
         if self.processor.file_path:
             self.processor.extract_images()
             messagebox.showinfo(
@@ -155,8 +153,6 @@ class DefaultButtons(IButtons):
                 "Aviso", "Por favor, selecione um arquivo PDF primeiro.")
 
     def save_separate_pdfs(self):
-        self.processor.read_file_path()
-        self.processor.create_output_folder()
         if self.processor.file_path:
             self.processor.save_individual_pages_as_pdfs()
             messagebox.showinfo(
@@ -200,8 +196,6 @@ class DefaultButtons(IButtons):
 
     def join_pdf_list(self):
         if self.processor.root_folder:
-            self.processor.read_file_path()
-            self.processor.create_output_folder()
             if self.selected_pdfs:
                 self.processor.pdf_list = PdfMerger()
                 for pdf in self.selected_pdfs:
