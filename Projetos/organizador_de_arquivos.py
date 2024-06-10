@@ -1,14 +1,13 @@
-import os
-from tkinter.filedialog import askdirectory
 from datetime import datetime
-from pytz import timezone
+from tkinter.filedialog import askdirectory
+import os
+
+
+DATA_ATUAL = datetime.now().strftime("%Y%m%d")
 
 
 caminho = askdirectory(title="Selecione uma pasta")
-DATA = datetime.now(timezone('America/Sao_paulo')).strftime('%d%m%Y')
-
 lista_arquivos = os.listdir(caminho)
-
 extensoes = {
     "oa_imagens": [".png", ".jpg", ".jpeg", ".gif", ".bmp", ".svg", ".ico"],
     "oa_DOCX": [".docx", ".doc"],
@@ -17,8 +16,8 @@ extensoes = {
     "oa_texto": [".txt", ".rtf", ".tex",],
     "oa_apresentacoes": [".pptx", ".ppt", ".md"],
     "oa_audio": [".mp3", ".wav", ".ogg", ".flac"],
-    "oa_video": [".mp4", ".avi", ".mov", ".wmv"],
-    "oa_executaveis": [".exe", ".bat", ".sh", ".msi", ".jar"],
+    "oa_video": [".mp4", ".avi", ".mov", ".wmv", ".m4v", ".REC"],
+    "oa_executaveis": [".exe", ".bat", ".sh", ".msi"],
     "oa_compactados": [".zip", ".rar", ".tar.gz"],
     "oa_Python": [".py"],
     "oa_C": [".c", ".h"],
@@ -36,18 +35,17 @@ extensoes = {
     "oa_Perl": [".pl"],
     "oa_R": [".r"],
     "oa_Assembly": [".asm"],
-    "oa_outros": [".bibtex"],
+    "oa_outros": [".bibtex", ".apk"],
+    "JNLP": [".jnlp",]
 }
-
 for arquivo in lista_arquivos:
     nome, extensao = os.path.splitext(f"{caminho}/{arquivo}")
 
     for pasta in extensoes:  # pylint: disable=C0206
 
         if extensao in extensoes[pasta]:
+            NOVO_CAMINHO = f'{caminho}/{pasta}/{DATA_ATUAL}'
 
-            if not os.path.exists(f"{caminho}/{pasta}"):
-                os.mkdir(f"{caminho}/{pasta}")
-
-            os.rename(f"{caminho}/{arquivo}",
-                      f"{caminho}/{pasta}/{DATA},{arquivo}")
+            if not os.path.exists(NOVO_CAMINHO):
+                os.makedirs(NOVO_CAMINHO)
+            os.rename(f"{caminho}/{arquivo}", f"{NOVO_CAMINHO}/{arquivo}")
