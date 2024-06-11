@@ -22,59 +22,70 @@ class DefaultButtons(IButtons):
         # Top frame buttons
         self.button_select_file = Button(self.top_frame,
                                          text='Selecionar PDF',
-                                         bg=self.color.bg_buttom,
+                                         bg=self.color.bg_button,
                                          command=self.select_file)
 
         self._file_name = Label(
             self.top_frame, text="Nenhum arquivo selecionado",
-            bg=self.color.bg_buttom)
+            bg=self.color.bg_button)
 
         self.output_folder = Button(self.top_frame,
                                     text='Selecionar pasta de saída',
-                                    bg=self.color.bg_buttom,
+                                    bg=self.color.bg_button,
                                     command=self.select_folder)
 
         self._output_name = Label(
             self.top_frame, text="Nenhuma pasta selecionada",
-            bg=self.color.bg_buttom)
+            bg=self.color.bg_button)
 
         self.button_extract_text = Button(self.top_frame,
                                           text="Extrair Texto",
-                                          bg=self.color.bg_buttom,
+                                          bg=self.color.bg_button,
                                           command=self.extract_text)
 
         self.button_extract_images = Button(self.top_frame,
                                             text="Extrair Imagens",
-                                            bg=self.color.bg_buttom,
+                                            bg=self.color.bg_button,
                                             command=self.extract_images)
 
         self.button_separate_pdf = Button(self.top_frame,
                                           text="Separar PDF",
-                                          bg=self.color.bg_buttom,
+                                          bg=self.color.bg_button,
                                           command=self.save_separate_pdfs)
 
         # bottom frame buttons
         self.button_listbox = Button(self.bottom_frame,
                                      text='Adicionar pdf na lista',
-                                     bg=self.color.bg_buttom,
+                                     bg=self.color.bg_button,
                                      command=self.add_pdf_to_pdf_list)
 
         self.select_pdf_from_listbox = Button(self.bottom_frame,
                                               text="Apagar PDF selecionado",
-                                              bg=self.color.bg_buttom,
+                                              bg=self.color.bg_button,
                                               command=self.get_selected_pdf)
 
         self.remove_list_items = Button(self.bottom_frame,
                                         text="Apagar itens da lista",
-                                        bg=self.color.bg_buttom,
+                                        bg=self.color.bg_button,
                                         command=self.remove_all_list)
 
         self.button_merge_pdfs = Button(self.bottom_frame,
                                         text="Juntar PDFs da lista",
-                                        bg=self.color.bg_buttom,
+                                        bg=self.color.bg_button,
                                         command=self.join_pdf_list)
 
         self.pdf_listbox = Listbox(self.bottom_frame, selectmode='multiple')
+
+        self.buttons = [
+            self.button_select_file, self.output_folder,
+            self.button_extract_text, self.button_extract_images,
+            self.button_separate_pdf, self.button_listbox,
+            self.select_pdf_from_listbox, self.remove_list_items,
+            self.button_merge_pdfs,
+        ]
+        self.hover_effect_manager = HoverEffectManager(
+            self.buttons, self.color.hover_button, self.color.bg_button
+        )
 
     def show_buttons(self):
         self.button_select_file.place(
@@ -246,3 +257,24 @@ class TooltipManager:
         if self.tooltip:
             self.tooltip.destroy()
             self.tooltip = None
+
+
+class HoverEffectManager:
+    def __init__(self, buttons, hover_color, original_color):
+        self.buttons = buttons
+        self.hover_color = hover_color
+        self.original_color = original_color
+        self.add_hover_effects()
+
+    def add_hover_effects(self):
+        for button in self.buttons:
+            button.bind("<Enter>", lambda event,
+                        btn=button: self.on_enter(btn))
+            button.bind("<Leave>", lambda event,
+                        btn=button: self.on_leave(btn))
+
+    def on_enter(self, button):
+        button['background'] = self.hover_color
+
+    def on_leave(self, button):
+        button['background'] = self.original_color

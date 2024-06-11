@@ -10,6 +10,6 @@ class ColorThemes:
         self.bottom_frame_color = '#4682B4'
         self.bg_text = '#2F4F4F'
 
-        self.bg_buttom = '#FFF'
+        self.bg_button = '#FFF'
         self.border_button = '#B0C4DE'
-        self.hover_buttom = '#ADD8E6'
+        self.hover_button = '#ADD8E6'
