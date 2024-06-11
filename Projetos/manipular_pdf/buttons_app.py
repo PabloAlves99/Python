@@ -35,79 +35,77 @@ class DefaultButtons(IButtons):
         self._output_name = Label(
             self.top_frame, text="Nenhuma pasta selecionada", bg="#DBDBDB")
 
-        self.button_listbox = Button(self.top_frame,
-                                     text='Adicionar pdf na lista',
-                                     bg='#DBDBDB',
-                                     command=self.add_pdf_to_pdf_list)
-
-        self.select_pdf_from_listbox = Button(self.top_frame,
-                                              text="Apagar PDF selecionado",
-                                              bg='#DBDBDB',
-                                              command=self.get_selected_pdf)
-
-        self.remove_list_items = Button(self.top_frame,
-                                        text="Apagar itens da lista",
-                                        bg='#DBDBDB',
-                                        command=self.remove_all_list)
-
-        self.button_merge_pdfs = Button(self.top_frame,
-                                        text="Juntar PDFs da lista",
-                                        bg='#DBDBDB',
-                                        command=self.join_pdf_list)
-
-        self.pdf_listbox = Listbox(self.top_frame, selectmode='multiple')
-
-        # bottom frame buttons
-        self.button_extract_text = Button(self.bottom_frame,
+        self.button_extract_text = Button(self.top_frame,
                                           text="Extrair Texto",
                                           bg='#DBDBDB',
                                           command=self.extract_text)
 
-        self.button_extract_images = Button(self.bottom_frame,
+        self.button_extract_images = Button(self.top_frame,
                                             text="Extrair Imagens",
                                             bg='#DBDBDB',
                                             command=self.extract_images)
 
-        self.button_separate_pdf = Button(self.bottom_frame,
+        self.button_separate_pdf = Button(self.top_frame,
                                           text="Separar PDF",
                                           bg='#DBDBDB',
                                           command=self.save_separate_pdfs)
 
+        # bottom frame buttons
+        self.button_listbox = Button(self.bottom_frame,
+                                     text='Adicionar pdf na lista',
+                                     bg='#DBDBDB',
+                                     command=self.add_pdf_to_pdf_list)
+
+        self.select_pdf_from_listbox = Button(self.bottom_frame,
+                                              text="Apagar PDF selecionado",
+                                              bg='#DBDBDB',
+                                              command=self.get_selected_pdf)
+
+        self.remove_list_items = Button(self.bottom_frame,
+                                        text="Apagar itens da lista",
+                                        bg='#DBDBDB',
+                                        command=self.remove_all_list)
+
+        self.button_merge_pdfs = Button(self.bottom_frame,
+                                        text="Juntar PDFs da lista",
+                                        bg='#DBDBDB',
+                                        command=self.join_pdf_list)
+
+        self.pdf_listbox = Listbox(self.bottom_frame, selectmode='multiple')
+
     def show_buttons(self):
         self.button_select_file.place(
-            relx=0.02, rely=0.02, relwidth=0.36, relheight=0.12)
+            relx=0.03, rely=0.02, relwidth=0.36, relheight=0.14)
         self._file_name.place(
-            relx=0.40, rely=0.02, relwidth=0.55, relheight=0.12
+            relx=0.41, rely=0.02, relwidth=0.55, relheight=0.14
         )
 
         self.output_folder.place(
-            relx=0.02, rely=0.16, relwidth=0.36, relheight=0.12)
+            relx=0.03, rely=0.18, relwidth=0.36, relheight=0.14)
         self._output_name.place(
-            relx=0.40, rely=0.16, relwidth=0.55, relheight=0.12
+            relx=0.41, rely=0.18, relwidth=0.55, relheight=0.14
+        )
+
+        self.button_extract_text.place(
+            relx=0.02, rely=0.36, relwidth=0.30, relheight=0.14
+        )
+        self.button_extract_images.place(
+            relx=0.35, rely=0.36, relwidth=0.30, relheight=0.14
+        )
+        self.button_separate_pdf.place(
+            relx=0.67, rely=0.36, relwidth=0.30, relheight=0.14
         )
 
         self.pdf_listbox.place(
-            relx=0.40, rely=0.30, relwidth=0.55, relheight=0.67)
+            relx=0.40, rely=0.02, relwidth=0.55, relheight=0.90)
         self.button_listbox.place(
-            relx=0.02, rely=0.35, relwidth=0.36, relheight=0.12)
-        self.select_pdf_from_listbox.place(
-            relx=0.02, rely=0.50, relwidth=0.36, relheight=0.12)
-        self.remove_list_items.place(
-            relx=0.02, rely=0.65, relwidth=0.36, relheight=0.12)
+            relx=0.02, rely=0.06, relwidth=0.36, relheight=0.18)
         self.button_merge_pdfs.place(
-            relx=0.02, rely=0.80, relwidth=0.36, relheight=0.12)
-
-        self.button_extract_text.place(
-            relx=0.02, rely=0.02, relwidth=0.25, relheight=0.20
-        )
-
-        self.button_extract_images.place(
-            relx=0.38, rely=0.02, relwidth=0.25, relheight=0.20
-        )
-
-        self.button_separate_pdf.place(
-            relx=0.73, rely=0.02, relwidth=0.25, relheight=0.20
-        )
+            relx=0.02, rely=0.27, relwidth=0.36, relheight=0.18)
+        self.select_pdf_from_listbox.place(
+            relx=0.02, rely=0.49, relwidth=0.36, relheight=0.18)
+        self.remove_list_items.place(
+            relx=0.02, rely=0.71, relwidth=0.36, relheight=0.18)
 
     def select_file(self):
         self.processor.select_file_pdf()

@@ -10,5 +10,5 @@ class DefaultConfigurations(IConfigurations):
     def app_settings(self):
         self.root.title("Manipulador de PDF")
         self.root.minsize(430, 350)
-        self.root.configure(background='#3999BF')
+        self.root.configure(background='#A3C9D9')
         self.root.resizable(True, True)
