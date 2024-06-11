@@ -17,10 +17,12 @@ class Colleague(ABC):
         self.name: str
 
     @abstractmethod
-    def broadcast(self, msg: str) -> None: pass
+    def broadcast(self, msg: str) -> None:
+        pass
 
     @abstractmethod
-    def direct(self, msg: str) -> None: pass
+    def direct(self, msg: str) -> None:
+        pass
 
 
 class Person(Colleague):
@@ -40,10 +42,12 @@ class Person(Colleague):
 
 class Mediator(ABC):
     @abstractmethod
-    def broadcast(self, colleague: Colleague, msg: str) -> None: pass
+    def broadcast(self, colleague: Colleague, msg: str) -> None:
+        pass
 
     @abstractmethod
-    def direct(self, sender: Colleague, receiver: str, msg: str) -> None: pass
+    def direct(self, sender: Colleague, receiver: str, msg: str) -> None:
+        pass
 
 
 class Chatroom(Mediator):

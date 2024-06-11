@@ -28,7 +28,8 @@ class Order:
 
 class DiscountStrategy(ABC):
     @abstractmethod
-    def calculate(self, value: float) -> float: pass
+    def calculate(self, value: float) -> float:
+        pass
 
 
 class TwentyPercent(DiscountStrategy):
