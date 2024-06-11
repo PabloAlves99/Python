@@ -15,7 +15,8 @@ class Handler(ABC):
         self.sucessor: Handler
 
     @abstractmethod
-    def handle(self, letter: str) -> str: pass
+    def handle(self, letter: str) -> str:
+        pass
 
 
 class HandlerABC(Handler):
