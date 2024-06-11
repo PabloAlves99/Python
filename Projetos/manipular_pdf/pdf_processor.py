@@ -150,8 +150,9 @@ class PDFProcessor:
 
         try:
             pages_number = args
-            writer = PdfWriter()
+
             for page_number in pages_number:
+                writer = PdfWriter()
                 writer.add_page(self.reader.pages[page_number - 1])
                 specific_pdf_path = self.new_folder / f'page_{page_number}.pdf'
                 with open(specific_pdf_path, 'wb') as sf:

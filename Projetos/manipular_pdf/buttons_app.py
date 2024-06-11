@@ -1,4 +1,4 @@
-from tkinter import Tk, Button, Label, messagebox, Toplevel, Listbox
+from tkinter import Tk, Button, Label, messagebox, Toplevel, Listbox, Entry
 from pathlib import Path
 from typing import List
 from factory_app import IButtons
@@ -53,6 +53,15 @@ class DefaultButtons(IButtons):
                                           bg=self.color.bg_button,
                                           command=self.save_separate_pdfs)
 
+        self.specific_page = Button(self.top_frame,
+                                    text="Salvar apenas a(s) página(s): ",
+                                    bg=self.color.bg_button,
+                                    command=self.save_specific_pages)
+
+        self.label_specific_page = PlaceholderEntry(self.top_frame,
+                                                    placeholder=' Ex: 2, 5, '
+                                                    '7...')
+
         # bottom frame buttons
         self.button_listbox = Button(self.bottom_frame,
                                      text='Adicionar pdf na lista',
@@ -81,7 +90,7 @@ class DefaultButtons(IButtons):
             self.button_extract_text, self.button_extract_images,
             self.button_separate_pdf, self.button_listbox,
             self.select_pdf_from_listbox, self.remove_list_items,
-            self.button_merge_pdfs,
+            self.button_merge_pdfs, self.specific_page
         ]
         self.hover_effect_manager = HoverEffectManager(
             self.buttons, self.color.hover_button, self.color.bg_button
@@ -108,6 +117,13 @@ class DefaultButtons(IButtons):
         )
         self.button_separate_pdf.place(
             relx=0.67, rely=0.36, relwidth=0.30, relheight=0.14
+        )
+
+        self.specific_page.place(
+            relx=0.02, rely=0.54, relwidth=0.43, relheight=0.14
+        )
+        self.label_specific_page.place(
+            relx=0.47, rely=0.54, relwidth=0.17, relheight=0.14
         )
 
         self.pdf_listbox.place(
@@ -218,16 +234,16 @@ class DefaultButtons(IButtons):
             messagebox.showerror("Erro",
                                  "Nenhuma pagina de destino foi selecionada.")
 
-    # def save_specific_pages(self):
-    #     if self.processor.file_path:
-    #         pages = self.page_entry.get().split(',')
-    #         pages = [int(page.strip()) for page in pages]
-    #         self.processor.save_specifics_pdf_pages(*pages)
-    #         messagebox.showinfo(
-    #             "Sucesso", "Páginas específicas salvas com sucesso.")
-    #     else:
-    #         messagebox.showwarning(
-    #             "Aviso", "Por favor, selecione um arquivo PDF primeiro.")
+    def save_specific_pages(self):
+        if self.processor.file_path:
+            pages = self.label_specific_page.get().split(',')
+            pages = [int(page.strip()) for page in pages]
+            self.processor.save_specifics_pdf_pages(*pages)
+            messagebox.showinfo(
+                "Sucesso", "Páginas específicas salvas com sucesso.")
+        else:
+            messagebox.showwarning(
+                "Aviso", "Por favor, selecione um arquivo PDF primeiro.")
 
 
 class TooltipManager:
@@ -278,3 +294,31 @@ class HoverEffectManager:
 
     def on_leave(self, button):
         button['background'] = self.original_color
+
+
+class PlaceholderEntry(Entry):
+    def __init__(self, frame=None, placeholder="", text_color='grey',
+                 *args, **kwargs):
+        super().__init__(frame, *args, **kwargs)
+
+        self.placeholder = placeholder
+        self.placeholder_color = text_color
+        self.default_fg_color = self["fg"]
+
+        self.bind("<FocusIn>", self.on_entry_focus_in)
+        self.bind("<FocusOut>", self.on_entry_focus_out)
+
+        self.set_placeholder()
+
+    def set_placeholder(self):
+        self.insert(0, self.placeholder)
+        self.config(fg=self.placeholder_color)
+
+    def on_entry_focus_in(self, event):
+        if self.get() == self.placeholder:
+            self.delete(0, 'end')
+            self.config(fg=self.default_fg_color)
+
+    def on_entry_focus_out(self, event):
+        if not self.get():
+            self.set_placeholder()
