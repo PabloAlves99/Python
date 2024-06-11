@@ -7,13 +7,14 @@ from PyPDF2 import PdfMerger
 
 
 class DefaultButtons(IButtons):
-    def __init__(self, root: Tk, top_frame, bottom_frame) -> None:
+    def __init__(self, root: Tk, top_frame, bottom_frame, color) -> None:
         self.processor = PDFProcessor()
         self.tooltip_manager = None
         self.selected_pdfs: List[str] = []
         self.top_frame = top_frame
         self.bottom_frame = bottom_frame
         self.root = root
+        self.color = color
         self.create_buttons()
         self.show_buttons()
 
@@ -21,54 +22,56 @@ class DefaultButtons(IButtons):
         # Top frame buttons
         self.button_select_file = Button(self.top_frame,
                                          text='Selecionar PDF',
-                                         bg="#DBDBDB",
+                                         bg=self.color.bg_buttom,
                                          command=self.select_file)
 
         self._file_name = Label(
-            self.top_frame, text="Nenhum arquivo selecionado", bg="#DBDBDB",)
+            self.top_frame, text="Nenhum arquivo selecionado",
+            bg=self.color.bg_buttom)
 
         self.output_folder = Button(self.top_frame,
                                     text='Selecionar pasta de saída',
-                                    bg="#DBDBDB",
+                                    bg=self.color.bg_buttom,
                                     command=self.select_folder)
 
         self._output_name = Label(
-            self.top_frame, text="Nenhuma pasta selecionada", bg="#DBDBDB")
+            self.top_frame, text="Nenhuma pasta selecionada",
+            bg=self.color.bg_buttom)
 
         self.button_extract_text = Button(self.top_frame,
                                           text="Extrair Texto",
-                                          bg='#DBDBDB',
+                                          bg=self.color.bg_buttom,
                                           command=self.extract_text)
 
         self.button_extract_images = Button(self.top_frame,
                                             text="Extrair Imagens",
-                                            bg='#DBDBDB',
+                                            bg=self.color.bg_buttom,
                                             command=self.extract_images)
 
         self.button_separate_pdf = Button(self.top_frame,
                                           text="Separar PDF",
-                                          bg='#DBDBDB',
+                                          bg=self.color.bg_buttom,
                                           command=self.save_separate_pdfs)
 
         # bottom frame buttons
         self.button_listbox = Button(self.bottom_frame,
                                      text='Adicionar pdf na lista',
-                                     bg='#DBDBDB',
+                                     bg=self.color.bg_buttom,
                                      command=self.add_pdf_to_pdf_list)
 
         self.select_pdf_from_listbox = Button(self.bottom_frame,
                                               text="Apagar PDF selecionado",
-                                              bg='#DBDBDB',
+                                              bg=self.color.bg_buttom,
                                               command=self.get_selected_pdf)
 
         self.remove_list_items = Button(self.bottom_frame,
                                         text="Apagar itens da lista",
-                                        bg='#DBDBDB',
+                                        bg=self.color.bg_buttom,
                                         command=self.remove_all_list)
 
         self.button_merge_pdfs = Button(self.bottom_frame,
                                         text="Juntar PDFs da lista",
-                                        bg='#DBDBDB',
+                                        bg=self.color.bg_buttom,
                                         command=self.join_pdf_list)
 
         self.pdf_listbox = Listbox(self.bottom_frame, selectmode='multiple')
