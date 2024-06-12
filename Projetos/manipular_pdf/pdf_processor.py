@@ -161,7 +161,7 @@ class PDFProcessor:
                       f"{specific_pdf_path}.")
 
         except IndexError:
-            print(f"Erro: O PDF possui {len(pages_number)}")
+            print(f"Erro: O PDF possui {len(pages_number)} paginas")
         except Exception as e:
             print(f"Erro ao salvar as páginas: {e}")
 

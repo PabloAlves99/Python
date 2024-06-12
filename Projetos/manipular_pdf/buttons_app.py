@@ -17,6 +17,7 @@ class DefaultButtons(IButtons):
         self.color = color
         self.create_buttons()
         self.show_buttons()
+        self.preliminary_setup()
 
     def create_buttons(self):
         # Top frame buttons
@@ -24,19 +25,17 @@ class DefaultButtons(IButtons):
                                          text='Selecionar PDF',
                                          bg=self.color.bg_button,
                                          command=self.select_file)
-
         self._file_name = Label(
             self.top_frame, text="Nenhum arquivo selecionado",
-            bg=self.color.bg_button)
+            bg=self.color.bg_label)
 
         self.output_folder = Button(self.top_frame,
-                                    text='Selecionar pasta de saída',
+                                    text='Salvar em:',
                                     bg=self.color.bg_button,
                                     command=self.select_folder)
-
         self._output_name = Label(
             self.top_frame, text="Nenhuma pasta selecionada",
-            bg=self.color.bg_button)
+            bg=self.color.bg_label)
 
         self.button_extract_text = Button(self.top_frame,
                                           text="Extrair Texto",
@@ -54,13 +53,15 @@ class DefaultButtons(IButtons):
                                           command=self.save_separate_pdfs)
 
         self.specific_page = Button(self.top_frame,
-                                    text="Salvar apenas a(s) página(s): ",
+                                    text="Selecionar página(s) para salvar: ",
                                     bg=self.color.bg_button,
                                     command=self.save_specific_pages)
 
         self.label_specific_page = PlaceholderEntry(self.top_frame,
                                                     placeholder=' Ex: 2, 5, '
                                                     '7...')
+
+        self.action_listbox = Listbox(self.top_frame)
 
         # bottom frame buttons
         self.button_listbox = Button(self.bottom_frame,
@@ -83,48 +84,33 @@ class DefaultButtons(IButtons):
                                         bg=self.color.bg_button,
                                         command=self.join_pdf_list)
 
-        self.pdf_listbox = Listbox(self.bottom_frame, selectmode='multiple')
-
-        self.buttons = [
-            self.button_select_file, self.output_folder,
-            self.button_extract_text, self.button_extract_images,
-            self.button_separate_pdf, self.button_listbox,
-            self.select_pdf_from_listbox, self.remove_list_items,
-            self.button_merge_pdfs, self.specific_page
-        ]
-        self.hover_effect_manager = HoverEffectManager(
-            self.buttons, self.color.hover_button, self.color.bg_button
-        )
+        self.pdf_listbox = Listbox(self.bottom_frame,
+                                   selectmode='multiple')
 
     def show_buttons(self):
-        self.button_select_file.place(
-            relx=0.03, rely=0.02, relwidth=0.36, relheight=0.14)
         self._file_name.place(
-            relx=0.41, rely=0.02, relwidth=0.55, relheight=0.14
-        )
-
-        self.output_folder.place(
-            relx=0.03, rely=0.18, relwidth=0.36, relheight=0.14)
+            relx=0.02, rely=0.02, relwidth=0.47, relheight=0.11)
         self._output_name.place(
-            relx=0.41, rely=0.18, relwidth=0.55, relheight=0.14
-        )
+            relx=0.51, rely=0.02, relwidth=0.47, relheight=0.11)
+
+        self.button_select_file.place(
+            relx=0.15, rely=0.15, relwidth=0.20, relheight=0.11)
+        self.output_folder.place(
+            relx=0.65, rely=0.15, relwidth=0.20, relheight=0.11)
 
         self.button_extract_text.place(
-            relx=0.02, rely=0.36, relwidth=0.30, relheight=0.14
-        )
+            relx=0.02, rely=0.32, relwidth=0.26, relheight=0.11)
         self.button_extract_images.place(
-            relx=0.35, rely=0.36, relwidth=0.30, relheight=0.14
-        )
+            relx=0.02, rely=0.45, relwidth=0.26, relheight=0.11)
         self.button_separate_pdf.place(
-            relx=0.67, rely=0.36, relwidth=0.30, relheight=0.14
-        )
+            relx=0.02, rely=0.58, relwidth=0.26, relheight=0.11)
 
         self.specific_page.place(
-            relx=0.02, rely=0.54, relwidth=0.43, relheight=0.14
-        )
+            relx=0.02, rely=0.71, relwidth=0.33, relheight=0.11)
         self.label_specific_page.place(
-            relx=0.47, rely=0.54, relwidth=0.17, relheight=0.14
-        )
+            relx=0.37, rely=0.71, relwidth=0.12, relheight=0.11)
+        self.action_listbox.place(
+            relx=0.51, rely=0.32, relwidth=0.47, relheight=0.64)
 
         self.pdf_listbox.place(
             relx=0.40, rely=0.02, relwidth=0.55, relheight=0.90)
@@ -137,9 +123,23 @@ class DefaultButtons(IButtons):
         self.remove_list_items.place(
             relx=0.02, rely=0.71, relwidth=0.36, relheight=0.18)
 
+    def preliminary_setup(self):
+        self.buttons = [
+            self.button_select_file, self.output_folder,
+            self.button_extract_text, self.button_extract_images,
+            self.button_separate_pdf, self.button_listbox,
+            self.select_pdf_from_listbox, self.remove_list_items,
+            self.button_merge_pdfs, self.specific_page
+        ]
+        self.hover_effect_manager = HoverEffectManager(
+            self.buttons, self.color.hover_button, self.color.bg_button
+        )
+        self.update_action_list(f'{' ' * 27}Ações realizadas')
+
     def select_file(self):
         self.processor.select_file_pdf()
         self.update_file_name()
+        self.update_action_list('Arquivo PDF selecionado')
 
     def update_file_name(self):
         if self.processor.file_path:
@@ -153,6 +153,7 @@ class DefaultButtons(IButtons):
     def select_folder(self):
         self.processor.select_output_folder()
         self.update_output_folder_name()
+        self.update_action_list('Pasta para salvar o arquivo selecionada')
 
     def update_output_folder_name(self):
         if self.processor.root_folder:
@@ -167,15 +168,14 @@ class DefaultButtons(IButtons):
     def extract_text(self):
         if self.processor.reader:
             self.processor.extract_text_files()
-            messagebox.showinfo("Sucesso", "Texto extraído com sucesso!")
+            self.update_action_list("Texto extraído com sucesso!")
         else:
             messagebox.showerror("Erro", "Nenhum arquivo PDF foi carregado.")
 
     def extract_images(self):
         if self.processor.file_path:
             self.processor.extract_images()
-            messagebox.showinfo(
-                "Sucesso", "Imagens extraídas e salvas com sucesso.")
+            self.update_action_list("Imagens extraídas e salvas com sucesso.")
         else:
             messagebox.showwarning(
                 "Aviso", "Por favor, selecione um arquivo PDF primeiro.")
@@ -183,8 +183,8 @@ class DefaultButtons(IButtons):
     def save_separate_pdfs(self):
         if self.processor.file_path:
             self.processor.save_individual_pages_as_pdfs()
-            messagebox.showinfo(
-                "Sucesso", "Páginas salvas individualmente com sucesso.")
+            self.update_action_list(
+                "Páginas salvas individualmente com sucesso.")
         else:
             messagebox.showwarning(
                 "Aviso", "Por favor, selecione um arquivo PDF primeiro.")
@@ -194,19 +194,22 @@ class DefaultButtons(IButtons):
             self.selected_pdfs.append(pdf)
             file_name = Path(pdf).name
             self.pdf_listbox.insert('end', file_name)
+            self.update_action_list(f"PDF: {file_name} adicionado a lista")
 
     def remove_pdf_to_pdf_list(self, pdf_name):
         for index, _ in enumerate(self.selected_pdfs):
             if pdf_name in self.selected_pdfs[index]:
                 self.selected_pdfs.pop(index)
                 self.update_listbox()
+                self.update_action_list(f"PDF: {Path(pdf_name).name} "
+                                        "removido da lista")
                 break
 
     def update_listbox(self):
         self.pdf_listbox.delete(0, "end")
         for pdf in self.selected_pdfs:
             file_name = Path(pdf).name
-            self.pdf_listbox.insert('end', file_name)
+            self.pdf_listbox.insert('end', f'  {file_name}')
 
     def get_selected_pdf(self):
         # Obter o índice do item selecionado
@@ -221,6 +224,7 @@ class DefaultButtons(IButtons):
     def remove_all_list(self):
         self.pdf_listbox.delete(0, "end")
         self.selected_pdfs.clear()
+        self.update_action_list("PDFs removidos da lista")
 
     def join_pdf_list(self):
         if self.processor.root_folder:
@@ -230,6 +234,7 @@ class DefaultButtons(IButtons):
                     self.processor.pdf_list.append(pdf)
                 self.processor.merge_pdfs()
                 self.remove_all_list()
+                self.update_action_list("PDFs da lista juntados")
         else:
             messagebox.showerror("Erro",
                                  "Nenhuma pagina de destino foi selecionada.")
@@ -239,11 +244,13 @@ class DefaultButtons(IButtons):
             pages = self.label_specific_page.get().split(',')
             pages = [int(page.strip()) for page in pages]
             self.processor.save_specifics_pdf_pages(*pages)
-            messagebox.showinfo(
-                "Sucesso", "Páginas específicas salvas com sucesso.")
+            self.update_action_list(f"Páginas {pages} salvas com sucesso.")
         else:
             messagebox.showwarning(
                 "Aviso", "Por favor, selecione um arquivo PDF primeiro.")
+
+    def update_action_list(self, action):
+        self.action_listbox.insert('end', f'  {action}')
 
 
 class TooltipManager:

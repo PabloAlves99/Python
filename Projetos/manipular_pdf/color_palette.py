@@ -13,3 +13,5 @@ class ColorThemes:
         self.bg_button = '#FFF'
         self.border_button = '#B0C4DE'
         self.hover_button = '#ADD8E6'
+
+        self.bg_label = '#ADD8E6'
