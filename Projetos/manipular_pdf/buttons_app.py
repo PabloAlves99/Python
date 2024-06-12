@@ -9,8 +9,8 @@ from PyPDF2 import PdfMerger
 class DefaultButtons(IButtons):
     def __init__(self, root: Tk, top_frame, bottom_frame, color) -> None:
         self.processor = PDFProcessor()
-        self.tooltip_manager = None
         self.selected_pdfs: List[str] = []
+        self.tooltip_manager = None
         self.top_frame = top_frame
         self.bottom_frame = bottom_frame
         self.root = root
