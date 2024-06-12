@@ -79,11 +79,11 @@ class PDFProcessor:
                 self.reader.pages] if self.reader is not None else [
                     'PDF sem texto']
 
-    def __extract_text_from_page(self, page):
+    def extract_text_from_page(self, page):
         return (self.reader.pages[page - 1].extract_text() if self.reader
                 is not None else ['page precisa ser int'])
 
-    def __save_texts(
+    def save_text(
             self, text_list: Union[List[str], str],
             page: Optional[int] = None):
         if self.new_folder:
@@ -101,15 +101,15 @@ class PDFProcessor:
 
         if page is None:
             texts = self.__extract_text()
-            self.__save_texts(texts)
+            self.save_text(texts)
 
         elif isinstance(page, int):
             num_pages = self.get_num_pages()
             is_page_valid = 1 <= page <= num_pages  # type: ignore
 
-            if num_pages is not None and is_page_valid:
-                text = self.__extract_text_from_page(page)
-                self.__save_texts(text, page)
+            if is_page_valid:
+                text = self.extract_text_from_page(page)
+                self.save_text(text, page)
 
             elif is_page_valid is False:
                 print(

@@ -52,12 +52,22 @@ class DefaultButtons(IButtons):
                                           bg=self.color.bg_button,
                                           command=self.save_separate_pdfs)
 
-        self.specific_page = Button(self.top_frame,
-                                    text="Selecionar página(s) para salvar: ",
-                                    bg=self.color.bg_button,
-                                    command=self.save_specific_pages)
+        self.salve_specific_page = Button(self.top_frame,
+                                          text="Selecionar página(s) para "
+                                          "salvar: ",
+                                          bg=self.color.bg_button,
+                                          command=self.save_specific_pages)
 
         self.label_specific_page = PlaceholderEntry(self.top_frame,
+                                                    placeholder=' Ex: 2, 5, '
+                                                    '7...')
+
+        self.extract_text_specific = Button(self.top_frame,
+                                            text="Extrair texto da Pagina: ",
+                                            bg=self.color.bg_button,
+                                            command=self.save_text_specific)
+
+        self.label_text_specific = PlaceholderEntry(self.top_frame,
                                                     placeholder=' Ex: 2, 5, '
                                                     '7...')
 
@@ -105,10 +115,16 @@ class DefaultButtons(IButtons):
         self.button_separate_pdf.place(
             relx=0.02, rely=0.58, relwidth=0.26, relheight=0.11)
 
-        self.specific_page.place(
+        self.salve_specific_page.place(
             relx=0.02, rely=0.71, relwidth=0.33, relheight=0.11)
         self.label_specific_page.place(
             relx=0.37, rely=0.71, relwidth=0.12, relheight=0.11)
+
+        self.extract_text_specific.place(
+            relx=0.02, rely=0.84, relwidth=0.33, relheight=0.11)
+        self.label_text_specific.place(
+            relx=0.37, rely=0.84, relwidth=0.12, relheight=0.11)
+
         self.action_listbox.place(
             relx=0.51, rely=0.32, relwidth=0.47, relheight=0.64)
 
@@ -129,7 +145,7 @@ class DefaultButtons(IButtons):
             self.button_extract_text, self.button_extract_images,
             self.button_separate_pdf, self.button_listbox,
             self.select_pdf_from_listbox, self.remove_list_items,
-            self.button_merge_pdfs, self.specific_page
+            self.button_merge_pdfs, self.salve_specific_page
         ]
         self.hover_effect_manager = HoverEffectManager(
             self.buttons, self.color.hover_button, self.color.bg_button
@@ -245,6 +261,19 @@ class DefaultButtons(IButtons):
             pages = [int(page.strip()) for page in pages]
             self.processor.save_specifics_pdf_pages(*pages)
             self.update_action_list(f"Páginas {pages} salvas com sucesso.")
+        else:
+            messagebox.showwarning(
+                "Aviso", "Por favor, selecione um arquivo PDF primeiro.")
+
+    def save_text_specific(self):
+        if self.processor.file_path:
+            pages = self.label_text_specific.get().split(',')
+            pages = [int(page.strip()) for page in pages]
+            for page in pages:
+                text = self.processor.extract_text_from_page(page)
+                self.processor.save_text(text, page)
+                self.update_action_list(f"Texto da pagina \"{page}\" salvo "
+                                        "com sucesso.")
         else:
             messagebox.showwarning(
                 "Aviso", "Por favor, selecione um arquivo PDF primeiro.")
