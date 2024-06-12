@@ -38,10 +38,12 @@ class IUser(ABC):
     lastname: str
 
     @abstractmethod
-    def get_addresses(self) -> List[Dict]: pass
+    def get_addresses(self) -> List[Dict]:
+        pass
 
     @abstractmethod
-    def get_all_user_data(self) -> Dict: pass
+    def get_all_user_data(self) -> Dict:
+        pass
 
 
 class RealUser(IUser):
