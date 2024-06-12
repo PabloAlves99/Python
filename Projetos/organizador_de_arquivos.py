@@ -35,7 +35,7 @@ extensoes = {
     "oa_Perl": [".pl"],
     "oa_R": [".r"],
     "oa_Assembly": [".asm"],
-    "oa_outros": [".bibtex", ".apk"],
+    "oa_outros": [".bibtex", ".apk", ".xml"],
     "JNLP": [".jnlp",]
 }
 for arquivo in lista_arquivos:
