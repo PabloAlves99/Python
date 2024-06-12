@@ -42,22 +42,19 @@ class PDFProcessor:
         try:
             if self.file_path:
                 self.reader = PdfReader(self.file_path)
-                print("Caminho do arquivo selecionado:", self.file_path)
             else:
                 self.reader = None
         except FileNotFoundError as e:
             print(f"Erro: Arquivo não encontrado - {e}")
+            self.reader = None
         except PdfReadError as e:
             print(f"Erro: Falha ao ler o arquivo PDF - {e}")
-        except Exception as e:
-            print(f"Erro ao ler o arquivo PDF: {e}")
             self.reader = None
 
     def create_output_folder(self):
         if self.root_folder and self.root_folder != Path('.'):
             self.new_folder = self.root_folder / "novos_pdf"
             self.new_folder.mkdir(exist_ok=True)
-            print(f"Nova pasta criada: {self.new_folder}")
         else:
             print("Nenhuma pasta selecionada.")
 
@@ -74,24 +71,27 @@ class PDFProcessor:
             page.images for page in
             self.reader.pages) if self.reader is not None else False
 
-    def __extract_text(self) -> List[str]:
+    def page_extraction(self) -> List[str]:
         return [page.extract_text() for page in
                 self.reader.pages] if self.reader is not None else [
                     'PDF sem texto']
 
-    def extract_text_from_page(self, page):
+    def extract_text_from_page(self, page) -> str:
         return (self.reader.pages[page - 1].extract_text() if self.reader
                 is not None else ['page precisa ser int'])
 
-    def save_text(
-            self, text_list: Union[List[str], str],
-            page: Optional[int] = None):
+    def save_text(self, text_list: Union[List[str], str],
+                  page: Optional[int] = None):
+
         if self.new_folder:
+
             if page is None:
+
                 for page_number, text in enumerate(text_list):
                     with open(self.new_folder / f'page_{page_number}.txt', 'w',
                               encoding='utf-8') as texto_arquivo:
                         texto_arquivo.write(text)
+
             else:
                 with open(self.new_folder / f'page_{page}.txt', 'w',
                           encoding='utf-8') as texto_arquivo:
@@ -100,7 +100,7 @@ class PDFProcessor:
     def extract_text_files(self, page: Optional[int] = None):
 
         if page is None:
-            texts = self.__extract_text()
+            texts = self.page_extraction()
             self.save_text(texts)
 
         elif isinstance(page, int):
@@ -141,8 +141,6 @@ class PDFProcessor:
                 writer.add_page(page)
                 writer.write(arquivo)
 
-        print("Todas as páginas individuais foram salvas em PDF.")
-
     def save_specifics_pdf_pages(self, *args):
         if self.reader is None:
             print("Nenhum arquivo PDF carregado.")
@@ -162,10 +160,8 @@ class PDFProcessor:
 
         except IndexError:
             print(f"Erro: O PDF possui {len(pages_number)} paginas")
-        except Exception as e:
-            print(f"Erro ao salvar as páginas: {e}")
 
-    def select_pdf_to_list(self):
+    def select_pdf_to_list(self) -> List[str]:
         files = askopenfilenames(
             title="Selecione os PDFs que deseja juntar",
             filetypes=[("PDF files", "*.pdf")]
@@ -187,9 +183,6 @@ class PDFProcessor:
 
             with open(merged_pdf_path, 'wb') as merged_file:
                 self.pdf_list.write(merged_file)
-
-            print(f"Os PDFs selecionados foram juntados e salvos em "
-                  f"{merged_pdf_path}.")
 
 
 # if __name__ == "__main__":
