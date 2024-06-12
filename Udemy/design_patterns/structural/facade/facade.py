@@ -16,16 +16,20 @@ class IObservable(ABC):
 
     @property
     @abstractmethod
-    def state(self): pass
+    def state(self):
+        pass
 
     @abstractmethod
-    def add_observer(self, observer: IObserver) -> None: pass
+    def add_observer(self, observer: IObserver) -> None:
+        pass
 
     @abstractmethod
-    def remove_observer(self, observer: IObserver) -> None: pass
+    def remove_observer(self, observer: IObserver) -> None:
+        pass
 
     @abstractmethod
-    def notify_observers(self) -> None: pass
+    def notify_observers(self) -> None:
+        pass
 
 
 class WeatherStation(IObservable):
@@ -68,7 +72,8 @@ class WeatherStation(IObservable):
 
 class IObserver(ABC):
     @abstractmethod
-    def update(self) -> None: pass
+    def update(self) -> None:
+        pass
 
 
 class Smartphone(IObserver):
