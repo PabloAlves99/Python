@@ -3,12 +3,13 @@ from tkinter.filedialog import askdirectory
 import os
 
 
-DATA_ATUAL = datetime.now().strftime("%Y%m%d")
+CURRENT_DATE = datetime.now().strftime("%d%m%y")
+CURRENT_SECOND = datetime.now().strftime("%S")
 
 
-caminho = askdirectory(title="Selecione uma pasta")
-lista_arquivos = os.listdir(caminho)
-extensoes = {
+file_path = askdirectory(title="Selecione uma pasta")
+file_list = os.listdir(file_path)
+extensions = {
     "imagens": [".png", ".jpg", ".jpeg", ".gif", ".bmp", ".svg", ".ico"],
     "DOCX": [".docx", ".doc"],
     "planilhas": [".xlsx", ".xls", ".csv", ".ods"],
@@ -38,15 +39,27 @@ extensoes = {
     "JNLP": [".jnlp",],
     "outros": [".bibtex", ".apk", ".xml", ".jar"],
 }
-for arquivo in lista_arquivos:
-    nome, extensao = os.path.splitext(f"{caminho}/{arquivo}")
 
-    for pasta in extensoes:  # pylint: disable=C0206
+for _file in file_list:
+    name, extension = os.path.splitext(f"{_file}")
 
-        if extensao in extensoes[pasta]:
-            NOVO_CAMINHO = f'{caminho}/organizador_de_arquivos/'\
-                f'{pasta}/{DATA_ATUAL}'
+    for _folder in extensions:  # pylint: disable=C0206
 
-            if not os.path.exists(NOVO_CAMINHO):
-                os.makedirs(NOVO_CAMINHO)
-            os.rename(f"{caminho}/{arquivo}", f"{NOVO_CAMINHO}/{arquivo}")
+        if extension.lower() in [ext.lower() for ext in extensions[_folder]]:
+
+            NEW_PATH = os.path.join(
+                file_path, 'organizador_de_arquivos', _folder, CURRENT_DATE)
+
+            if not os.path.exists(NEW_PATH):
+                os.makedirs(NEW_PATH)
+
+            new_file_path = os.path.join(NEW_PATH, _file)
+
+            try:
+                os.rename(os.path.join(file_path, _file), new_file_path)
+
+            except FileExistsError:
+                new_file_path = os.path.join(
+                    NEW_PATH, f"{CURRENT_SECOND}_{_file}")
+                os.rename(os.path.join(file_path, _file), new_file_path)
+            break
