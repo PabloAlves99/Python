@@ -8,7 +8,7 @@ class BrickBreaker:
         pygame.init()
         self.color_settings()
         self.screen_settings()
-        self.ball_settings()
+        self.ball_and_player_settings()
         self.block_settings()
         self.game_settings()
         self.blocks = self.generate_blocks()
@@ -30,9 +30,9 @@ class BrickBreaker:
         self.screen = pygame.display.set_mode(self.screen_size)
         pygame.display.set_caption("Brick Breaker")
 
-    def ball_settings(self):
+    def ball_and_player_settings(self):
         self.ball_size = 20
-        self.ball = pygame.Rect(100, 500, self.ball_size, self.ball_size)
+        self.ball = pygame.Rect(100, 700, self.ball_size, self.ball_size)
         self.player_size = 200
         self.player = pygame.Rect(0, 750, self.player_size, 15)
 
@@ -54,13 +54,17 @@ class BrickBreaker:
         self.block_height = 15
         self.distance_between_rows = self.block_height + 10
         self._blocks = []
+
         for j in range(self.num_of_block_rows):
+
             for i in range(self.num_of_blocks_in_line):
+
                 self.__block = pygame.Rect(
                     i * (self.block_width + self.distance_between_blocks),
                     j * self.distance_between_rows, self.block_width,
                     self.block_height)
                 self._blocks.append(self.__block)
+
         return self._blocks
 
     def draw_home_screen(self):
