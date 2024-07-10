@@ -1,26 +1,22 @@
 import pygame
-from player_settings import PlayerConfigs
+from player_settings import PlayerSettings
+from ball_settings import BallSettings
 
 
-class UISettings():
+class GameSettings():
     def __init__(self) -> None:
         self.initial_screen()
-        self.initial_game()
         self.initial_blocks()
         self.color_settings()
         self.generate_blocks()
-        self.ball_settings()
-        self.player_settings = PlayerConfigs()
+        self.player_settings = PlayerSettings()
+        self.ball_settings = BallSettings()
         self.blocks = self.generate_blocks()
 
     def initial_screen(self):
         self.screen_size = (800, 800)
         self.screen = pygame.display.set_mode(self.screen_size)
         pygame.display.set_caption("Brick Breaker")
-
-    def initial_game(self):
-        self.end_game = False
-        self.punctuation = 0
 
     def initial_blocks(self):
         self.num_of_blocks_in_line = 8
@@ -36,11 +32,6 @@ class UISettings():
             "player_color": "#2651A6",
             "blocks": "#2651A6",
         }
-
-    def ball_settings(self):
-        self.ball_size = 20
-        self.ball = pygame.Rect(100, 700, self.ball_size, self.ball_size)
-        self.ball_movement = [3, -3]
 
     def generate_blocks(self):
         self.distance_between_blocks = 5
@@ -61,18 +52,3 @@ class UISettings():
                 self._blocks.append(self.__block)
 
         return self._blocks
-
-    def draw_home_screen(self):
-        self.screen.fill(self.colors["background"])
-        pygame.draw.rect(self.screen,
-                         self.colors["player_color"],
-                         self.player_settings.player)
-
-        pygame.draw.rect(self.screen,
-                         self.colors["ball_color"],
-                         self.ball)
-
-    def draw_blocks(self):
-        for block in self.blocks:
-            pygame.draw.rect(self.screen,
-                             self.colors["blocks"], block)

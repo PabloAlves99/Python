@@ -1,7 +1,7 @@
 import pygame
 
 
-class PlayerConfigs:
+class PlayerSettings:
     def __init__(self) -> None:
         self.player_settings()
 
