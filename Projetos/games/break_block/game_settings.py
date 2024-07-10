@@ -52,3 +52,15 @@ class GameSettings():
                 self._blocks.append(self.__block)
 
         return self._blocks
+
+    def update_score(self, punctuation):
+        font = pygame.font.Font(None, 30)
+        text = font.render(f"Pontuação: {punctuation}", 1,
+                           self.colors["punctuation"])
+        self.screen.fill(
+            self.colors["background"], (0, 780, 150, 30))
+        self.screen.blit(text, (0, 780))
+        if punctuation >= self.total_number_of_blocks:
+            return True
+        else:
+            return False

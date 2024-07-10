@@ -5,12 +5,9 @@ from movements import Movements
 class GameManager(Movements):
     def __init__(self) -> None:
         super().__init__()
-        self.initial_game()
-
-    def initial_game(self):
         self.end_game = False
         self.punctuation = 0
-        self.event = ''
+        self.event = ...
 
     def draw_home_screen(self):
         self.screen.fill(self.colors["background"])
