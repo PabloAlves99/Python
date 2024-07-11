@@ -35,13 +35,17 @@ class Actions(GameSettings):
         self.ball_settings.ball.x = self.ball_settings.ball.x + movement[0]
         self.ball_settings.ball.y = self.ball_settings.ball.y + movement[1]
 
+        # Verificações de colisão com as bordas da tela
         if self.ball_settings.ball.x <= 0:
             movement[0] = - movement[0]
+
         if self.ball_settings.ball.y <= 0:
             movement[1] = - movement[1]
+
         if self.ball_settings.ball.x + self.ball_settings.ball_size >=\
                 self.screen_size[0]:
             movement[0] = - movement[0]
+
         if self.ball_settings.ball.y + self.ball_settings.ball_size >=\
                 self.screen_size[1]:
             movement = None
@@ -55,5 +59,6 @@ class Actions(GameSettings):
                     self.ball_settings.ball.x, self.ball_settings.ball.y):
                 self.blocks.remove(block)
                 movement[1] = - movement[1]
+                break
 
         return movement
