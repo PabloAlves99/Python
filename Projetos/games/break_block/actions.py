@@ -48,7 +48,7 @@ class Actions(GameSettings):
 
         if self.ball_settings.ball.y + self.ball_settings.ball_size >=\
                 self.screen_size[1]:
-            movement = None
+            self.end_game = True
 
         if self.player_settings.player.collidepoint(
                 self.ball_settings.ball.x, self.ball_settings.ball.y):
