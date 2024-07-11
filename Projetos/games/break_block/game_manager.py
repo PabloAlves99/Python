@@ -1,8 +1,8 @@
 import pygame
-from movements import Movements
+from actions import Actions
 
 
-class GameManager(Movements):
+class GameManager(Actions):
     def __init__(self) -> None:
         super().__init__()
         self.end_game = False

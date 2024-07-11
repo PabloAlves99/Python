@@ -4,23 +4,31 @@ import pygame
 from game_settings import GameSettings
 
 
-class Movements(GameSettings):
+class Actions(GameSettings):
 
     def player_move(self, event):
+        self.event_handler = {
+            pygame.K_RIGHT: self.move_right,
+            pygame.K_LEFT: self.move_left
+        }
+        self.valid_key_event = event.type == pygame.KEYDOWN and \
+            event.key in self.event_handler
 
-        if event.type == pygame.KEYDOWN:
-            if event.key == pygame.K_RIGHT:
-                if (self.player_settings.player.x +
-                    self.player_settings.player_size) \
-                        < self.screen_size[0]:
+        if self.valid_key_event:
+            self.event_handler[event.key]()
 
-                    self.player_settings.player.x = \
-                        self.player_settings.player.x + 5
+    def move_right(self):
+        if (self.player_settings.player.x +
+            self.player_settings.player_size) \
+                < self.screen_size[0]:
 
-            if event.key == pygame.K_LEFT:
-                if self.player_settings.player.x > 0:
-                    self.player_settings.player.x = \
-                        self.player_settings.player.x - 5
+            self.player_settings.player.x = \
+                self.player_settings.player.x + 5
+
+    def move_left(self):
+        if self.player_settings.player.x > 0:
+            self.player_settings.player.x = \
+                self.player_settings.player.x - 5
 
     def ball_move(self):
         movement = self.ball_settings.ball_movement
