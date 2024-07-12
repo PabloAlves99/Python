@@ -32,10 +32,16 @@ class Actions(GameSettings):
 
     def ball_move(self):
         movement = self.ball_settings.ball_movement
-        self.ball_settings.ball.x = self.ball_settings.ball.x + movement[0]
-        self.ball_settings.ball.y = self.ball_settings.ball.y + movement[1]
+        self.ball_settings.ball.x += movement[0]
+        self.ball_settings.ball.y += movement[1]
 
-        # Verificações de colisão com as bordas da tela
+        movement = self.check_screen_collisions(movement)
+        movement = self.check_player_collision(movement)
+        movement = self.check_block_collisions(movement)
+
+        return movement
+
+    def check_screen_collisions(self, movement):
         if self.ball_settings.ball.x <= 0:
             movement[0] = - movement[0]
 
@@ -50,15 +56,25 @@ class Actions(GameSettings):
                 self.screen_size[1]:
             self.end_game = True
 
-        if self.player_settings.player.collidepoint(
-                self.ball_settings.ball.x, self.ball_settings.ball.y):
-            movement[1] = - movement[1]
+        return movement
 
+    def check_player_collision(self, movement):
+        if self.player_settings.player.collidepoint(self.ball_settings.ball.x,
+                                                    self.ball_settings.ball.y):
+            movement[1] = -movement[1]
+        return movement
+
+    def check_block_collisions(self, movement):
         for block in self.blocks:
             if block.collidepoint(
                     self.ball_settings.ball.x, self.ball_settings.ball.y):
                 self.blocks.remove(block)
-                movement[1] = - movement[1]
-                break
+
+                if self.ball_settings.ball.x <= block.left or \
+                        self.ball_settings.ball.x + \
+                        self.ball_settings.ball_size >= block.right:
+                    movement[0] = -movement[0]
+                else:
+                    movement[1] = -movement[1]
 
         return movement
