@@ -65,16 +65,25 @@ class Actions(GameSettings):
         return movement
 
     def check_block_collisions(self, movement):
+        ball = self.ball_settings.ball
         for block in self.blocks:
-            if block.collidepoint(
-                    self.ball_settings.ball.x, self.ball_settings.ball.y):
+            if block.colliderect(ball):
                 self.blocks.remove(block)
 
-                if self.ball_settings.ball.x <= block.left or \
-                        self.ball_settings.ball.x + \
-                        self.ball_settings.ball_size >= block.right:
+                # Calcular a quantidade de sobreposição em cada direção
+                overlap_left = ball.right - block.left
+                overlap_right = block.right - ball.left
+                overlap_top = ball.bottom - block.top
+                overlap_bottom = block.bottom - ball.top
+
+                # A menor sobreposição indica a direção da colisão
+                if min(overlap_left, overlap_right, overlap_top, overlap_bottom) == overlap_left:
                     movement[0] = -movement[0]
-                else:
+                elif min(overlap_left, overlap_right, overlap_top, overlap_bottom) == overlap_right:
+                    movement[0] = -movement[0]
+                elif min(overlap_left, overlap_right, overlap_top, overlap_bottom) == overlap_top:
+                    movement[1] = -movement[1]
+                elif min(overlap_left, overlap_right, overlap_top, overlap_bottom) == overlap_bottom:
                     movement[1] = -movement[1]
 
         return movement
