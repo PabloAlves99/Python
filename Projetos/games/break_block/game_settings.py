@@ -13,7 +13,7 @@ class GameSettings():
         self.blocks = self.blocks_settings()
 
     def initial_screen(self):
-        self.screen_size = (800, 800)
+        self.screen_size = (820, 800)
         self.screen = pygame.display.set_mode(self.screen_size)
         pygame.display.set_caption("Brick Breaker")
 
@@ -36,7 +36,7 @@ class GameSettings():
         self.distance_between_blocks = 5
         self.block_width = self.screen_size[0] / 8 - \
             self.distance_between_blocks
-        self.block_height = 15
+        self.block_height = 20
         self.distance_between_rows = self.block_height + 10
         self._blocks = []
         return self.generate_blocks()
@@ -48,8 +48,8 @@ class GameSettings():
             for i in range(self.num_of_blocks_in_line):
 
                 self.__block = pygame.Rect(
-                    i * (self.block_width + self.distance_between_blocks),
-                    j * self.distance_between_rows, self.block_width,
+                    3 + i * (self.block_width + self.distance_between_blocks),
+                    3 + j * self.distance_between_rows, self.block_width,
                     self.block_height)
                 self._blocks.append(self.__block)
 

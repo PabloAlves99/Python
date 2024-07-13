@@ -5,31 +5,35 @@ from game_manager import GameManager
 class MainMenu:
     def __init__(self):
         pygame.init()
-        self.screen = pygame.display.set_mode((800, 800))
+        self.screen = pygame.display.set_mode((820, 800))
         pygame.display.set_caption("Brick Breaker")
         self.clock = pygame.time.Clock()
         self.running = True
         self.game_manager = GameManager()
+        self.background = pygame.image.load(
+            "Projetos/games/break_block/images.jpeg")
+        self.background = pygame.transform.scale(self.background, (800, 800))
 
     def main_menu(self):
         while self.running:
-            self.screen.fill((0, 0, 0))
+            self.screen.blit(self.background, (0, 0))
             self.draw_text('Brick Breaker', 50, (255, 255, 255), 400, 300)
             self.draw_text('Press SPACE to Play', 30,
                            (255, 255, 255), 400, 400)
-
-            for event in pygame.event.get():
-                if event.type == pygame.QUIT:
-                    self.running = False
-                    pygame.quit()
-                    sys.exit()
-                if event.type == pygame.KEYDOWN:
-                    if event.key == pygame.K_SPACE:
-                        self.start_game()
-                        self.running = False
-
+            self.handle_events()
             pygame.display.flip()
             self.clock.tick(60)
+
+    def handle_events(self):
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                self.running = False
+                pygame.quit()
+                sys.exit()
+            if event.type == pygame.KEYDOWN:
+                if event.key == pygame.K_SPACE:
+                    self.start_game()
+                    self.running = False
 
     def start_game(self):
         self.game_manager.end_game = False
