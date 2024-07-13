@@ -8,10 +8,9 @@ class GameSettings():
         self.initial_screen()
         self.initial_blocks()
         self.color_settings()
-        self.generate_blocks()
         self.player_settings = PlayerSettings()
         self.ball_settings = BallSettings()
-        self.blocks = self.generate_blocks()
+        self.blocks = self.blocks_settings()
 
     def initial_screen(self):
         self.screen_size = (800, 800)
@@ -33,13 +32,16 @@ class GameSettings():
             "blocks": "#2651A6",
         }
 
-    def generate_blocks(self):
+    def blocks_settings(self):
         self.distance_between_blocks = 5
         self.block_width = self.screen_size[0] / 8 - \
             self.distance_between_blocks
         self.block_height = 15
         self.distance_between_rows = self.block_height + 10
         self._blocks = []
+        return self.generate_blocks()
+
+    def generate_blocks(self):
 
         for j in range(self.num_of_block_rows):
 
