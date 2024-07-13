@@ -10,16 +10,17 @@ class MainMenu:
         self.clock = pygame.time.Clock()
         self.running = True
         self.game_manager = GameManager()
-        self.background = pygame.image.load(
-            "Projetos/games/break_block/images.jpeg")
-        self.background = pygame.transform.scale(self.background, (800, 800))
+        # self.background = pygame.image.load(
+        #     "Projetos/games/break_block/images.jpeg")
+        # self.background = pygame.transform.scale(self.background, (820, 800))
 
     def main_menu(self):
         while self.running:
-            self.screen.blit(self.background, (0, 0))
-            self.draw_text('Brick Breaker', 50, (255, 255, 255), 400, 300)
+            self.screen.fill(('#A7BDD9'))
+            self.draw_text('Welcome to Brick Breaker', 70, ('#0D0D0D'),
+                           410, 300)
             self.draw_text('Press SPACE to Play', 30,
-                           (255, 255, 255), 400, 400)
+                           ('#0D0D0D'), 400, 350)
             self.handle_events()
             pygame.display.flip()
             self.clock.tick(60)
