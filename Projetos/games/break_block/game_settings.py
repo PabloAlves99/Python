@@ -47,11 +47,11 @@ class GameSettings():
 
             for i in range(self.num_of_blocks_in_line):
 
-                self.__block = pygame.Rect(
+                block = pygame.Rect(
                     3 + i * (self.block_width + self.distance_between_blocks),
                     3 + j * self.distance_between_rows, self.block_width,
                     self.block_height)
-                self._blocks.append(self.__block)
+                self._blocks.append(block)
 
         return self._blocks
 
