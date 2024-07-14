@@ -37,7 +37,7 @@ class GameSettings():
         self.block_width = self.screen_size[0] / 8 - \
             self.distance_between_blocks
         self.block_height = 20
-        self.distance_between_rows = self.block_height + 10
+        self.distance_between_rows = self.block_height + 5
         self._blocks = []
         return self.generate_blocks()
 
