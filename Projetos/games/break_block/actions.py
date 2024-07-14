@@ -59,9 +59,12 @@ class Actions(GameSettings):
         return movement
 
     def check_player_collision(self, movement):
-        if self.player_settings.player.collidepoint(self.ball_settings.ball.x,
-                                                    self.ball_settings.ball.y):
+        ball = self.ball_settings.ball
+        player = self.player_settings.player
+
+        if player.collidepoint(ball.centerx, ball.bottom):
             movement[1] = -movement[1]
+
         return movement
 
     def check_block_collisions(self, movement):
@@ -69,21 +72,27 @@ class Actions(GameSettings):
         for block in self.blocks:
             if block.colliderect(ball):
                 self.blocks.remove(block)
+                movement = self.detect_collision_direction(
+                    ball, block, movement)
+        return movement
 
-                # Calcular a quantidade de sobreposição em cada direção
-                overlap_left = ball.right - block.left
-                overlap_right = block.right - ball.left
-                overlap_top = ball.bottom - block.top
-                overlap_bottom = block.bottom - ball.top
+    def detect_collision_direction(self, ball, block, movement):
+        # Calcular a quantidade de sobreposição em cada direção
+        overlap_left = ball.right - block.left
+        overlap_right = block.right - ball.left
+        overlap_top = ball.bottom - block.top
+        overlap_bottom = block.bottom - ball.top
 
-                # A menor sobreposição indica a direção da colisão
-                if min(overlap_left, overlap_right, overlap_top, overlap_bottom) == overlap_left:
-                    movement[0] = -movement[0]
-                elif min(overlap_left, overlap_right, overlap_top, overlap_bottom) == overlap_right:
-                    movement[0] = -movement[0]
-                elif min(overlap_left, overlap_right, overlap_top, overlap_bottom) == overlap_top:
-                    movement[1] = -movement[1]
-                elif min(overlap_left, overlap_right, overlap_top, overlap_bottom) == overlap_bottom:
-                    movement[1] = -movement[1]
+        min_overlap = min(overlap_left, overlap_right,
+                          overlap_top, overlap_bottom)
+
+        if min_overlap == overlap_left:
+            movement[0] = -movement[0]
+        elif min_overlap == overlap_right:
+            movement[0] = -movement[0]
+        elif min_overlap == overlap_top:
+            movement[1] = -movement[1]
+        elif min_overlap == overlap_bottom:
+            movement[1] = -movement[1]
 
         return movement
