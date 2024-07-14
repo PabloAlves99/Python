@@ -40,6 +40,6 @@ class GameManager(Actions):
             if not __ball_move:
                 self.end_game = True
 
-            pygame.time.wait(5)
+            pygame.time.wait(10)
         except AttributeError:
             pass

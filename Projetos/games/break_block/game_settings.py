@@ -13,7 +13,7 @@ class GameSettings():
         self.blocks = self.blocks_settings()
 
     def initial_screen(self):
-        self.screen_size = (820, 800)
+        self.screen_size = (620, 600)
         self.screen = pygame.display.set_mode(self.screen_size)
         pygame.display.set_caption("Brick Breaker")
 
@@ -59,8 +59,8 @@ class GameSettings():
         text = font.render(f"Pontuação: {punctuation}", 1,
                            self.colors["punctuation"])
         self.screen.fill(
-            self.colors["background"], (0, 780, 150, 30))
-        self.screen.blit(text, (0, 780))
+            self.colors["background"], (0, 580, 150, 30))
+        self.screen.blit(text, (0, 580))
         if punctuation >= self.total_number_of_blocks:
             return True
         else:

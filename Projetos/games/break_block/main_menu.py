@@ -5,7 +5,7 @@ from game_manager import GameManager
 class MainMenu:
     def __init__(self):
         pygame.init()
-        self.screen = pygame.display.set_mode((820, 800))
+        self.screen = pygame.display.set_mode((620, 600))
         pygame.display.set_caption("Brick Breaker")
         self.clock = pygame.time.Clock()
         self.running = True
@@ -14,10 +14,10 @@ class MainMenu:
     def main_menu(self):
         while self.running:
             self.screen.fill(('#BF9D7E'))
-            self.draw_text('Welcome to Brick Breaker', 70, ('#0D0D0D'),
-                           410, 300, bold=True)
+            self.draw_text('Welcome to Brick Breaker', 60, ('#0D0D0D'),
+                           310, 100, bold=True)
             self.draw_text('Press SPACE to Play', 30,
-                           ('#0D0D0D'), 400, 350)
+                           ('#0D0D0D'), 310, 150)
             self.handle_events()
             pygame.display.flip()
             self.clock.tick(60)
