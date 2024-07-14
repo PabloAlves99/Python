@@ -15,8 +15,7 @@ class GameManager(Actions):
                          self.colors["player_color"],
                          self.player_settings.player)
 
-        pygame.draw.rect(self.screen,
-                         self.colors["ball_color"],
+        self.screen.blit(self.ball_settings.ball_image,
                          self.ball_settings.ball)
 
     def draw_blocks(self):

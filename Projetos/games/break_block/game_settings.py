@@ -25,11 +25,10 @@ class GameSettings():
 
     def color_settings(self):
         self.colors = {
-            "ball_color": "#0D0D0D",
-            "background": "#A7BDD9",
+            "background": "#BF9D7E",
             "punctuation": "#F20707",
-            "player_color": "#2651A6",
-            "blocks": "#2651A6",
+            "player_color": "#26130D",
+            "blocks": "#26130D",
         }
 
     def blocks_settings(self):

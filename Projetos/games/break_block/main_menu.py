@@ -10,15 +10,12 @@ class MainMenu:
         self.clock = pygame.time.Clock()
         self.running = True
         self.game_manager = GameManager()
-        # self.background = pygame.image.load(
-        #     "Projetos/games/break_block/images.jpeg")
-        # self.background = pygame.transform.scale(self.background, (820, 800))
 
     def main_menu(self):
         while self.running:
-            self.screen.fill(('#A7BDD9'))
+            self.screen.fill(('#BF9D7E'))
             self.draw_text('Welcome to Brick Breaker', 70, ('#0D0D0D'),
-                           410, 300)
+                           410, 300, bold=True)
             self.draw_text('Press SPACE to Play', 30,
                            ('#0D0D0D'), 400, 350)
             self.handle_events()
@@ -41,8 +38,9 @@ class MainMenu:
         while not self.game_manager.end_game:
             self.game_manager.play()
 
-    def draw_text(self, text, size, color, x, y):
+    def draw_text(self, text, size, color, x, y, bold=False):
         font = pygame.font.Font(None, size)
+        font.set_bold(bold)
         text_surface = font.render(text, True, color)
         text_rect = text_surface.get_rect()
         text_rect.center = (x, y)
