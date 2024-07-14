@@ -29,6 +29,7 @@ class GameSettings():
             "punctuation": "#F20707",
             "player_color": "#26130D",
             "blocks": "#26130D",
+            "special_block": "#FFD700",
         }
 
     def blocks_settings(self):
