@@ -20,8 +20,7 @@ class GameManager(Actions):
 
     def draw_blocks(self):
         for block in self.blocks:
-            pygame.draw.rect(self.screen,
-                             self.colors["blocks"], block)
+            self.screen.blit(self.block_image, block.topleft)
 
     def play(self):
         self.draw_home_screen()

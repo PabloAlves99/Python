@@ -1,4 +1,5 @@
 import pygame
+import os
 from player_settings import PlayerSettings
 from ball_settings import BallSettings
 
@@ -36,9 +37,16 @@ class GameSettings():
         self.distance_between_blocks = 5
         self.block_width = self.screen_size[0] / 8 - \
             self.distance_between_blocks
-        self.block_height = 20
+        self.block_height = 25
         self.distance_between_rows = self.block_height + 5
         self._blocks = []
+
+        current_dir = os.path.dirname(__file__)
+        self.block_image = pygame.image.load(
+            os.path.join(current_dir, 'images', 'block-100.png'))
+        self.block_image = pygame.transform.scale(
+            self.block_image, (self.block_width, self.block_height))
+
         return self.generate_blocks()
 
     def generate_blocks(self):
