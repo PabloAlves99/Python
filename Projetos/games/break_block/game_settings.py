@@ -27,9 +27,8 @@ class GameSettings():
     def color_settings(self):
         self.colors = {
             "background": "#BF9D7E",
-            "punctuation": "#F20707",
+            "punctuation": "#26130D",
             "player_color": "#26130D",
-            "blocks": "#26130D",
             "special_block": "#FFD700",
         }
 
