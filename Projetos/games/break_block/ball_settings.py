@@ -1,5 +1,6 @@
 import pygame
 from random import randint
+import os
 
 
 class BallSettings:
@@ -11,7 +12,9 @@ class BallSettings:
         self.ball = pygame.Rect(randint(5, 500), 500,
                                 self.ball_size, self.ball_size)
         self.ball_movement = [3, -3]
+
+        current_dir = os.path.dirname(__file__)
         self.ball_image = pygame.image.load(
-            "Projetos/games/break_block/images/ball.png")
+            os.path.join(current_dir, 'images', 'ball.png'))
         self.ball_image = pygame.transform.scale(
             self.ball_image, (self.ball_size, self.ball_size))
