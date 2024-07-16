@@ -72,9 +72,10 @@ class Actions(GameSettings):
         ball = self.ball_settings.ball
         for block in self.blocks:
             if block.colliderect(ball):
-                self.blocks.remove(block)
                 movement = self.detect_collision_direction(
                     ball, block, movement)
+                self.blocks.remove(block)
+                break
         return movement
 
     def detect_collision_direction(self, ball, block, movement):
