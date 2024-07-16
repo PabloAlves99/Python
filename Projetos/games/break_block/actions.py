@@ -32,12 +32,13 @@ class Actions(GameSettings):
 
     def ball_move(self):
         movement = self.ball_settings.ball_movement
-        self.ball_settings.ball.x += movement[0]
-        self.ball_settings.ball.y += movement[1]
 
         movement = self.check_screen_collisions(movement)
         movement = self.check_player_collision(movement)
         movement = self.check_block_collisions(movement)
+
+        self.ball_settings.ball.x += movement[0]
+        self.ball_settings.ball.y += movement[1]
 
         return movement
 
