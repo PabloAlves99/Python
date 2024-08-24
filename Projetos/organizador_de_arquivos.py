@@ -37,7 +37,7 @@ extensions = {
     "R": [".r"],
     "Assembly": [".asm"],
     "JNLP": [".jnlp",],
-    "outros": [".bibtex", ".apk", ".xml", ".jar"],
+    "outros": [".bibtex", ".apk", ".xml", ".jar", ".asc"],
 }
 
 for _file in file_list:
