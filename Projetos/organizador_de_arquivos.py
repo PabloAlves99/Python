@@ -3,14 +3,16 @@ from tkinter.filedialog import askdirectory
 import os
 
 
-CURRENT_DATE = datetime.now().strftime("%d%m%y")
-CURRENT_SECOND = datetime.now().strftime("%S")
+DATA_ATUAL = datetime.now().strftime("%d%m%Y")
+SEGUNDO_ATUAL = datetime.now().strftime("%S")
+MINUTO_ATUAL = datetime.now().strftime("%M")
 
 
-file_path = askdirectory(title="Selecione uma pasta")
-file_list = os.listdir(file_path)
-extensions = {
-    "imagens": [".png", ".jpg", ".jpeg", ".gif", ".bmp", ".svg", ".ico"],
+caminho = askdirectory(title="Selecione uma pasta")
+lista_arquivos = os.listdir(caminho)
+extensoes = {
+    "imagens": [".png", ".jpg", ".jpeg", ".gif", ".bmp", ".svg", ".ico",
+                ".HEIC", '.JPG'],
     "DOCX": [".docx", ".doc"],
     "planilhas": [".xlsx", ".xls", ".csv", ".ods"],
     "pdfs": [".pdf", ".PDF"],
@@ -37,29 +39,33 @@ extensions = {
     "R": [".r"],
     "Assembly": [".asm"],
     "JNLP": [".jnlp",],
-    "outros": [".bibtex", ".apk", ".xml", ".jar", ".asc"],
+    "outros": [".bibtex", ".apk", ".xml", ".jar", ".vcf", ".p7s"],
 }
 
-for _file in file_list:
-    name, extension = os.path.splitext(f"{_file}")
+arquivos_com_erro_permissao = []
 
-    for _folder in extensions:  # pylint: disable=C0206
+for arquivo in lista_arquivos:
+    nome, extensao = os.path.splitext(f"{caminho}/{arquivo}")
 
-        if extension.lower() in [ext.lower() for ext in extensions[_folder]]:
+    for pasta in extensoes:  # pylint: disable=C0206
 
-            NEW_PATH = os.path.join(
-                file_path, 'organizador_de_arquivos', _folder, CURRENT_DATE)
-
-            if not os.path.exists(NEW_PATH):
-                os.makedirs(NEW_PATH)
-
-            new_file_path = os.path.join(NEW_PATH, _file)
-
+        if extensao in extensoes[pasta]:
+            NOVO_CAMINHO = f'{caminho}/organizador_de_arquivos/'\
+                f'{pasta}/{DATA_ATUAL}'
             try:
-                os.rename(os.path.join(file_path, _file), new_file_path)
-
+                if not os.path.exists(NOVO_CAMINHO):
+                    os.makedirs(NOVO_CAMINHO)
+                os.rename(f"{caminho}/{arquivo}", f"{NOVO_CAMINHO}/{arquivo}")
+            except PermissionError:
+                arquivos_com_erro_permissao.append(arquivo)
             except FileExistsError:
-                new_file_path = os.path.join(
-                    NEW_PATH, f"{CURRENT_SECOND}_{_file}")
-                os.rename(os.path.join(file_path, _file), new_file_path)
-            break
+                if not os.path.exists(NOVO_CAMINHO):
+                    os.makedirs(NOVO_CAMINHO)
+                os.rename(f"{caminho}/{arquivo}",
+                          f"{NOVO_CAMINHO}/{MINUTO_ATUAL}{SEGUNDO_ATUAL}_{arquivo}/")
+
+
+if arquivos_com_erro_permissao:
+    arquivos = '\n'.join(arquivos_com_erro_permissao)
+    print(f"Os seguintes arquivos não puderam ser movidos devido a problemas de permissão:\nCaso o arquivo esteja aberto em algum lugar, feche antes de executar o script \n\n{
+          arquivos}.")
