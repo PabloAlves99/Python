@@ -62,12 +62,13 @@ for arquivo in lista_arquivos:
                 if not os.path.exists(NOVO_CAMINHO):
                     os.makedirs(NOVO_CAMINHO)
                 os.rename(f"{caminho}/{arquivo}",
-                          f"{NOVO_CAMINHO}/{MINUTO_ATUAL}{SEGUNDO_ATUAL}_{arquivo}/")
+                          f"{NOVO_CAMINHO}/{MINUTO_ATUAL}{SEGUNDO_ATUAL}_"
+                          f"{arquivo}/")
 
 
 if arquivos_com_erro_permissao:
-    arquivos = '\n'.join(arquivos_com_erro_permissao)
+    ARQUIVOS = '\n'.join(arquivos_com_erro_permissao)
     print(f"Os seguintes arquivos não puderam ser movidos devido a problemas "
           f"de permissão:\nCaso o arquivo esteja aberto em algum lugar, feche "
           f"antes de executar o script \n\n"
-          f"{arquivos}.")
+          f"{ARQUIVOS}.")
