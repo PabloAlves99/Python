@@ -39,7 +39,9 @@ extensoes = {
     "R": [".r"],
     "Assembly": [".asm"],
     "JNLP": [".jnlp",],
-    "outros": [".bibtex", ".apk", ".xml", ".jar", ".vcf", ".p7s"],
+    "outros": [
+        ".bibtex", ".apk", ".xml", ".jar", ".vcf", ".p7s", ".ipynb", ""
+    ],
 }
 
 arquivos_com_erro_permissao = []
